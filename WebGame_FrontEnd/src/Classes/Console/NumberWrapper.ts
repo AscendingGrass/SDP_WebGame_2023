@@ -6,14 +6,14 @@ import { Wrapper } from "./Wrapper";
 export class NumberWrapper extends Wrapper{
     static processes:ExpressionHandler[] = [
         {
-            trigger:"",
+            operator:"",
             arguments:0,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 return self;
             }
         },
         {
-            trigger:".",
+            operator:".",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 switch(args[0].getValue()){
@@ -25,7 +25,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:"+",
+            operator:"+",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -35,7 +35,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:"-",
+            operator:"-",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -44,7 +44,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:"*",
+            operator:"*",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -53,7 +53,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:"/",
+            operator:"/",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -62,7 +62,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:"%",
+            operator:"%",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -71,7 +71,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:"==",
+            operator:"==",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -80,7 +80,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:"!=",
+            operator:"!=",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -89,7 +89,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:"<=",
+            operator:"<=",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -98,7 +98,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:">=",
+            operator:">=",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -107,7 +107,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:"<",
+            operator:"<",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -116,7 +116,7 @@ export class NumberWrapper extends Wrapper{
             }
         },
         {
-            trigger:">",
+            operator:">",
             arguments:1,
             process:(self:NumberWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -131,13 +131,13 @@ export class NumberWrapper extends Wrapper{
         this.type="number"
     }
 
-    public processExpression(trigger: string, args: Wrapper[]): Wrapper {
+    public processExpression(operator: string, args: Wrapper[]): Wrapper {
         const argCount = args.length
         const expHandler = NumberWrapper.processes.find(x => {
-            return x.trigger === trigger && x.arguments == argCount
+            return x.operator === operator && x.arguments == argCount
         })
 
-        if(!expHandler) throw Error("this operator, '" + trigger + "' doesn't exist for number")
+        if(!expHandler) throw Error("this operator, '" + operator + "' doesn't exist for number")
         return expHandler.process(this, args);
     }
 

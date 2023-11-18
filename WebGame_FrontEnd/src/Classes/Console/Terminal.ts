@@ -22,7 +22,7 @@ export class Terminal{
     private constGlobalVariables:Map<string, Wrapper>  = new Map()
     private globalExpressionHandlers:ExpressionHandler[] = [
         {
-            trigger:".",
+            operator:".",
             arguments:1,
             process:(self:VoidWrapper, args:Wrapper[])=>{
                 switch(args[0].getValue()){
@@ -35,7 +35,7 @@ export class Terminal{
             }
         },
         {
-            trigger:".",
+            operator:".",
             arguments:2,
             process:(self:VoidWrapper, args:Wrapper[])=>{
                 switch(args[0].getValue()){
@@ -48,19 +48,20 @@ export class Terminal{
             }
         },
         {
-            trigger:".",
+            operator:".",
             arguments:3,
             process:(self:VoidWrapper, args:Wrapper[])=>{
                 switch(args[0].getValue()){
                     case 'random()':
                         if(args[1] instanceof NumberWrapper && args[2] instanceof NumberWrapper) return new NumberWrapper(Math.floor(Math.random()*args[2].getValue() + args[1].getValue()));
+                        break;
                     default:
                         throw Error("this method, '" + args[0].getValue() + "' doesn't exist globally");
                 }
             }
         },
         {
-            trigger:"-",
+            operator:"-",
             arguments:1,
             process:(self:VoidWrapper, args:Wrapper[])=>{
                 if(args[0] instanceof NumberWrapper) return new NumberWrapper(-args[0].getValue())
@@ -68,7 +69,7 @@ export class Terminal{
             }
         },
         {
-            trigger:"!",
+            operator:"!",
             arguments:1,
             process:(self:VoidWrapper, args:Wrapper[])=>{
                 if(args[0] instanceof BoolWrapper) return new BoolWrapper(!args[0].getValue())
@@ -95,7 +96,7 @@ export class Terminal{
         // + - * / = > < ! %
         const stackableOp:RegExp = /[\+\-\*\/\=\<\>\!\%]/
         const stringOp:RegExp = /['"]/
-        var stringBuilder = ""
+        let stringBuilder = ""
         for (let i = 0; i < code.length; i++) {
             const char = code[i];
             if(stringBuilder.length > 0){
@@ -167,7 +168,7 @@ export class Terminal{
     }
 
     public setVariable(variableName:string, value:string|Wrapper){
-        var wrapperValue:Wrapper;
+        let wrapperValue:Wrapper;
         if(value instanceof Wrapper) wrapperValue = value
         else{
             try{
@@ -183,9 +184,9 @@ export class Terminal{
         this.variables.set(variableName, wrapperValue)
     }
 
-    public processGlobalExpression(trigger:string, args:Wrapper[]):Wrapper{
+    public processGlobalExpression(operator:string, args:Wrapper[]):Wrapper{
         const expHandler = this.globalExpressionHandlers.find(x => {
-            return x.trigger === trigger && x.arguments == args.length
+            return x.operator === operator && x.arguments == args.length
         })
 
         if(!expHandler) {
@@ -197,7 +198,7 @@ export class Terminal{
 
     private _compile(codeTokens:string[]):{startCommand:Command, endCommands:Command[]}{
         const startCommand:StartCommand = new StartCommand(this)
-        var placeholderCommands:Command[] = [startCommand]
+        let placeholderCommands:Command[] = [startCommand]
 
         for (let i = 0; i < codeTokens.length; i++) {
             switch(codeTokens[i]){
@@ -205,7 +206,7 @@ export class Terminal{
                     
                     if(codeTokens[++i] !== '(') throw Error('if syntax error, correct syntax ex. : if(a == "test"){ moveUp(); }')
                     const conditionTokens:string[] = [];
-                    var bracketCounter = 1
+                    let bracketCounter = 1
                     while(bracketCounter > 0){
                         i++;
                         if(i >= codeTokens.length) throw Error('there is an opened bracket, missing )')
@@ -226,7 +227,7 @@ export class Terminal{
                     }
 
 
-                    var condition:Expression|Wrapper|string;
+                    let condition:Expression|Wrapper|string;
                     if(conditionTokens.length == 1){
                         try{
                             condition = Terminal.wrap(conditionTokens[0])
@@ -240,7 +241,7 @@ export class Terminal{
                     }
                     
 
-                    var temp = new BranchCommand(this, condition)
+                    let temp = new BranchCommand(this, condition)
                     setNextCommand(temp);
 
                     // if true
@@ -258,7 +259,7 @@ export class Terminal{
                     }
                     else{
                         const codeBlockTokens:string[] = [codeTokens[++i]];
-                        var bracketCounter = 1;
+                        let bracketCounter = 1;
                         if(codeTokens[i] === '}'){
                             const empty = new StartCommand(this)
                             temp.setTrueNextCommand(empty)
@@ -295,7 +296,7 @@ export class Terminal{
                         i += 2
                         if(codeTokens[++i] !== '(') throw Error('if syntax error, correct syntax ex. : if(a == "test"){ moveUp(); }')
                         const conditionTokens:string[] = [];
-                        var bracketCounter = 1
+                        let bracketCounter = 1
                         while(bracketCounter > 0){
                             i++;
                             if(i >= codeTokens.length) throw Error('there is an opened bracket, missing )')
@@ -316,7 +317,7 @@ export class Terminal{
                         }
 
 
-                        var condition:Expression|Wrapper|string;
+                        let condition:Expression|Wrapper|string;
                         if(conditionTokens.length == 1){
                             try{
                                 condition = Terminal.wrap(conditionTokens[0])
@@ -348,7 +349,7 @@ export class Terminal{
                         }
                         else{
                             const codeBlockTokens:string[] = [codeTokens[++i]];
-                            var bracketCounter = 1;
+                            let bracketCounter = 1;
                             if(codeTokens[i] === '}'){
                                 const empty = new StartCommand(this)
                                 temp.setTrueNextCommand(empty)
@@ -398,7 +399,7 @@ export class Terminal{
                         }
                         else{
                             const codeBlockTokens:string[] = [codeTokens[++i]];
-                            var bracketCounter = 1;
+                            let bracketCounter = 1;
                             if(codeTokens[i] === '}'){
                                 const empty = new StartCommand(this)
                                 temp.setFalseNextCommand(empty)
@@ -436,7 +437,7 @@ export class Terminal{
                 case "while" : {
                     if(codeTokens[++i] !== '(') throw Error('while syntax error, correct syntax ex. : while(a == "up"){ moveUp(); }')
                     const conditionTokens:string[] = [];
-                    var bracketCounter = 1
+                    let bracketCounter = 1
                     while(bracketCounter > 0){
                         i++;
                         if(i >= codeTokens.length) throw Error('there is an opened bracket, missing )')
@@ -456,7 +457,7 @@ export class Terminal{
                         }
                     }
 
-                    var condition:Expression|Wrapper|string;
+                    let condition:Expression|Wrapper|string;
                     if(conditionTokens.length == 1){
                         try{
                             condition = Terminal.wrap(conditionTokens[0])
@@ -469,7 +470,7 @@ export class Terminal{
                         condition = this.compileExpression(conditionTokens)
                     }
 
-                    var temp = new BranchCommand(this, condition)
+                    let temp = new BranchCommand(this, condition)
                     setNextCommand(temp);
 
                     // if true
@@ -487,7 +488,7 @@ export class Terminal{
                     }
                     else{
                         const codeBlockTokens:string[] = [codeTokens[++i]];
-                        var bracketCounter = 1;
+                        let bracketCounter = 1;
                         if(codeTokens[i] === '}'){
                             const empty = new StartCommand(this)
                             temp.setTrueNextCommand(empty)
@@ -524,7 +525,7 @@ export class Terminal{
                 case "for" : {
                     if(codeTokens[++i] !== '(') throw Error('for syntax error, correct syntax ex. : for(index = 0 to 8){ moveUp(index); }')
                     const commandTokens:string[] = []
-                    var bracketCounter = 1
+                    let bracketCounter = 1
                     while(bracketCounter > 0){
                         i++;
                         if(i >= codeTokens.length) throw Error('there is an opened bracket, missing )')
@@ -571,7 +572,7 @@ export class Terminal{
                     }
                     else{
                         const codeBlockTokens:string[] = [codeTokens[++i]];
-                        var bracketCounter = 1;
+                        let bracketCounter = 1;
                         if(codeTokens[i] === '}'){
                             const empty = new StartCommand(this)
                             conditionCommand.setTrueNextCommand(empty)
@@ -641,8 +642,8 @@ export class Terminal{
 
     private compileSingleCommand(terminal:Terminal, commandTokens:string[]):SingleCommand{
         const assignment = commandTokens.includes('=')
-        var variable:string = "";
-        var expression:Expression;
+        let variable:string = "";
+        let expression:Expression;
 
         if(assignment && commandTokens.indexOf('=') != 1) throw Error('invalid assignment syntax, valid ex. a = 3')
         if(assignment){
@@ -659,7 +660,7 @@ export class Terminal{
         return new SingleCommand(terminal, expression, null, variable)
     }
 
-    private compileExpression(expTokens:string[]):Expression{
+    private compileExpression(expressionTokens:string[]):Expression{
         
         const globalSymbol:string = '@g'
         const postfixedTokens:string[] = []
@@ -679,34 +680,34 @@ export class Terminal{
         ]
 
         // postfixify
-        for (let i = 0; i < expTokens.length; i++) {
-            if(opsRegex.test(expTokens[i])){
+        for (let i = 0; i < expressionTokens.length; i++) {
+            if(opsRegex.test(expressionTokens[i])){
 
                 //check if this is a unary operator by looking at the token before, if it's an operator or a bracket then this operator is most likely to be unary
-                if(unaryOpsRegex.test(expTokens[i]) && (!expTokens[i-1] || (opsRegex.test(expTokens[i-1]) && expTokens[i-1] !== '.') || separatorRegex.test(expTokens[i-1]))){
+                if(unaryOpsRegex.test(expressionTokens[i]) && (!expressionTokens[i-1] || (opsRegex.test(expressionTokens[i-1]) && expressionTokens[i-1] !== '.') || separatorRegex.test(expressionTokens[i-1]))){
                     postfixedTokens.push(globalSymbol);
-                    stackOp(expTokens[i])
+                    stackOp(expressionTokens[i])
                     continue;
                 }
 
                 // if two operators are stacked together, throw an error
-                if(expTokens[i-1] && (opsRegex.test(expTokens[i-1]) || (separatorRegex.test(expTokens[i-1]) && expTokens[i-1] !== ')'))) throw Error('something is wrong at : ' + expTokens.slice(i-1, i+2).join(' '))
+                if(expressionTokens[i-1] && (opsRegex.test(expressionTokens[i-1]) || (separatorRegex.test(expressionTokens[i-1]) && expressionTokens[i-1] !== ')'))) throw Error('something is wrong at : ' + expressionTokens.slice(i-1, i+2).join(' '))
 
                 // if the operator is stackable according to the priority table then stack, else eject previous ones until stackable again
-                while(!opStackable(peek(postfixOps), expTokens[i])){
+                while(!opStackable(peek(postfixOps), expressionTokens[i])){
                     pushOp()
                 }
-                stackOp(expTokens[i])
+                stackOp(expressionTokens[i])
                 continue;
             }
 
-            if(expTokens[i] === '('){
+            if(expressionTokens[i] === '('){
                 postfixOps.push('(')
                 continue;
             }
 
-            if(expTokens[i] === ')'){
-                var op:string|undefined;
+            if(expressionTokens[i] === ')'){
+                let op:string|undefined;
                 while((op = peek(postfixOps)) && op !== '('){
                     pushOp()
                 }
@@ -715,7 +716,7 @@ export class Terminal{
                 continue;
             }
 
-            if(expTokens[i] === ','){
+            if(expressionTokens[i] === ','){
                 while((op = peek(postfixOps)) && op !== '('){
                     pushOp()
                 }
@@ -724,18 +725,18 @@ export class Terminal{
 
             // if the code reaches this part that means the token is most likely not a symbol
             // throw an error if values or variables are stacked next to each other
-            if(expTokens[i-1] && !opsRegex.test(expTokens[i-1]) && !separatorRegex.test(expTokens[i-1])) throw Error('something is wrong at 2: ' + expTokens.slice(i-1, i+2).join(' '))
-            if(expTokens[i+1] === '('){
-                if(expTokens[i-1] !== '.'){
+            if(expressionTokens[i-1] && !opsRegex.test(expressionTokens[i-1]) && !separatorRegex.test(expressionTokens[i-1])) throw Error('something is wrong at 2: ' + expressionTokens.slice(i-1, i+2).join(' '))
+            if(expressionTokens[i+1] === '('){
+                if(expressionTokens[i-1] !== '.'){
                     postfixedTokens.push(globalSymbol)
-                    stackOp('.'+expTokens[i]+'()')
+                    stackOp('.'+expressionTokens[i]+'()')
                     continue;
                 }
-                postfixOps[postfixOps.length-1] += expTokens[i] + '()'
+                postfixOps[postfixOps.length-1] += expressionTokens[i] + '()'
                 continue;
             }
-            if(expTokens[i-1] === '.') postfixedTokens.push('"' + expTokens[i] + '"')
-            else postfixedTokens.push(expTokens[i])
+            if(expressionTokens[i-1] === '.') postfixedTokens.push('"' + expressionTokens[i] + '"')
+            else postfixedTokens.push(expressionTokens[i])
         }
 
         // push all remaining operators
@@ -749,8 +750,8 @@ export class Terminal{
 
 
         // convert postfix string into expression tree
-        var root:Expression = new Expression(this)
-        var expressionParentStack: Expression[] = [root]
+        let root:Expression = new Expression(this)
+        const expressionParentStack: Expression[] = [root]
         setSelfExpression(expressionParentStack[0], postfixedTokens[0])
 
         if(postfixedTokens.length == 1){
@@ -780,12 +781,12 @@ export class Terminal{
                     i += 1;
                     const parent = peek(expressionParentStack)
                     if(/^\..+/.test(postfixedTokens[i])){
-                        parent.setTrigger('.')
+                        parent.setOperator('.')
                         parent.addArg(new StringWrapper(postfixedTokens[i].substring(1)))
                     }
                     else{
                         throw Error('there is not supposed to be any operator that accepts 0 parameters other than methods')
-                        // parent.setTrigger(postfixedTokens[i])
+                        // parent.setOperator(postfixedTokens[i])
                         // parent.setArgs([])
                     }
 
@@ -801,11 +802,11 @@ export class Terminal{
                 parent.addArg(lastParameter.isSelfExpression() ? first: lastParameter)
 
                 if(/^\..+/.test(postfixedTokens[i])){
-                    parent.setTrigger('.')
+                    parent.setOperator('.')
                     parent.setArgs([ new StringWrapper(postfixedTokens[i].substring(1)), ...(parent.getArgs() ?? []) ])
                 }
                 else{
-                    parent.setTrigger(postfixedTokens[i])
+                    parent.setOperator(postfixedTokens[i])
                 }
 
                 continue
@@ -839,7 +840,7 @@ export class Terminal{
             catch(err){
                 expression.setFirst(value)
             }
-            expression.setTrigger(null)
+            expression.setOperator(null)
             expression.setArgs(null)
         }
 

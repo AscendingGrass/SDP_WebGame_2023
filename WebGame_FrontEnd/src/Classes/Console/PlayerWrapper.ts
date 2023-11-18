@@ -9,14 +9,14 @@ import { Wrapper } from "./Wrapper";
 export class PlayerWrapper extends Wrapper{
     static processes:ExpressionHandler[] = [
         {
-            trigger:"",
+            operator:"",
             arguments:0,
             process:(self:PlayerWrapper, args:Wrapper[])=>{
                 return self;
             }
         },
         {
-            trigger:".",
+            operator:".",
             arguments:1,
             process:(self:PlayerWrapper, args:Wrapper[])=>{
                 switch(args[0]?.getValue()){
@@ -73,7 +73,7 @@ export class PlayerWrapper extends Wrapper{
             }
         },
         {
-            trigger:".",
+            operator:".",
             arguments:2,
             process:(self:PlayerWrapper, args:Wrapper[])=>{
                 switch(args[0]?.getValue()){
@@ -101,10 +101,10 @@ export class PlayerWrapper extends Wrapper{
         this.type ="playerUnit"
     }
 
-    public processExpression(trigger:string, args:Wrapper[]):Wrapper{
+    public processExpression(operator:string, args:Wrapper[]):Wrapper{
         const argCount = args.length
         const expHandler = PlayerWrapper.processes.find(x => {
-            return x.trigger === trigger && x.arguments == argCount
+            return x.operator === operator && x.arguments == argCount
         })
 
         if(!expHandler) throw Error('something is wrong with what you wrote')

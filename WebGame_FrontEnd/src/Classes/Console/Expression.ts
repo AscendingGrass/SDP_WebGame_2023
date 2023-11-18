@@ -1,6 +1,3 @@
-import { PlayerUnit } from "../GameObjects/PlayerUnit";
-import { Command } from "./Command";
-import { PlayerWrapper } from "./PlayerWrapper";
 import { Terminal } from "./Terminal";
 import { VoidWrapper } from "./VoidWrapper";
 import { Wrapper } from "./Wrapper";
@@ -8,13 +5,13 @@ import { Wrapper } from "./Wrapper";
 export class Expression{
     private terminal:Terminal
     private first:Expression|Wrapper|string|null
-    private trigger:string|null
+    private operator:string|null
     private args:(Expression|Wrapper|string)[]|null
 
-    constructor(terminal:Terminal, trigger:string|null = null, first:Expression|Wrapper|string|null = null, args:(Expression|Wrapper|string)[]|null = null){
+    constructor(terminal:Terminal, operator:string|null = null, first:Expression|Wrapper|string|null = null, args:(Expression|Wrapper|string)[]|null = null){
         this.terminal = terminal
         this.first = first
-        this.trigger = trigger
+        this.operator = operator
         this.args = args
     }
 
@@ -39,18 +36,18 @@ export class Expression{
         return this.args
     }
 
-    public setTrigger(value:string|null):void{
-        this.trigger = value
+    public setOperator(value:string|null):void{
+        this.operator = value
     }
 
     public isSelfExpression():boolean{
-        return this.trigger == null && this.args == null && this.first != null
+        return this.operator == null && this.args == null && this.first != null
     }
 
     public getResult(): Wrapper {
         if(this.first == null) throw Error('something went wrong with the expression, the first is null')
 
-        var first;
+        let first;
         try{
             first = this.first instanceof Wrapper ? 
                 this.first : 
@@ -59,7 +56,7 @@ export class Expression{
                     this.terminal.getVariable(this.first)
             ;
     
-            if(this.trigger == null && this.args == null){
+            if(this.operator == null && this.args == null){
                 return first;
             } 
         }
@@ -68,7 +65,7 @@ export class Expression{
             // console.log('error passed');
         }
 
-        if(this.args == null || this.trigger == null) throw Error('something went wrong with the expression, the args or the trigger is null')
+        if(this.args == null || this.operator == null) throw Error('something went wrong with the expression, the args or the operator is null')
         if(this.first instanceof VoidWrapper) throw Error('there is something wrong with your code, this.first returns void')
 
         const args:Wrapper[] = []
@@ -86,17 +83,17 @@ export class Expression{
 
         // accessing global function
         if(this.first === '@g'){
-            return this.terminal.processGlobalExpression(this.trigger, args);
+            return this.terminal.processGlobalExpression(this.operator, args);
             // const argCount = args.length
             // const expHandler = this.terminal.globalExpressionHandlers.find(x => {
-            //     return x.trigger === this.trigger && x.arguments == argCount
+            //     return x.operator === this.operator && x.arguments == argCount
             // })
 
             // if(!expHandler) throw Error('something is wrong with what you wrote')
             // return expHandler.process(new VoidWrapper(), args);
         }
 
-        return first!.processExpression(this.trigger, args)
+        return first!.processExpression(this.operator, args)
     }
     
 } 

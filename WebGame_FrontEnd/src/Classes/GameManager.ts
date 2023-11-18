@@ -1,38 +1,28 @@
-import { TerminalView } from './TerminalView';
-import { Grid } from './GameObjects/Grid'
-import { CanvasView } from './CanvasView'
 import { GroupAnimation } from './GameObjects/GroupAnimation';
+import { TerminalView } from './TerminalView';
+import { CanvasView } from './CanvasView'
+import { Grid } from './GameObjects/Grid'
 import { Player } from './Player';
 import { Direction } from './GameObjects/Direction';
 import { PlayerUnit } from './GameObjects/PlayerUnit';
-import { ShopView } from './ShopView';
 
 export class GameManager {
     private lastTimeStamp: number = 0;
     private deltaTime: number = 0;
-    private isRunning: Boolean = false;
+    private isRunning: boolean = false;
     private animationFrameId: number = -1;
     private player: Player = new Player();
     private terminalView: TerminalView | null = null;
     private grid: Grid = new Grid({ x: 100, y: 100 });
     private canvasView: CanvasView | null = null;
     private activePlayerUnit: PlayerUnit | null = null;
-    private shopView: ShopView | null = null;
 
-    constructor(canvasView: CanvasView | null = null, terminalView: TerminalView | null = null, shopView: ShopView | null) {
+    constructor(canvasView: CanvasView | null = null, terminalView: TerminalView | null = null) {
         this.setCanvasView(canvasView);
         this.setTerminalView(terminalView);
         this.grid.addEntity(this.player.units[0]);
         this.grid.addEntity(this.player.units[1]);
         this.setActivePlayerUnit(this.player.units[0]);
-        this.setShopView(shopView);
-    }
-
-    public setShopView(shopView: ShopView | null) {
-        this.shopView = shopView;
-    }
-    public getShopView() {
-        return this.shopView;
     }
 
     public getDeltatime(): number {

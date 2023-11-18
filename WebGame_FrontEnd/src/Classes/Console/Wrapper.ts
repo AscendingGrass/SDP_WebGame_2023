@@ -13,10 +13,10 @@ export abstract class Wrapper {
         console.log(this.value)
     }
 
-    public processExpression(trigger:string, args:Wrapper[]):Wrapper{
+    public processExpression(operator:string, args:Wrapper[]):Wrapper{
         const argCount = args.length
         const expHandler = Wrapper.processes.find(x => {
-            return x.trigger === trigger && x.arguments == argCount
+            return x.operator === operator && x.arguments == argCount
         })
 
         if(!expHandler) throw Error('something is wrong with what you wrote')

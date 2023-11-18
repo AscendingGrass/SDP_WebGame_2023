@@ -1,33 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
+import {loadGame} from './loadGame';
 
+// INI CUMAN BUAT NGETES AJA, APUS & GANTI2 AJA KALO MAU -Nichoasl, 18 Nov 23
 function App() {
-  const [count, setCount] = useState(0)
+  const [mode, setMode] = useState(false)
+  useEffect(() => {
+    loadGame()
+  }, [])
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{backgroundColor:'white'}}>
+      <button onClick={()=> setMode(!mode)}>Toggle</button>
+    </div>
+    {
+      mode &&
+      <div className="top">NavBar or something </div>
+    }
+      <div className="left-side">
+        <canvas id="view">
+
+        </canvas>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div className="right-side">
+          <div className="UI">
+              <button className="button-shop">button-shop</button>
+              <div className="shop-html"></div>
+          </div>
+
+          <div className="UI">
+              <textarea name="console" className="console" id="console" cols={30} rows={10} spellCheck="false">
+
+              </textarea>
+              <div className="buttonsection">
+                  <button id="executeButton" className="button start">
+                      Start
+                  </button>
+                  <button id="stopButton" className="button stop">
+                      Stop
+                  </button>
+              </div>
+          </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }

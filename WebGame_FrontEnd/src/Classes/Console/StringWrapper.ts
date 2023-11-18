@@ -6,18 +6,19 @@ import { Wrapper } from "./Wrapper";
 export class StringWrapper extends Wrapper{
     static processes:ExpressionHandler[] = [
         {
-            trigger:"",
+            operator:"",
             arguments:0,
             process:(self:StringWrapper, args:Wrapper[])=>{
                 return self;
             }
         },
         {
-            trigger:".",
+            operator:".",
             arguments:1,
             process:(self:StringWrapper, args:Wrapper[])=>{
                 switch(args[0]?.getValue()){
                     case 'toNumber()':
+                        // eslint-disable-next-line no-case-declarations
                         const val:number = +self.getValue()
                         return new NumberWrapper(val);
                     default:
@@ -26,7 +27,7 @@ export class StringWrapper extends Wrapper{
             }
         },
         {
-            trigger:"+",
+            operator:"+",
             arguments:1,
             process:(self:StringWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -36,7 +37,7 @@ export class StringWrapper extends Wrapper{
             }
         },
         {
-            trigger:"==",
+            operator:"==",
             arguments:1,
             process:(self:StringWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -45,7 +46,7 @@ export class StringWrapper extends Wrapper{
             }
         },
         {
-            trigger:"!=",
+            operator:"!=",
             arguments:1,
             process:(self:StringWrapper, args:Wrapper[])=>{
                 const arg = args[0]
@@ -60,13 +61,13 @@ export class StringWrapper extends Wrapper{
         this.type="string"
     }
 
-    public processExpression(trigger: string, args: Wrapper[]): Wrapper {
+    public processExpression(operator: string, args: Wrapper[]): Wrapper {
         const argCount =  args.length
         const expHandler = StringWrapper.processes.find(x => {
-            return x.trigger === trigger && x.arguments == argCount
+            return x.operator === operator && x.arguments == argCount
         })
 
-        if(!expHandler) throw Error("this operator, '" + trigger + "' doesn't exist for string")
+        if(!expHandler) throw Error("this operator, '" + operator + "' doesn't exist for string")
         return expHandler.process(this, args);
     }
 
