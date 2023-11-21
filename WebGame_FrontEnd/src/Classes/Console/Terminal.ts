@@ -40,7 +40,7 @@ export class Terminal{
             process:(self:VoidWrapper, args:Wrapper[])=>{
                 switch(args[0].getValue()){
                     case 'alert()':
-                        console.log(args[1].getValue())
+                        alert(args[1].getValue())
                         return args[1];
                     default:
                         throw Error("this method, '" + args[0].getValue() + "' doesn't exist globally");

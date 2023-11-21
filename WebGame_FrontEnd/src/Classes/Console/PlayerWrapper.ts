@@ -76,6 +76,7 @@ export class PlayerWrapper extends Wrapper{
             operator:".",
             arguments:2,
             process:(self:PlayerWrapper, args:Wrapper[])=>{
+                console.log("player move : " + args[1].getValue());
                 switch(args[0]?.getValue()){
                     case 'moveUp()':
                         return new WaitWrapper('move up ' + args[1].getValue());

@@ -11,13 +11,13 @@ function App() {
 
   return (
     <>
-    <div style={{backgroundColor:'white'}}>
+    {/* <div style={{backgroundColor:'white'}}>
       <button onClick={()=> setMode(!mode)}>Toggle</button>
     </div>
     {
       mode &&
       <div className="top">NavBar or something </div>
-    }
+    } */}
       <div className="left-side">
         <canvas id="view">
 
@@ -30,7 +30,7 @@ function App() {
           </div>
 
           <div className="UI">
-              <textarea name="console" className="console" id="console" cols={30} rows={10} spellCheck="false">
+              <textarea name="console" style={{fontFamily:'monospace'}} className="console" id="console" cols={30} rows={10} spellCheck="false">
 
               </textarea>
               <div className="buttonsection">

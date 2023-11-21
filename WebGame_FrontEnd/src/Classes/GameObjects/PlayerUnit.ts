@@ -12,8 +12,8 @@ export class PlayerUnit extends Entity{
     private isMoving:boolean = false
     private moveSpeed:number = 1
     private lerpProgress:number = 0
-    private moveProgress:number = 0
-    private moveIteration:number = 0
+    private moveIterationProgress:number = 0
+    private moveIterationTarget:number = 0
     private direction:Direction = Direction.None;
     public terminal:Terminal;
     public inventory:Inventory = new Inventory()
@@ -57,7 +57,7 @@ export class PlayerUnit extends Entity{
                 this.terminal.stop()
             }
         }
-        var currentCommand = this.terminal.currentCommand
+        let currentCommand = this.terminal.currentCommand
         
         if(currentCommand instanceof SingleCommand){
             const asyncTask = currentCommand.getAsyncTask()
@@ -81,28 +81,28 @@ export class PlayerUnit extends Entity{
                             this.direction = Direction.None;
                             break;
                     }
-                    this.moveIteration = Number.parseInt(taskDetail[2])
+                    this.moveIterationTarget = Number.parseInt(taskDetail[2])
                     if(!this.isMoving)this.move(this.direction)
                 }
             }
             if(this.isMoving)  this.lerpProgress += deltaTime * this.moveSpeed
             if(this.lerpProgress >= 1){
-                this.moveProgress += 1;
+                this.moveIterationProgress += 1;
                 this.lerpProgress = 0;
                 this.originalCoordinate = this.coordinate;
                 this.isMoving = false
-                if(this.moveProgress < this.moveIteration) {
+                if(this.moveIterationProgress < this.moveIterationTarget) {
                     if(!this.terminal.running){
-                        this.moveProgress  = 0
-                        this.moveIteration = 0
+                        this.moveIterationProgress  = 0
+                        this.moveIterationTarget = 0
                         this.playAnimation('idle')
                         return
                     }
                     this.move(this.direction)
                     return
                 }
-                this.moveProgress  = 0
-                this.moveIteration = 0
+                this.moveIterationProgress  = 0
+                this.moveIterationTarget = 0
                 currentCommand = currentCommand.jumpNextCommand()
                 try{
                     currentCommand.Execute()

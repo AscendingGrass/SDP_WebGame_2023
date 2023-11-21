@@ -28,9 +28,9 @@ export class Grid{
         }
     }
 
-    public update(deltaTime:number, updateArea:{position:Point, size:Point} | null = null, priorityUpdate:Animated[] = []):void{
+    public update(deltaTime:number, updateArea:{position:Point, size:Point} | null = null, prioritizedUpdate:Animated[] = []):void{
         GroupAnimation.animations.forEach(x => x.nextFrame(deltaTime))
-
+        
         if(!updateArea){
             for(let i = 0; i < this.size.y; ++i){
                 for(let j = 0; j < this.size.x; ++j){
@@ -52,16 +52,16 @@ export class Grid{
                 if(j < 0) continue;
                 const tile = this.tiles[i]?.at(j)
                 const entity = this.entityGrid[i]?.at(j)
-                if(tile && !priorityUpdate.includes(tile))
+                if(tile && !prioritizedUpdate.includes(tile))
                     tile.nextFrame(deltaTime)
-                if(entity && !priorityUpdate.includes(entity)){
+                if(entity && !prioritizedUpdate.includes(entity)){
                     if(entity instanceof PlayerUnit) entity.update(deltaTime);
                     entity.nextFrame(deltaTime)
                 }
             }
         }
 
-        priorityUpdate.forEach(x => {
+        prioritizedUpdate.forEach(x => {
             if(x instanceof PlayerUnit) x.update(deltaTime);
             x.nextFrame(deltaTime)
         })

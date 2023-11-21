@@ -1,4 +1,5 @@
-import { GroupAnimation } from './GameObjects/GroupAnimation';
+import { ChainedAnimation } from './GameObjects/ChainedAnimation';
+import { Animation } from './GameObjects/Animation';
 import { TerminalView } from './TerminalView';
 import { CanvasView } from './CanvasView'
 import { Grid } from './GameObjects/Grid'
@@ -11,27 +12,39 @@ export class GameManager {
     private deltaTime: number = 0;
     private isRunning: boolean = false;
     private animationFrameId: number = -1;
-    private player: Player = new Player();
+    private player: PlayerUnit = new PlayerUnit({x:0,y:0});
     private terminalView: TerminalView | null = null;
     private grid: Grid = new Grid({ x: 100, y: 100 });
     private canvasView: CanvasView | null = null;
-    private activePlayerUnit: PlayerUnit | null = null;
 
     constructor(canvasView: CanvasView | null = null, terminalView: TerminalView | null = null) {
         this.setCanvasView(canvasView);
         this.setTerminalView(terminalView);
-        this.grid.addEntity(this.player.units[0]);
-        this.grid.addEntity(this.player.units[1]);
-        this.setActivePlayerUnit(this.player.units[0]);
+        
+        this.player.addAnimation(new ChainedAnimation(
+            this.player,
+            "idle",
+            Animation.assets['player_idle'],
+            {x:32, y:32},
+            2,
+            -1,
+            1
+        ))
+
+        this.player.createAnimation(
+            "walk", 
+            Animation.assets['player_walk'],
+            {x:32, y:32},
+            4,
+            "",
+            4
+        )
+        this.player.setMoveSpeed(2);
+        this.grid.addEntity(this.player);
     }
 
     public getDeltatime(): number {
         return this.deltaTime
-    }
-
-    public setActivePlayerUnit(value: PlayerUnit | null): void {
-        this.terminalView?.setTerminal(value?.terminal ?? null)
-        this.activePlayerUnit = value
     }
 
     public setCanvasView(canvasView: CanvasView | null): void {
@@ -45,7 +58,7 @@ export class GameManager {
     }
 
     public setTerminalView(terminalView: TerminalView | null): void {
-        terminalView?.setTerminal(this.activePlayerUnit?.terminal ?? null)
+        terminalView?.setTerminal(this.player?.terminal ?? null)
         this.terminalView?.setTerminal(null)
         this.terminalView = terminalView
     }
@@ -85,7 +98,7 @@ export class GameManager {
                 x: Math.ceil(scaledRenderRadius * 2),
                 y: Math.ceil(scaledRenderRadius * 2),
             }
-        }, this.player.units)
+        }, [this.player])
     }
 
     private render(): void {
