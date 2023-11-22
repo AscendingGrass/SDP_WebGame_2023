@@ -12,6 +12,8 @@ import Leaderboard from './Leaderboard.tsx';
 import Homepage from './Homepage.tsx';
 import News from './News.tsx';
 import Setting from './Setting.tsx';
+import User from './User.tsx';
+import Report from './Report.tsx';
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
       {
         path: "setting", //Akses melalui base_url/about
         element: <Setting/>,
+      },
+      {
+        path: "admin/user", //Akses melalui base_url/about
+        element: <User/>,
+      },
+      {
+        path: "admin/report", //Akses melalui base_url/about
+        element: <Report/>,
       },
     ],
   },
