@@ -1,10 +1,62 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+import Error from "./Error.tsx"
+import Home from './Home.tsx';
+import LoginRegister from './LoginRegister.tsx';
+import Login from './Login.tsx';
+import Register from './Register.tsx';
+import App from './App.tsx';
+import Leaderboard from './Leaderboard.tsx';
+import Homepage from './Homepage.tsx';
+import News from './News.tsx';
+import Setting from './Setting.tsx';
+
+const router = createBrowserRouter([
+  {
+    path: "/", //Akses melalui base_url
+    element: <Home   />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: '',
+        element:(window.localStorage.getItem("user")? <Homepage/> : <LoginRegister/>),
+        children: [
+          {
+            path: "",
+            element: <Login/>
+          },
+          {
+            path: "register",
+            element: <Register/>
+          },
+        ]
+      },
+      {
+        path: "game", //Akses melalui base_url/about
+        element: <App/>,
+      },
+      {
+        path: "leaderboard", //Akses melalui base_url/about
+        element: <Leaderboard/>,
+      },
+      {
+        path: "home", //Akses melalui base_url/about
+        element: <Homepage/>,
+      },
+      {
+        path: "news", //Akses melalui base_url/about
+        element: <News/>,
+      },
+      {
+        path: "setting", //Akses melalui base_url/about
+        element: <Setting/>,
+      },
+    ],
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <RouterProvider router={router} />
+);
