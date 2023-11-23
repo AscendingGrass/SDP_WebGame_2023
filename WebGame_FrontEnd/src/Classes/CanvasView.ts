@@ -16,7 +16,7 @@ export class CanvasView{
     private renderRadius:number = 6
     private moveMouseTriggerPressed:boolean = false
     private cameraMoved:boolean = false
-    private cameraPosition:Point = {x:0, y:0}
+    private cameraPosition:Point = {x:4.8, y:2.2}
 
     public onClick?: (gridCoordinate:Point)=>void;
 
@@ -209,7 +209,7 @@ export class CanvasView{
         }
             
         
-        this.context.fillText( "x : " + this.cameraPosition.x, 10, 20)
-        this.context.fillText( "y : " + this.cameraPosition.y, 10, 40)
+        // this.context.fillText( "x : " + this.cameraPosition.x, 10, 20)
+        // this.context.fillText( "y : " + this.cameraPosition.y, 10, 40)
     }
 }

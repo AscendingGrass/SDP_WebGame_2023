@@ -103,6 +103,6 @@ export class GameManager {
 
     private render(): void {
         this.canvasView?.render(this.grid)
-        this.canvasView?.getContext()?.fillText("fps : " + (1 / this.deltaTime).toFixed(3), 10, 80)
+        // this.canvasView?.getContext()?.fillText("fps : " + (1 / this.deltaTime).toFixed(3), 10, 80)
     }
 }

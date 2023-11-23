@@ -10,7 +10,7 @@ function App() {
   }, [])
 
   return (
-    <>
+    <div style={{display:"flex",height:"600px",margin:"0px"}}>
     {/* <div style={{backgroundColor:'white'}}>
       <button onClick={()=> setMode(!mode)}>Toggle</button>
     </div>
@@ -18,32 +18,32 @@ function App() {
       mode &&
       <div className="top">NavBar or something </div>
     } */}
-      <div className="left-side">
+      <div className="left-side" style={{width:"80%"}}>
         <canvas id="view">
-
+          
         </canvas>
       </div>
-      <div className="right-side">
-          <div className="UI">
-              <button className="button-shop">button-shop</button>
-              <div className="shop-html"></div>
-          </div>
+      <div className="right-side"style={{width:"20%"}}>
+        <div className="UI">
+            <button className="button-shop">button-shop</button>
+            <div className="shop-html"></div>
+        </div>
 
-          <div className="UI">
-              <textarea name="console" style={{fontFamily:'monospace'}} className="console" id="console" cols={30} rows={10} spellCheck="false">
+        <div className="UI">
+            <textarea name="console" style={{fontFamily:'monospace'}} className="console" id="console" cols={30} rows={10} spellCheck="false">
 
-              </textarea>
-              <div className="buttonsection">
-                  <button id="executeButton" className="button start">
-                      Start
-                  </button>
-                  <button id="stopButton" className="button stop">
-                      Stop
-                  </button>
-              </div>
-          </div>
+            </textarea>
+            <div className="buttonsection">
+                <button id="executeButton" className="button start">
+                    Start
+                </button>
+                <button id="stopButton" className="button stop">
+                    Stop
+                </button>
+            </div>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
