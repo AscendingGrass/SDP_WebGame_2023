@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const handleLogin = () => {
     const storedUser = window.localStorage.getItem("user");
 
@@ -9,6 +11,8 @@ const Login = () => {
     } else {
       window.localStorage.setItem("user", "HAI");
     }
+    navigate("/");
+    window.location.reload();
   };
 
   return (

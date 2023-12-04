@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const News = () => {
 
+  const navigate = useNavigate();
+  const handleLogOut = ()=>{
+    window.localStorage.removeItem("user");
+    navigate("/");
+    window.location.reload();
+  }
   return (
     <div className="container" style={{ overflowX: 'auto' }}>
       <div className="row mt-3 mb-3">
@@ -20,7 +27,9 @@ const News = () => {
             </div>
         </div>
         <div className="col-lg-5">
-            <button className='btn btn-danger float-end'>Log Out</button>
+            <button className='btn btn-danger float-end'
+              onClick={handleLogOut}
+            >Log Out</button>
         </div>
       </div>
       <br />
@@ -35,7 +44,9 @@ const News = () => {
       <br />
       <div className="row mb-3">
         <div className="col-lg-12">
-            <button className='btn btn-outline-danger float-end me-3'>Delete Account</button>
+            <button className='btn btn-outline-danger float-end me-3'
+              onClick={handleLogOut}
+            >Delete Account</button>
             <button className='btn btn-outline-success float-end me-3'>Save Account</button>
         </div>
       </div>
