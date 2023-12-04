@@ -33,6 +33,8 @@ export default function RegisterForm() {
       };
     return (
         <Card color="transparent" shadow={false}>
+            <Input variant="outlined" label="Outlined" />
+            <Input variant="outlined" label="Outlined" />
             <Typography variant="h4" color="blue-gray">
                 Sign Up
             </Typography>
