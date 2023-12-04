@@ -1,41 +1,55 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Link, useNavigate } from "react-router-dom";
+import { Button, Input } from "@material-tailwind/react";
+import {useState} from "react";
+import axios from "axios";
+import { LoginForm } from "./Component/LoginForm";
 
 const Login = () => {
+  const [login, setLogin] = useState({
+    username: '',
+    password: '',
+  })
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    const storedUser = window.localStorage.getItem("user");
-
-    if (storedUser) {
-      window.localStorage.removeItem("user");
-    } else {
-      window.localStorage.setItem("user", "HAI");
-    }
-    navigate("/");
-    window.location.reload();
+  const handleLogin = async () => {
+    const body = {...login};
+    const result = await axios.post("http://localhost:3000", body);
+    console.log(result);
+    
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLogin((prevMatch) => ({
+        ...prevMatch,
+        [name]: value,
+    }));
+    console.log(name + " " + value);
+    
+  };
+
+
   return (
-    <div className="row justify-content-center text-center">
-      <div className="col-lg-5">
-        <div className="form-floating mb-3">
-          <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
-          <label htmlFor="floatingInput">Username</label>
-        </div>
-        <div className="form-floating">
-          <input type="password" className="form-control" id="floatingPassword" placeholder="Password" />
-          <label htmlFor="floatingPassword">Password</label>
-        </div>
-        <br />
-        <br />
-        <button className="btn btn-primary" onClick={handleLogin}>
-          Login Now
-        </button>
-        <p>
-          Don't have an account? <Link to={"register"}>Sign Up Now</Link>
-        </p>
-      </div>
+    <div className="grid place-items-center">
+      <LoginForm/>
     </div>
+    // <div className="grid gap-5 place-items-center ">
+    //   <div className="w-72">
+    //     <Input label="Username" name="username" onChange={handleInputChange} crossOrigin={undefined} />
+    //   </div>
+    //   <div className="w-72">
+    //     <Input label="Password" name="password" onChange={handleInputChange} crossOrigin={undefined}/>
+    //   </div>
+    //   <div className="w-72">
+    //     <Button variant="filled" color="blue"
+    //       onClick={handleLogin}
+    //     >Login</Button>
+    //   </div>
+    //   <p>
+    //     Don't have an account? <Link className="text-blue-700" to={"register"}>Sign Up Now</Link>
+    //   </p>
+    // </div>
   );
 };
 

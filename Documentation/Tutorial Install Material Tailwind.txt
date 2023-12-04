@@ -1,0 +1,4 @@
+cd WebGame_FrontEnd
+
+npm i @material-tailwind/react
+

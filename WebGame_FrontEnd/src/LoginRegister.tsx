@@ -1,7 +1,20 @@
 import { Outlet, NavLink } from "react-router-dom";
+import axios from "axios";
 
 const LoginRegister = () => {
+    const testBackEnd =async () => {
+        const test = await axios.get("http://localhost:3000");
+        console.log(test);
+        
+    }
+
+    testBackEnd();
     return (
+        // <div className="flex justify-center">
+        //     <div className="basis-5/12">
+
+        //     </div>
+        // </div>
         <div className="container-fluid">
             <div className="row justify-content-center text-center mb-3">
                 <div className="col-lg-5">
