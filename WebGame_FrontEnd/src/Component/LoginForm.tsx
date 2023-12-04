@@ -1,12 +1,40 @@
+import axios from "axios";
+import { useState } from "react";
 import {
     Card,
     Input,
-    Checkbox,
     Button,
     Typography,
   } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
    
   export function LoginForm() {
+    const [login, setLogin] = useState({
+        username: '',
+        password: '',
+      });
+      const [error, setError] = useState("");
+      const navigate = useNavigate();
+    
+      const handleLogin = async () => {
+        const body = {...login};
+        const result = (await axios.post("http://localhost:3000/login", body)).data;
+        
+        if(!result.status){
+            setError(result.error);
+        }
+        
+      };
+    
+      const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setLogin((prevMatch) => ({
+            ...prevMatch,
+            [name]: value,
+        }));
+        console.log(name + " " + value);
+        
+      };
     return (
         <Card color="transparent" shadow={false}>
         <Typography variant="h4" color="blue-gray">
@@ -24,6 +52,8 @@ import {
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
+              name="username"
+              onChange={handleInputChange}
             />
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Password
@@ -34,12 +64,17 @@ import {
               placeholder="********"
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
-                className: "before:content-none after:content-none",
-              }}
+                  className: "before:content-none after:content-none",
+                }}
+              name="password"
+              onChange={handleInputChange}
             />
+            <Typography variant="h6" color="red" className="-mb-3">
+                {error}
+            </Typography>
           </div>
-          <Button className="mt-6" fullWidth>
-            sign up
+          <Button className="mt-6" fullWidth onClick={handleLogin}>
+            Log In
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
             Already have an account?{" "}

@@ -11,7 +11,11 @@ app.use(cors({
     optionSucessStatus: 200
 }));
 
+const userRouter = require("./src/routes/user");
+
 app.get('/', (req, res) => res.send('Hello World!'))
+app.use("/", userRouter);
+
 app.listen(port, async () => {
     try{
         await mongoose.connect('mongodb://127.0.0.1:27017/webgame')
