@@ -28,9 +28,11 @@ const UserSchema = new mongoose.Schema({
     },
     scoreboard: {
         type: String,
+        default: 0,
     },
     status: {
         type: String,
+        default: 1
     },
     created_at: {
         type: Date,
