@@ -33,30 +33,28 @@ export default function RegisterForm() {
       };
     return (
         <Card color="transparent" shadow={false}>
-            <Input variant="outlined" label="Outlined" />
-            <Input variant="outlined" label="Outlined" />
             <Typography variant="h4" color="blue-gray">
                 Sign Up
             </Typography>
             <div className="mt-4 mb-2 w-80 max-w-screen-lg sm:w-96">
                 <div className="mb-1 flex flex-col gap-6">
                 <Typography variant="h6" color="blue-gray" className="-mb-3">
-                    Your Name
+                    Username
                 </Typography>
                 <Input
                     size="lg"
-                    placeholder="name@mail.com"
+                    placeholder="Enter your username"
                     className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                     labelProps={{
                     className: "before:content-none after:content-none",
                     }}
                 />
                 <Typography variant="h6" color="blue-gray" className="-mb-3">
-                    Your Email
+                    Email
                 </Typography>
                 <Input
                     size="lg"
-                    placeholder="name@mail.com"
+                    placeholder="Enter your email"
                     className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                     labelProps={{
                     className: "before:content-none after:content-none",
@@ -68,7 +66,7 @@ export default function RegisterForm() {
                 <Input
                     type="password"
                     size="lg"
-                    placeholder="********"
+                    placeholder="Enter your password"
                     className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                     labelProps={{
                     className: "before:content-none after:content-none",
