@@ -24,11 +24,13 @@ const UserSchema = new mongoose.Schema({
         type: Number,
     },
     save: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        default: null,
     },
     scoreboard: {
-        type: String,
-        default: 0,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Scoreboard',
+        default: null,
     },
     status: {
         type: String,

@@ -25,7 +25,7 @@ router.post("/login", async (req, res)=>{
         status: true,
         result
     });
-})
+});
 
 router.post("/register", async (req, res)=>{
     const { username, email, password, confirm_password, gender } = req.body;
@@ -69,6 +69,6 @@ router.post("/register", async (req, res)=>{
         result
     });
 
-})
+});
 
 module.exports = router;
