@@ -71,8 +71,27 @@ router.post("/register", async (req, res)=>{
 
 });
 
-router.delete("/deleteUser", async (req, res)=> {
-    const { id } = req.body;
+router.delete('/deleteUser/:id', async (req, res) => {
+    const { id } = req.params;
+    let checkUser = await User.findOne({
+        _id: id
+    });
+    if(!result) return res.status(200).send({
+        status: false,
+        error: "Tidak ada user dengan ID : " + id
+    })
+    
+    checkUser.$set({
+        status: "dead",
+        deleted_at: Date.now()
+    });
+
+    const result = await checkUser.save();
+
+    return res.status(200).json({
+        status: true,
+        result
+    });
 })
 
 module.exports = router;

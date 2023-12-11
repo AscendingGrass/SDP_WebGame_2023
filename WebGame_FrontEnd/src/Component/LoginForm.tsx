@@ -22,6 +22,9 @@ import { useNavigate } from "react-router-dom";
         
         if(!result.status){
             setError(result.error);
+        }else{
+          setError('');
+          navigate('/home');
         }
         
       };
