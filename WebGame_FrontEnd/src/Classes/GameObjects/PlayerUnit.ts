@@ -1,51 +1,24 @@
 import { SingleCommand } from "../Console/SingleCommand";
 import { Terminal } from "../Console/Terminal";
-import { IEquippable } from "../Items/IEquippable";
 import { Inventory } from "../Items/Inventory";
 import { Animation } from "./Animation";
 import { Direction } from "./Direction";
-import { Entity } from "./Entity";
 import { Point } from "./Point";
+import { Unit } from "./Unit";
+import { GameState } from "../States/GameState";
+import { PlayerState } from "../States/PlayerState";
 
-export class PlayerUnit extends Entity{
-    private originalCoordinate:Point
-    private isMoving:boolean = false
-    private moveSpeed:number = 1
-    private lerpProgress:number = 0
-    private moveIterationProgress:number = 0
-    private moveIterationTarget:number = 0
-    private direction:Direction = Direction.None;
+export class PlayerUnit extends Unit{
+    private playerState:PlayerState
     public terminal:Terminal;
     public inventory:Inventory = new Inventory()
-    public equipped:IEquippable|null = null
 
-    constructor(coordinate:Point, moveSpeed:number = 1, animations:Animation[]=[]){
-        super("PlayerUnit", coordinate, animations)
+    constructor(playerState:PlayerState, gameState:GameState,animations:Animation[]=[]){
+        super(playerState, "PlayerUnit", gameState, animations);
         this.terminal = new Terminal(this)
-        this.originalCoordinate = {...this.coordinate}
-        this.setMoveSpeed(moveSpeed)
+        this.playerState = playerState
     }
 
-    public setMoveSpeed(value:number, animationSpeedMult:number = 1):void{
-        this.moveSpeed = value;
-        const animation = this.getAnimation('walk');
-        if(!animation) return;
-        animation.animationSpeed = animation.spriteFrameNum * animationSpeedMult * this.moveSpeed
-    }
-
-    public addAnimation(animation: Animation): void {
-        super.addAnimation(animation)
-        if(animation.animationName === 'walk'){
-            this.setMoveSpeed(this.moveSpeed)
-        }
-    }
-
-    public createAnimation(animationName: string, spriteSheet: HTMLImageElement, spriteResolution: Point, spriteFrameNum: number, nextAnimation?: string, animationSpeed?: number): void {
-        super.createAnimation(animationName, spriteSheet, spriteResolution, spriteFrameNum, nextAnimation, animationSpeed)
-        if(animationName === 'walk'){
-            this.setMoveSpeed(this.moveSpeed)
-        }
-    }
 
     public update(deltaTime: number): void {
         if(this.terminal.running) {
@@ -85,7 +58,7 @@ export class PlayerUnit extends Entity{
                     if(!this.isMoving)this.move(this.direction)
                 }
             }
-            if(this.isMoving)  this.lerpProgress += deltaTime * this.moveSpeed
+            if(this.isMoving)  this.lerpProgress += deltaTime * this.playerState.moveSpeed
             if(this.lerpProgress >= 1){
                 this.moveIterationProgress += 1;
                 this.lerpProgress = 0;
@@ -156,6 +129,8 @@ export class PlayerUnit extends Entity{
         try{
             this.setCoordinate(nextCoord, true)
         }
-        catch(err){}
+        catch(err){
+            return
+        }
     }
 }

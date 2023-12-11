@@ -24,10 +24,6 @@ function App() {
         </canvas>
       </div>
       <div className="right-side"style={{width:"20%"}}>
-        <div className="UI">
-            <button className="button-shop">button-shop</button>
-            <div className="shop-html"></div>
-        </div>
 
         <div className="UI">
             <textarea name="console" style={{fontFamily:'monospace'}} className="console" id="console" cols={30} rows={10} spellCheck="false">

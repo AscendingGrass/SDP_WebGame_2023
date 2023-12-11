@@ -41,4 +41,9 @@ export class ChainedAnimation extends Animation{
             resolution: this.spriteResolution
         }
     }
+
+    public copy(newOwner:Animated):ChainedAnimation{
+        return new ChainedAnimation(newOwner, this.animationName, this.spriteSheet, this.spriteResolution, this.spriteFrameNum, this.nextAnimationIndex, this.animationSpeed)
+    
+    }
 }

@@ -58,8 +58,6 @@ export class CanvasView{
             if(evt.button == 0) {
                 if(!this.cameraMoved && this.canvas){
                     const oneTileSize = this.canvasScale * this.maxCanvasSize/ this.defaultTilesPerCanvas
-                    const oneTileSizeX = oneTileSize / Tile.defaultTileResolution.x
-                    const oneTileSizeY = oneTileSize / Tile.defaultTileResolution.y
                              
                     const xClick = (evt.clientX  - this.canvas.width / 2) / oneTileSize
                     const yClick = (evt.clientY - this.canvas.height / 2) / oneTileSize 
@@ -74,7 +72,7 @@ export class CanvasView{
             }
         }
 
-        this.canvas.onmouseleave = (evt) => {
+        this.canvas.onmouseleave = () => {
             this.cameraMoved = false
             this.moveMouseTriggerPressed = false
         }
@@ -87,7 +85,7 @@ export class CanvasView{
             }
         }
 
-        window.onresize = (evt) => {
+        window.onresize = () => {
             const target = this.canvas as HTMLCanvasElement
             if(!target) return
             canvas.width = canvas.clientWidth
@@ -143,7 +141,7 @@ export class CanvasView{
             if(i < 0) continue;
             for (let j = jStart; j < jEnd; j++) {
                 if(j < 0) continue;
-                var tileSprite:SpriteFrame|undefined = grid.tiles[i]?.at(j)?.currentAnimationFrame();
+                const tileSprite:SpriteFrame|undefined = grid.tiles[i]?.at(j)?.currentAnimationFrame();
                 
 
                 if(tileSprite) {
@@ -175,7 +173,7 @@ export class CanvasView{
             if(i < 0) continue;
             for (let j = jStart; j < jEnd; j++) {
                 if(j < 0) continue;
-                var entity:Entity|null|undefined = grid.entityGrid[i]?.at(j);
+                const entity:Entity|null|undefined = grid.entityGrid[i]?.at(j);
 
                 if(entity) {
                     const entitySprite = entity.currentAnimationFrame()
@@ -209,7 +207,7 @@ export class CanvasView{
         }
             
         
-        // this.context.fillText( "x : " + this.cameraPosition.x, 10, 20)
-        // this.context.fillText( "y : " + this.cameraPosition.y, 10, 40)
+        this.context.fillText( "x : " + this.cameraPosition.x, 10, 20)
+        this.context.fillText( "y : " + this.cameraPosition.y, 10, 40)
     }
 }

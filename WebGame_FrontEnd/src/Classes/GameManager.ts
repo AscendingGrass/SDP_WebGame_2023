@@ -3,23 +3,32 @@ import { Animation } from './GameObjects/Animation';
 import { TerminalView } from './TerminalView';
 import { CanvasView } from './CanvasView'
 import { Grid } from './GameObjects/Grid'
-import { Player } from './Player';
-import { Direction } from './GameObjects/Direction';
 import { PlayerUnit } from './GameObjects/PlayerUnit';
+import { GameState } from './States/GameState';
+import { LogView } from './LogView';
+import { PlayerState } from './States/PlayerState';
 
 export class GameManager {
     private lastTimeStamp: number = 0;
     private deltaTime: number = 0;
     private isRunning: boolean = false;
     private animationFrameId: number = -1;
-    private player: PlayerUnit = new PlayerUnit({x:0,y:0});
+    private player: PlayerUnit;
     private terminalView: TerminalView | null = null;
     private grid: Grid = new Grid({ x: 100, y: 100 });
     private canvasView: CanvasView | null = null;
+    private logView: LogView | null = null;
+    private currentState:GameState
 
-    constructor(canvasView: CanvasView | null = null, terminalView: TerminalView | null = null) {
+    constructor(logView: LogView, canvasView: CanvasView | null = null, terminalView: TerminalView | null = null)  {
         this.setCanvasView(canvasView);
         this.setTerminalView(terminalView);
+
+        const playerState = new PlayerState()
+        this.logView = logView
+        
+        this.currentState = new GameState([], playerState, logView)
+        this.player = new PlayerUnit(playerState, this.currentState)
         
         this.player.addAnimation(new ChainedAnimation(
             this.player,
@@ -41,6 +50,14 @@ export class GameManager {
         )
         this.player.setMoveSpeed(2);
         this.grid.addEntity(this.player);
+    }
+
+    public save():void{
+
+    }
+
+    public load(gameState:GameState):void {
+
     }
 
     public getDeltatime(): number {
@@ -103,6 +120,6 @@ export class GameManager {
 
     private render(): void {
         this.canvasView?.render(this.grid)
-        // this.canvasView?.getContext()?.fillText("fps : " + (1 / this.deltaTime).toFixed(3), 10, 80)
+        this.canvasView?.getContext()?.fillText("fps : " + (1 / this.deltaTime).toFixed(3), 10, 80)
     }
 }

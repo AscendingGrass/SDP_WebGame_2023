@@ -3,14 +3,18 @@ import { Animation } from "./Animation";
 import { Grid } from "./Grid";
 import { Point } from "./Point";
 import { Tile } from "./Tile";
+import { IHasCoordinate } from "./IHasCoordinate";
+import { GameState } from "../States/GameState";
 
-export abstract class Entity extends Animated{
+export abstract class Entity extends Animated implements IHasCoordinate{
     protected coordinate:Point
     protected grid:Grid | null = null
+    protected gameState:GameState
 
-    constructor(name:string, coordinate:Point, animations:Animation[] = []){
+    constructor(name:string, coordinate:Point, gameState:GameState, animations:Animation[] = []){
         super(name, animations)
         this.coordinate = coordinate
+        this.gameState = gameState
     }
 
     public getCoordinate():Point{
@@ -36,7 +40,7 @@ export abstract class Entity extends Animated{
             this.grid.entityGrid[this.coordinate.y][this.coordinate.x] = null;
             row[value.x] = this;
             this.coordinate = value;
-            if(triggerTile) this.grid.tiles[value.y][value.x]?.step(this);
+            if(triggerTile) this.grid.tiles[value.y][value.x]?.step(this, this.gameState);
             return;
         }
         this.coordinate = value;
