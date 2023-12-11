@@ -2,10 +2,13 @@ const express = require("express");
 const router = express();
 
 const User = require("../models/Users");
+const Scoreboard = require("../models/Scoreboards");
 
-router.post("/login", async (req, res)=>{
-    const { username, password } = req.body;
-    const result = await User.findOne({username});
+router.post("/insertScoreboard", async (req, res)=>{
+    const { id } = req.body;
+    const newScoreboard = new Scoreboard({
+        user_id: id
+    });
     console.log(result);
     if(!result){
         return res.status(200).json({
@@ -27,7 +30,7 @@ router.post("/login", async (req, res)=>{
     });
 });
 
-router.post("/register", async (req, res)=>{
+router.post("/deleteScoreboard", async (req, res)=>{
     const { username, email, password, confirm_password, gender } = req.body;
 
     const checkUsername = await User.findOne({
@@ -70,28 +73,5 @@ router.post("/register", async (req, res)=>{
     });
 
 });
-
-router.delete('/deleteUser/:id', async (req, res) => {
-    const { id } = req.params;
-    let checkUser = await User.findOne({
-        _id: id
-    });
-    if(!result) return res.status(200).send({
-        status: false,
-        error: "Tidak ada user dengan ID : " + id
-    })
-    
-    checkUser.$set({
-        status: "dead",
-        deleted_at: Date.now()
-    });
-
-    const result = await checkUser.save();
-
-    return res.status(200).json({
-        status: true,
-        result
-    });
-})
 
 module.exports = router;
