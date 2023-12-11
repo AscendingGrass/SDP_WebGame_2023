@@ -57,7 +57,9 @@ export class GameManager {
     }
 
     public load(gameState:GameState):void {
-
+        this.currentState = gameState
+        throw Error("Not Implemented");
+        
     }
 
     public getDeltatime(): number {

@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2023-12-11T21:46:30.925Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="eDkOTvUkxistn32w2EuG" version="22.1.2" type="device">
+<mxfile host="Electron" modified="2023-12-11T22:20:08.611Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.2 Chrome/114.0.5735.289 Electron/25.9.4 Safari/537.36" etag="Nx3JnQq8e5wtwDIKY7LH" version="22.1.2" type="device">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="3975" dy="389" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="4455" dy="669" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -1872,7 +1872,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="xnawm_rAH6HHE10GptO4-255" value="EventState" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="675.59" y="200" width="520" height="226" as="geometry" />
+          <mxGeometry x="675.59" y="200" width="520" height="236" as="geometry" />
         </mxCell>
         <mxCell id="xnawm_rAH6HHE10GptO4-263" value="id:string" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="xnawm_rAH6HHE10GptO4-255" vertex="1">
           <mxGeometry y="26" width="520" height="26" as="geometry" />
@@ -1883,20 +1883,20 @@
         <mxCell id="xnawm_rAH6HHE10GptO4-264" value="properties:EventProperty[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="xnawm_rAH6HHE10GptO4-255" vertex="1">
           <mxGeometry y="78" width="520" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="xnawm_rAH6HHE10GptO4-258" value="onEventProgressed:(((progressName:string, currentState:GameState) =&amp;gt; void) =&amp;gt; void)[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="xnawm_rAH6HHE10GptO4-255" vertex="1">
-          <mxGeometry y="104" width="520" height="26" as="geometry" />
+        <mxCell id="xnawm_rAH6HHE10GptO4-258" value="onEventProgressed:((progressHandler:(progressName:string, currentState:GameState) =&amp;gt; void) =&amp;gt; void)[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="xnawm_rAH6HHE10GptO4-255" vertex="1">
+          <mxGeometry y="104" width="520" height="36" as="geometry" />
         </mxCell>
         <mxCell id="xnawm_rAH6HHE10GptO4-260" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="xnawm_rAH6HHE10GptO4-255" vertex="1">
-          <mxGeometry y="130" width="520" height="8" as="geometry" />
+          <mxGeometry y="140" width="520" height="8" as="geometry" />
         </mxCell>
         <mxCell id="xnawm_rAH6HHE10GptO4-261" value="EventState(name:string, properties:EventProperty[], eventHandler:(event:EventState, deltaTime:double, currentState:GameState) =&amp;gt; void):void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="xnawm_rAH6HHE10GptO4-255" vertex="1">
-          <mxGeometry y="138" width="520" height="36" as="geometry" />
+          <mxGeometry y="148" width="520" height="36" as="geometry" />
         </mxCell>
         <mxCell id="xnawm_rAH6HHE10GptO4-283" value="update(deltaTime:double, gameState:GameState): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="xnawm_rAH6HHE10GptO4-255" vertex="1">
-          <mxGeometry y="174" width="520" height="26" as="geometry" />
+          <mxGeometry y="184" width="520" height="26" as="geometry" />
         </mxCell>
         <mxCell id="xnawm_rAH6HHE10GptO4-268" value="copy():EventState" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="xnawm_rAH6HHE10GptO4-255" vertex="1">
-          <mxGeometry y="200" width="520" height="26" as="geometry" />
+          <mxGeometry y="210" width="520" height="26" as="geometry" />
         </mxCell>
         <mxCell id="xnawm_rAH6HHE10GptO4-279" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamond;endFill=1;" parent="xnawm_rAH6HHE10GptO4-255" source="xnawm_rAH6HHE10GptO4-255" target="xnawm_rAH6HHE10GptO4-262" edge="1">
           <mxGeometry relative="1" as="geometry">

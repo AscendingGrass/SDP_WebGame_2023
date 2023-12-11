@@ -23,11 +23,11 @@ export class GameState{
     public update(deltaTime:number){
         this.playtime += deltaTime
         this.eventStates.forEach(eventState => {
-            eventState.update(deltaTime)
+            eventState.update(deltaTime, this)
         })
     }
 
-    public copy():GameState{
+    // public copy():GameState{
         
-    }
+    // }
 }
