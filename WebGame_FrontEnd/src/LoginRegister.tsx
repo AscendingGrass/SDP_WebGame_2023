@@ -7,7 +7,8 @@ const LoginRegister = () => {
         console.log(test);
         
     }
-
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("access_token");
     testBackEnd();
     return (
         // <div className="flex justify-center">

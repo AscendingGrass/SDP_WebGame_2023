@@ -10,34 +10,42 @@ import { useNavigate } from "react-router-dom";
    
   export function LoginForm() {
     const [login, setLogin] = useState({
-        username: '',
-        password: '',
-      });
-      const [error, setError] = useState("");
-      const navigate = useNavigate();
-    
-      const handleLogin = async () => {
-        const body = {...login};
-        const result = (await axios.post("http://localhost:3000/login", body)).data;
+      username: '',
+      password: '',
+    });
+
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+  
+    const handleLogin = async () => {
+      const body = {...login};
+      const result = (await axios.post("http://localhost:3000/login", body)).data;
+      
+      if(result.error){
+        console.log(result);
+        setError(result.msg);
+      }else{
+        console.log(result);
         
-        if(!result.status){
-            setError(result.error);
-        }else{
-          setError('');
-          navigate('/home');
-        }
-        
-      };
-    
-      const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setLogin((prevMatch) => ({
-            ...prevMatch,
-            [name]: value,
+        localStorage.setItem("user", JSON.stringify({
+          ...result.result
         }));
-        console.log(name + " " + value);
-        
-      };
+        localStorage.setItem("access_token", result.access_token);
+        setError('');
+        navigate('/home');
+      }
+      
+    };
+    
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setLogin((prevMatch) => ({
+          ...prevMatch,
+          [name]: value,
+      }));
+      console.log(name + " " + value);
+      
+    };
     return (
         <Card color="transparent" shadow={false}>
         <Typography variant="h4" color="blue-gray">

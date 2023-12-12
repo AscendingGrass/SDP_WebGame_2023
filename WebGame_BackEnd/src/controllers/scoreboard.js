@@ -1,74 +1,110 @@
-const insertScoreboard = async (req, res)=>{
-    const { id } = req.body;
-    const newScoreboard = new Scoreboard({
-        user_id: id
+const { User, Scoreboard } = require("../models");
+
+const insertScoreboard = async (req, res) => {
+    const { user_id } = req.params;
+    const checkUser = await User.findOne({
+        _id: user_id
     });
-    console.log(result);
-    if(!result){
+
+    if (!checkUser) {
         return res.status(200).json({
-            status: false,
-            error: "User tidak terdaftar!"
+            error: true,
+            msg: "User tidak terdaftar!",
         });
     }
-    
-    if(result.password != password){
-        return res.status(200).json({
-            status: false,
-            error: "Password salah!"
-        });
-    }
+
+    const newScoreboard = new Scoreboard({
+        user_id
+    });
+
+    const result = await newScoreboard.save();
 
     return res.status(200).json({
-        status: true,
+        error: false,
+        msg: "Berhasil menambahkan scoreboard!",
         result
     });
-}
+};
 
-const deleteScoreboard = async (req, res)=>{
-    const { username, email, password, confirm_password, gender } = req.body;
+const updateScoreboard = async (req, res) => {
+    const { user_id, score } = req.body;
 
-    const checkUsername = await User.findOne({
-        username
+    const checkUser = await User.findOne({
+        _id: user_id
     });
 
-    if(checkUsername){
+    if (!checkUser) {
         return res.status(200).json({
-            status: false,
-            error: "Username telah terpakai"
-        })
+            error: true,
+            msg: "User tidak terdaftar!",
+        });
     }
 
-    const checkEmail = await User.findOne({
-        email
+    const checkScoreboard = await Scoreboard.findOne({
+        user_id: user_id
     })
 
-    if(checkEmail){
+    if(!checkScoreboard){
         return res.status(200).json({
-            status: false,
-            error: "Email telah terpakai"
+            error: true,
+            msg: "Scoreboard tidak ada!"
         })
     }
 
-    if(password != confirm_password){
-        return res.status(200).json({
-            status: false,
-            error: "Password tidak sama!"
-        })
-    }
+    checkScoreboard.$set({
+        score: score
+    })
 
-    const newUser = new User({
-        username, email, password, gender
+    const result = await checkScoreboard.save();
+
+    return res.status(200).json({
+        error: false,
+        msg: "Scoreboard berhasil diupdate!",
+        result /* Your result object or data here */
+    });
+};
+
+const deleteScoreboard = async (req, res) => {
+    const { user_id } = req.body;
+
+    const checkUser = await User.findOne({
+        _id: user_id
     });
 
-    const result = await newUser.save();
+    if (!checkUser) {
+        return res.status(200).json({
+            error: true,
+            msg: "User tidak terdaftar!"
+        });
+    }
+
+    const checkScoreboard = await Scoreboard.findOne({
+        user_id: user_id
+    })
+
+    if(!checkScoreboard){
+        return res.status(200).json({
+            error: true,
+            msg: "Scoreboard tidak ada!"
+        })
+    }
+
+    checkScoreboard.$set({
+        status: "dead",
+        deleted_at: Date.now()
+    })
+
+    const result = await checkScoreboard.save();
+
     return res.status(200).json({
-        status: true,
+        error: false,
+        msg: "Scoreboard berhasil didelete!",
         result
     });
-
 };
 
 module.exports = {
     insertScoreboard,
+    updateScoreboard,
     deleteScoreboard
-}
+};

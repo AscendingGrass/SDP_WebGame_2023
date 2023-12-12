@@ -4,9 +4,12 @@ const router = express();
 const { insertScoreboard, deleteScoreboard } = require("../controllers/scoreboard");
 
 // POST
-router.post("/insertScoreboard", insertScoreboard);
+router.post("/insertScoreboard/:user_id", insertScoreboard);
+
+// PUT
+router.put("/updateScoreboard")
 
 // DELETE
-router.delete("/deleteScoreboard", deleteScoreboard);
+router.delete("/deleteScoreboard/:user_id", deleteScoreboard);
 
 module.exports = router;

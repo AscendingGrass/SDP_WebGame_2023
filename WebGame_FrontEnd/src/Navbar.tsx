@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NavLink, Link } from "react-router-dom";
+import {useSelector, useDispatch} from "react-redux"
 import {
   Navbar,
   MobileNav,
@@ -7,10 +8,13 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
-import {useState } from "react";
+import { useState } from "react";
 
 const NavBarFun = () => {
   const [openNav, setOpenNav] = useState(false);
+  const user = useSelector((state)=> state.auth.user);
+  const access_token = useSelector((state)=> state.auth.access_token);
+  
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -112,13 +116,22 @@ const NavBarFun = () => {
   return (
     <Navbar className="mx-auto max-w-screen-xl px-4 py-2 lg:px-8 lg:py-4 bg-black">
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
-        <Typography
-          as="a"
-          href="#"
-          className="mr-4 cursor-pointer py-1.5 font-medium"
-        >
-          Material Tailwind
-        </Typography>
+        <div className="flex">
+          <Typography
+            as="a"
+            href="#"
+            className="mr-0 cursor-pointer py-1.5 font-medium"
+          >
+            test
+          </Typography>
+          <Typography
+            as="a"
+            href="#"
+            className={`mr-4 cursor-pointer py-1.5 font-medium text-red-500`}
+          >
+            hai
+          </Typography>
+        </div>
         <div className="hidden lg:block">{navList}</div>
         <div className="flex items-center gap-x-1">
           <Button variant="gradient" color="blue" size="sm" className="hidden lg:inline-block">

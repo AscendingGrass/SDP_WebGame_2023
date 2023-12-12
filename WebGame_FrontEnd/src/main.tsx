@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element:(window.localStorage.getItem("user")? <Homepage/> : <LoginRegister/>),
+        element: <LoginRegister/>,
         children: [
           {
             path: "",
@@ -37,16 +37,16 @@ const router = createBrowserRouter([
         ]
       },
       {
+        path: "home", //Akses melalui base_url/about
+        element: <Homepage/>,
+      },
+      {
         path: "game", //Akses melalui base_url/about
         element: <App/>,
       },
       {
         path: "leaderboard", //Akses melalui base_url/about
         element: <Leaderboard/>,
-      },
-      {
-        path: "home", //Akses melalui base_url/about
-        element: <Homepage/>,
       },
       {
         path: "news", //Akses melalui base_url/about

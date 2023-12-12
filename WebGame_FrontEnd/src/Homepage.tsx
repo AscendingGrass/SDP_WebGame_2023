@@ -5,7 +5,7 @@ const Homepage = () => {
       { title: 'News 3', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.' },
       // Add more objects as needed
     ];
-  
+
     return (
       <div className="container mt-3 mb-3">
         <div className="row">
@@ -33,7 +33,7 @@ const Homepage = () => {
         </div>
       </div>
     );
-  }
+}
   
   export default Homepage;
   

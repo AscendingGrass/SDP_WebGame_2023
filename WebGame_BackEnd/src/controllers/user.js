@@ -1,5 +1,28 @@
 const User = require("../models/Users");
-const Scoreboard = require("../models/Scoreboards");
+const jwt = require('jsonwebtoken');
+
+const secret_key = "t12345!";
+
+const user = async (req, res)=> {
+    const { id } = req.params;
+
+    const result = await User.findOne({
+        _id: id
+    });
+
+    if(!result){
+        return res.status(200).json({
+            error: true,
+            msg: "User tidak ditemukan"
+        })
+    }
+
+    return res.status(200).json({
+        error: false,
+        msg: "User ditemukan",
+        result
+    })
+};
 
 const login = async (req, res)=>{
     const { username, password } = req.body;
@@ -7,21 +30,24 @@ const login = async (req, res)=>{
     console.log(result);
     if(!result){
         return res.status(200).json({
-            status: false,
-            error: "User tidak terdaftar!"
+            error: true,
+            msg: "User tidak terdaftar!"
         });
     }
     
     if(result.password != password){
         return res.status(200).json({
-            status: false,
-            error: "Password salah!"
+            error: true,
+            msg: "Password salah!"
         });
     }
-
+    console.log(result);
+    const access_token = jwt.sign({...result}, secret_key, {expiresIn: "3h"});
     return res.status(200).json({
-        status: true,
-        result
+        error: false,
+        msg: "Berhasil login!",
+        result,
+        access_token
     });
 }
 
@@ -34,8 +60,8 @@ const register = async (req, res)=>{
 
     if(checkUsername){
         return res.status(200).json({
-            status: false,
-            error: "Username telah terpakai"
+            error: true,
+            msg: "Username telah terpakai"
         })
     }
 
@@ -45,15 +71,15 @@ const register = async (req, res)=>{
 
     if(checkEmail){
         return res.status(200).json({
-            status: false,
-            error: "Email telah terpakai"
+            error: true,
+            msg: "Email telah terpakai"
         })
     }
 
     if(password != confirm_password){
         return res.status(200).json({
-            status: false,
-            error: "Password tidak sama!"
+            error: true,
+            msg: "Password tidak sama!"
         })
     }
 
@@ -63,7 +89,8 @@ const register = async (req, res)=>{
 
     const result = await newUser.save();
     return res.status(200).json({
-        status: true,
+        error: false,
+        msg: "Berhasil register!",
         result
     });
 }
@@ -74,8 +101,8 @@ const deleteUser = async (req, res) => {
         _id: id
     });
     if(!result) return res.status(200).send({
-        status: false,
-        error: "Tidak ada user dengan ID : " + id
+        error: true,
+        msg: "Tidak ada user dengan ID : " + id
     })
     
     checkUser.$set({
@@ -86,12 +113,14 @@ const deleteUser = async (req, res) => {
     const result = await checkUser.save();
 
     return res.status(200).json({
-        status: true,
+        error: false,
+        msg: "Berhasil delete user dengan ID : " + id,
         result
     });
 }
 
 module.exports = {
+    user,
     login,
     register,
     deleteUser
