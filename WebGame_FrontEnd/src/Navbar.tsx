@@ -23,9 +23,6 @@ const NavBarFun = () => {
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium hover:text-blue-500 transition-colors cursor-pointer cursor-pointer"
-        onClick={()=>{
-          navigate("/")
-        }}
       >
         <svg
           width="16"
@@ -40,18 +37,15 @@ const NavBarFun = () => {
           />
         </svg>
 
-        <div className="flex items-center">
+        <Link to={"/"} className="flex items-center">
           Home
-        </div>
+        </Link>
       </Typography>
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium hover:text-blue-500 transition-colors cursor-pointer"
-        onClick={()=>{
-          navigate("/admin/user")
-        }}
       >
         <svg
           width="16"
@@ -67,18 +61,15 @@ const NavBarFun = () => {
             fill="#90A4AE"
           />
         </svg>
-        <div className="flex items-center">
+        <Link to={"/admin/user"} className="flex items-center">
           Users
-        </div>
+        </Link>
       </Typography>
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium hover:text-blue-500 transition-colors cursor-pointer"
-        onClick={()=>{
-          navigate("/setting");
-        }}
       >
         <svg
           width="14"
@@ -92,18 +83,15 @@ const NavBarFun = () => {
             fill="#90A4AE"
           />
         </svg>
-        <div className="flex items-center">
+        <Link to={"/setting"} className="flex items-center">
           Setting
-        </div>
+        </Link>
       </Typography>
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium hover:text-blue-500 transition-colors cursor-pointer"
-        onClick={()=>{
-          navigate("/news");
-        }}
       >
         <svg
           width="16"
@@ -119,9 +107,9 @@ const NavBarFun = () => {
             fill="#90A4AE"
           />
         </svg>
-        <div className="flex items-center">
+        <Link to={"/news"} className="flex items-center">
           News
-        </div>
+        </Link>
       </Typography>
     </ul>
   );
@@ -133,9 +121,6 @@ const NavBarFun = () => {
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium hover:text-blue-500 transition-colors cursor-pointer hover:text-blue-500 transition-colors"
-        onClick={()=>{
-          navigate("/")
-        }}
       >
         <svg
           width="16"
@@ -150,18 +135,15 @@ const NavBarFun = () => {
           />
         </svg>
 
-        <div className="flex items-center">
+        <Link to={"/"} className="flex items-center">
           Home
-        </div>
+        </Link>
       </Typography>
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium hover:text-blue-500 transition-colors cursor-pointer"
-        onClick={()=>{
-          navigate("/leaderboard")
-        }}
       >
         <svg
           width="16"
@@ -177,20 +159,15 @@ const NavBarFun = () => {
             fill="#90A4AE"
           />
         </svg>
-        <div className="flex items-center">
+        <Link to={"/leaderboard"} className="flex items-center">
           Leaderboard
-        </div>
+        </Link>
       </Typography>
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium hover:text-blue-500 transition-colors cursor-pointer"
-        onClick={()=>{
-          if(!state.user){
-            navigate("/login");
-          }
-        }}
       >
         <svg
           width="14"
@@ -204,9 +181,9 @@ const NavBarFun = () => {
             fill="#90A4AE"
           />
         </svg>
-        <div className="flex items-center">
+        <Link to={"/login"} className="flex items-center">
           Setting
-        </div>
+        </Link>
       </Typography>
     </ul>
   )
@@ -232,9 +209,9 @@ const NavBarFun = () => {
           />
         </svg>
 
-        <div className="flex items-center">
+        <Link to={"/"} className="flex items-center">
           Home
-        </div>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -256,9 +233,9 @@ const NavBarFun = () => {
             fill="#90A4AE"
           />
         </svg>
-        <div className="flex items-center">
+        <Link to={"/leaderboard"} className="flex items-center">
           Leaderboard
-        </div>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -278,9 +255,9 @@ const NavBarFun = () => {
             fill="#90A4AE"
           />
         </svg>
-        <div className="flex items-center">
+        <Link to={"/setting"} className="flex items-center">
           Setting
-        </div>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -300,9 +277,9 @@ const NavBarFun = () => {
             fill="#90A4AE"
           />
         </svg>
-        <div className="flex items-center">
+        <Link to={"/news"} className="flex items-center">
           News
-        </div>
+        </Link>
       </Typography>
     </ul>
   )
