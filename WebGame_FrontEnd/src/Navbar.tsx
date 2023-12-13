@@ -13,7 +13,8 @@ import { useState } from "react";
 const NavBarFun = () => {
   const [openNav, setOpenNav] = useState(false);
   const navigate = useNavigate();
-  const { data } = useData();
+  const { state, dispatch } = useData();
+  console.log(state);
   
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -23,7 +24,7 @@ const NavBarFun = () => {
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium"
         onClick={()=>{
-          navigate("/home")
+          navigate("/")
         }}
       >
         <svg
@@ -227,7 +228,7 @@ const NavBarFun = () => {
     <Navbar className="mx-auto max-w-100 px-4 py-2 lg:px-8 lg:py-4 bg-black ">
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
         {
-          !data &&
+          !state &&
           <Typography
               as="a"
               href="#"
@@ -237,7 +238,7 @@ const NavBarFun = () => {
             </Typography>
         }
         {
-          data &&
+          state &&
           <div className="flex">
             <Typography
               as="a"
@@ -249,9 +250,9 @@ const NavBarFun = () => {
             <Typography
               as="a"
               href="#"
-              className={`mr-4 cursor-pointer py-1.5 font-medium ${data.result.role == "admin"? "text-red-500" : "text-blue-500"}`}
+              className={`mr-4 cursor-pointer py-1.5 font-medium`}
             >
-              {data.result.username}
+              YURt
             </Typography>
         </div>
         }
