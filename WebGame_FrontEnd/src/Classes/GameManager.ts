@@ -24,13 +24,12 @@ export class GameManager {
 
     constructor(logView: LogView|null = null, canvasView: CanvasView | null = null, terminalView: TerminalView | null = null, gameState:GameState|null = null)  {
         this.grid = new Grid({ x: 100, y: 100 })
+        this.groupAnimations = GroupAnimation.animations.map(x => x.copy())
         this.load(gameState)
         this.setCanvasView(canvasView);
         this.setTerminalView(terminalView);
         this.logView = logView
 
-        this.groupAnimations = GroupAnimation.animations.map(x => x.copy())
-        this.grid.fill("grass", this.groupAnimations)
     }
 
     public save():void{
@@ -42,7 +41,7 @@ export class GameManager {
         
         if(gameState == null){
 
-            const playerState = new PlayerState()
+            const playerState = new PlayerState({x:3,y:3})
             this.currentState = new GameState([], playerState, this.logView as LogView)
             this.player = new PlayerUnit(playerState, this.currentState)
             
@@ -93,6 +92,30 @@ export class GameManager {
             )
             this.player.setMoveSpeed(2);
             this.grid.addEntity(this.player);
+            this.grid.loadBarriers(
+                'wwwwwww00\n' +
+                'w00000w00\n' +
+                'w00000w00\n' +
+                'w00000d00\n' +
+                'w00000w00\n' +
+                'w00000w00\n' +
+                'wwwwwww00\n' 
+                ,
+                this.currentState,
+                this.groupAnimations
+            )
+            this.grid.fill("grass", this.groupAnimations)
+            this.grid.loadTiles(
+                'fffffff00\n' +
+                'fffffff00\n' +
+                'fffffff00\n' +
+                'fffffff00\n' +
+                'fffffff00\n' +
+                'fffffff00\n' +
+                'fffffff00\n' 
+                ,
+                this.groupAnimations
+            )
         }else{
             this.currentState = gameState
             throw Error("Not Implemented");
