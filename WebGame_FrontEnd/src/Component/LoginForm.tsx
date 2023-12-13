@@ -7,7 +7,7 @@ import {
     Button,
     Typography,
   } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
    
   export function LoginForm() {
     const [login, setLogin] = useState({
@@ -86,12 +86,10 @@ import { useNavigate } from "react-router-dom";
           <Button className="mt-6" fullWidth onClick={handleLogin}>
             Log In
           </Button>
-          <Typography color="gray" className="mt-4 text-center font-normal">
-            Dont have an account?{" "}
-            <a href="#" className="font-medium text-gray-900">
-              Sign up
-            </a>
-          </Typography>
+          Dont have an account?
+            <NavLink to="/login/register" className="font-medium text-gray-900">
+                Sign up
+            </NavLink>  
         </div>
       </Card>
     );
