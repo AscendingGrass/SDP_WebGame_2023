@@ -18,7 +18,7 @@ import Report from './Report.tsx';
 const router = createBrowserRouter([
   {
     path: "/", //Akses melalui base_url
-    element: <Home/>,
+    element: <App/>,
     errorElement: <Error/>,
     children: [
       {
