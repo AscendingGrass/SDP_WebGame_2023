@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useData } from './DataContext';
 import {
   Navbar,
@@ -12,6 +12,7 @@ import { useState } from "react";
 
 const NavBarFun = () => {
   const [openNav, setOpenNav] = useState(false);
+  const navigate = useNavigate();
   const { data } = useData();
   
   const navList = (
@@ -21,6 +22,9 @@ const NavBarFun = () => {
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium"
+        onClick={()=>{
+          navigate("/home")
+        }}
       >
         <svg
           width="16"
@@ -35,8 +39,8 @@ const NavBarFun = () => {
           />
         </svg>
 
-        <a href="#" className="flex items-center">
-          Pages
+        <a href="" className="flex items-center">
+          Home
         </a>
       </Typography>
       <Typography
@@ -44,6 +48,9 @@ const NavBarFun = () => {
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium"
+        onClick={()=>{
+          navigate("/admin/user")
+        }}
       >
         <svg
           width="16"
@@ -59,8 +66,8 @@ const NavBarFun = () => {
             fill="#90A4AE"
           />
         </svg>
-        <a href="#" className="flex items-center">
-          Account
+        <a href="" className="flex items-center">
+          Users
         </a>
       </Typography>
       <Typography
@@ -75,14 +82,17 @@ const NavBarFun = () => {
           viewBox="0 0 14 15"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          onClick={()=>{
+            navigate("setting");
+          }}
         >
           <path
             d="M2 0.5C1.46957 0.5 0.960859 0.710714 0.585786 1.08579C0.210714 1.46086 0 1.96957 0 2.5V4.5C0 5.03043 0.210714 5.53914 0.585786 5.91421C0.960859 6.28929 1.46957 6.5 2 6.5H4C4.53043 6.5 5.03914 6.28929 5.41421 5.91421C5.78929 5.53914 6 5.03043 6 4.5V2.5C6 1.96957 5.78929 1.46086 5.41421 1.08579C5.03914 0.710714 4.53043 0.5 4 0.5H2ZM2 8.5C1.46957 8.5 0.960859 8.71071 0.585786 9.08579C0.210714 9.46086 0 9.96957 0 10.5V12.5C0 13.0304 0.210714 13.5391 0.585786 13.9142C0.960859 14.2893 1.46957 14.5 2 14.5H4C4.53043 14.5 5.03914 14.2893 5.41421 13.9142C5.78929 13.5391 6 13.0304 6 12.5V10.5C6 9.96957 5.78929 9.46086 5.41421 9.08579C5.03914 8.71071 4.53043 8.5 4 8.5H2ZM8 2.5C8 1.96957 8.21071 1.46086 8.58579 1.08579C8.96086 0.710714 9.46957 0.5 10 0.5H12C12.5304 0.5 13.0391 0.710714 13.4142 1.08579C13.7893 1.46086 14 1.96957 14 2.5V4.5C14 5.03043 13.7893 5.53914 13.4142 5.91421C13.0391 6.28929 12.5304 6.5 12 6.5H10C9.46957 6.5 8.96086 6.28929 8.58579 5.91421C8.21071 5.53914 8 5.03043 8 4.5V2.5ZM8 10.5C8 9.96957 8.21071 9.46086 8.58579 9.08579C8.96086 8.71071 9.46957 8.5 10 8.5H12C12.5304 8.5 13.0391 8.71071 13.4142 9.08579C13.7893 9.46086 14 9.96957 14 10.5V12.5C14 13.0304 13.7893 13.5391 13.4142 13.9142C13.0391 14.2893 12.5304 14.5 12 14.5H10C9.46957 14.5 8.96086 14.2893 8.58579 13.9142C8.21071 13.5391 8 13.0304 8 12.5V10.5Z"
             fill="#90A4AE"
           />
         </svg>
-        <a href="#" className="flex items-center">
-          Blocks
+        <a href="" className="flex items-center">
+          Setting
         </a>
       </Typography>
       <Typography
@@ -90,6 +100,9 @@ const NavBarFun = () => {
         variant="small"
         color="blue-gray"
         className="flex items-center gap-x-2 p-1 font-medium"
+        onClick={()=>{
+          navigate("/news");
+        }}
       >
         <svg
           width="16"
@@ -105,8 +118,8 @@ const NavBarFun = () => {
             fill="#90A4AE"
           />
         </svg>
-        <a href="#" className="flex items-center">
-          Docs
+        <a href="" className="flex items-center">
+          News
         </a>
       </Typography>
     </ul>
