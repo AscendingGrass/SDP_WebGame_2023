@@ -16,7 +16,7 @@ const News = () => {
     ];
   
     return (
-      <div className="container  mt-40 ml-40"  style=  {{ overflowX: 'auto'}}>
+      <div className="container  mt-20 "  style=  {{ overflowX: 'auto'}}>
         <div className="row mb-3 grid grid-cols-3 gap-3  w-full">
           {cardData.map((item, index) => (
             <div className="col-lg-4 mb-3 justify-content-evenly justify-center flex " key={index}>
