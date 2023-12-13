@@ -24,21 +24,21 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
+        element: <Homepage/>,
+      },
+      {
+        path: "/login", //Akses melalui base_url/about
         element: <LoginRegister/>,
         children: [
           {
-            path: "",
+            index: true,
             element: <Login/>
           },
           {
             path: "register",
             element: <Register/>
-          },
+          }
         ]
-      },
-      {
-        path: "home", //Akses melalui base_url/about
-        element: <Homepage/>,
       },
       {
         path: "game", //Akses melalui base_url/about
