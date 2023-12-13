@@ -10,11 +10,22 @@ export abstract class Entity extends Animated implements IHasCoordinate{
     protected coordinate:Point
     protected grid:Grid | null = null
     protected gameState:GameState
+    private passable:boolean = false
+    public holds:Entity|null = null
 
     constructor(name:string, coordinate:Point, gameState:GameState, animations:Animation[] = []){
         super(name, animations)
         this.coordinate = coordinate
         this.gameState = gameState
+    }
+
+    public getPassable():boolean{
+        return this.passable
+    }
+
+    public setPassable(value:boolean):void{
+        if(this.holds === null) this.passable = value
+        else throw Error('Entity is holding another entity')
     }
 
     public getCoordinate():Point{
@@ -34,11 +45,30 @@ export abstract class Entity extends Animated implements IHasCoordinate{
             }
 
             if(entity !== null) {
-                throw Error('coordinate is not empty')
+                let topmost = entity
+                while(topmost.holds != null) topmost = topmost.holds
+                // throw an error if you can't stack the moving entity into the target position (the topmost entity in the target position is impassable)
+                if(!topmost.passable) throw Error('coordinate is not empty')
+                topmost.holds = this;
+                return;
+            }
+            else{
+                row[value.x] = this;
             }
 
-            this.grid.entityGrid[this.coordinate.y][this.coordinate.x] = null;
-            row[value.x] = this;
+            let current = this.grid.entityGrid[this.coordinate.y][this.coordinate.x]
+            if(current === null) throw Error('Misaligned entity, '+ this.name +' coordinates is not reflected in the grid')
+            if(current === this) { // If the moving entity is the bottom most entity
+                this.grid.entityGrid[this.coordinate.y][this.coordinate.x] = this.holds
+            }
+            else { // If the moving entity is on top of another entity
+                while(current.holds !== this) { // Find the entity that is right under the moving entity
+                    current = current.holds
+                    if(current == null) throw Error('Misaligned entity, '+ this.name +' coordinates is not reflected in the grid')
+                }
+                current.holds = this.holds;
+                this.holds = null;
+            }
             this.coordinate = value;
             if(triggerTile) this.grid.tiles[value.y][value.x]?.step(this, this.gameState);
             return;
