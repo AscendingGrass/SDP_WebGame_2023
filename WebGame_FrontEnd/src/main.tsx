@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { DataProvider } from './DataContext';
 
 import Error from "./Error.tsx"
 import Home from './Home.tsx';
@@ -68,5 +69,7 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <DataProvider>
+    <RouterProvider router={router} />
+  </DataProvider>
 )

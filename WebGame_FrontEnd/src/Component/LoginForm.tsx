@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useData } from '../DataContext';
 import {
     Card,
     Input,
@@ -15,6 +16,7 @@ import { useNavigate } from "react-router-dom";
     });
 
     const [error, setError] = useState("");
+    const {data, setData} = useData();
     const navigate = useNavigate();
   
     const handleLogin = async () => {
@@ -25,14 +27,9 @@ import { useNavigate } from "react-router-dom";
         console.log(result);
         setError(result.msg);
       }else{
-        console.log(result);
-        
-        localStorage.setItem("user", JSON.stringify({
-          ...result.result
-        }));
-        localStorage.setItem("access_token", result.access_token);
         setError('');
-        navigate('/home');
+        setData(result);
+        navigate("/home");
       }
       
     };
@@ -46,6 +43,8 @@ import { useNavigate } from "react-router-dom";
       console.log(name + " " + value);
       
     };
+
+    setData(null);
     return (
         <Card color="transparent" shadow={false}>
         <Typography variant="h4" color="blue-gray">
