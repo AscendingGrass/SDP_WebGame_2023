@@ -4,10 +4,10 @@ import axios from "axios";
 const LoginRegister = () => {
     return (
         <div className="container-fluid">
+            <Outlet></Outlet>
             <div className="row justify-content-center text-center mb-3">
                 <div className="col-lg-5">
-                    <ul className="nav nav-tabs justify-content-center">
-                       
+                    <ul className="nav nav-tabs justify-content-center">                    
                         <li className="nav-item col-lg-6">
                             <NavLink to={"/"} className={(state)=>{
                                 return state.isActive? "fw-bold nav-link active" : "nav-link active"
@@ -21,7 +21,6 @@ const LoginRegister = () => {
                     </ul>
                 </div>
             </div>
-            <Outlet></Outlet>
         </div>
     )
 }

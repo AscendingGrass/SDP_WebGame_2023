@@ -1,30 +1,37 @@
+
 const News = () => {
     const cardData = [
-      { title: 'Breaking News 1', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-      { title: 'Technology Update', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-      { title: 'Sports Highlights', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.' },
-      { title: 'Entertainment Buzz', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-      { title: 'Health and Wellness', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-      { title: 'Travel Destinations', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.' },
-      { title: 'Business Insights', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-      { title: 'Science Discoveries', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-      { title: 'Fashion Trends', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.' },
-      { title: 'Food and Cuisine', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-      { title: 'Movie Reviews', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-      { title: 'Book Recommendations', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.' },
+      { title: 'Breaking News 1', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',time: '2 days ago' ,by: 'vichan'},
+      { title: 'Technology Update', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',time: '1 days ago' ,by: 'osama bin laden' },
+      { title: 'Sports Highlights', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',time: '3 days ago' ,by: 'paulus' },
+      { title: 'Entertainment Buzz', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',time: '2 days ago' ,by: 'jasmin' },
+      { title: 'Health and Wellness', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',time: '5 days ago' ,by: 'mikasa' },
+      { title: 'Travel Destinations', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',time: ' 8 days ago' ,by: 'kenneth' },
+      { title: 'Business Insights', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',time: '12 days ago' ,by: 'Breaking News 1' },
+      { title: 'Science Discoveries', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',time: ' 24 days ago' ,by: 'eren' },
+      { title: 'Fashion Trends', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',time: '32 days ago' ,by: 'yuki' },
+      { title: 'Food and Cuisine', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',time: '52 days ago' ,by: 'jojo' },
+      { title: 'Movie Reviews', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',time: ' 62 days ago' ,by: 'giorgio' },
+      { title: 'Book Recommendations', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',time: '122 days ago' ,by: 'vichan' },
     ];
   
     return (
-      <div className="container"  style={{ overflowX: 'auto' }}>
-        <div className="row mb-3">
+      <div className="container  mt-20 "  style=  {{ overflowX: 'auto'}}>
+        <div className="row mb-3 grid grid-cols-3 gap-3  w-full">
           {cardData.map((item, index) => (
-            <div className="col-lg-4 mb-3" key={index}>
-              <div className="card">
+            <div className="col-lg-4 mb-3 justify-content-evenly justify-center flex " key={index}>
+              <div className="card rounded-md table w-3/4 border-solid border-8 border-gray-400 bg-gray-400 ">
                 <div className="card-header">
-                  <div className="card-title">{item.title}</div>
+                  <div className="card-title text-2xl font-bold">{item.title}</div>
                 </div>
-                <div className="card-body">
+                <div className="card-body mt-6">
                   {item.content}
+                </div>
+                <div className="card-footer mt-6">
+                  {item.time}
+                </div>
+                <div className="card-footer mt-2">
+                  {item.by}
                 </div>
               </div>
             </div>

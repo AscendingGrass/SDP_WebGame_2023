@@ -87,9 +87,9 @@ import { useNavigate } from "react-router-dom";
             Log In
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
-            Already have an account?{" "}
+            Dont have an account?{" "}
             <a href="#" className="font-medium text-gray-900">
-              Sign In
+              Sign up
             </a>
           </Typography>
         </div>
