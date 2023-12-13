@@ -1,11 +1,11 @@
+import { Navbar } from "@material-tailwind/react";
+
 const Footer = ()=> {
     return (
-        <div className="container-fluid">
-            <div className="row py-2 justify-content-between bg-dark text-white text-center align-items-center">
+        <Navbar className="flex justify-evenly h-15 bg-black text-white "variant="gradient">
                 <div className="col">Privacy Policy</div>
                 <div className="col">Term & Condition</div>
-            </div>
-        </div>
+        </Navbar>
        );
 }
 

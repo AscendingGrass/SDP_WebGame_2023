@@ -5,11 +5,11 @@ import { Animation } from "./Animation";
 
 export class ChainedAnimation extends Animation{
     
-    public readonly owner: Animated;
+    public owner: Animated|null;
     public readonly nextAnimationIndex: number;
 
     constructor(
-        owner: Animated,
+        owner: Animated|null,
         animationName: string,
         spriteSheet: HTMLImageElement,
         spriteResolution: Point,
@@ -22,6 +22,10 @@ export class ChainedAnimation extends Animation{
         this.nextAnimationIndex = nextAnimationIndex;
     }
 
+    public setOwner(value:Animated|null):void{
+        this.owner = value
+    }
+
     public nextFrame(deltaTime: number):void{
         this.animationProgress += deltaTime * this.animationSpeed
         if(this.nextAnimationIndex == -1){
@@ -29,7 +33,7 @@ export class ChainedAnimation extends Animation{
         }
         else if(this.animationProgress >= this.spriteFrameNum){
             this.resetAnimation()
-            this.owner.currentAnimationIndex = this.nextAnimationIndex
+            if(this.owner) this.owner.currentAnimationIndex = this.nextAnimationIndex
         }
     }
 

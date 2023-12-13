@@ -84,7 +84,6 @@ export default function RegisterForm() {
                     value={register.password}
                     onChange={handleInputChange}
                 />
-
                 </div>
                 <Checkbox
                 label={

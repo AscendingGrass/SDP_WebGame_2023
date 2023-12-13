@@ -56,16 +56,16 @@ export class CanvasView{
         this.canvas.onmouseup = (evt) => {
             
             if(evt.button == 0) {
-                if(!this.cameraMoved && this.canvas){
-                    const oneTileSize = this.canvasScale * this.maxCanvasSize/ this.defaultTilesPerCanvas
+                // if(!this.cameraMoved && this.canvas){
+                //     const oneTileSize = this.canvasScale * this.maxCanvasSize/ this.defaultTilesPerCanvas
                              
-                    const xClick = (evt.clientX  - this.canvas.width / 2) / oneTileSize
-                    const yClick = (evt.clientY - this.canvas.height / 2) / oneTileSize 
-                    const x = Math.floor(this.cameraPosition.x + xClick) 
-                    const y = Math.floor(this.cameraPosition.y + yClick) 
-                    console.log('click! ' + x +', ' + y)
-                    if(this.onClick) this.onClick({x,y})
-                }
+                //     const xClick = (evt.clientX  - this.canvas.width / 2) / oneTileSize
+                //     const yClick = (evt.clientY - this.canvas.height / 2) / oneTileSize 
+                //     const x = Math.floor(this.cameraPosition.x + xClick) 
+                //     const y = Math.floor(this.cameraPosition.y + yClick) 
+                //     console.log('click! ' + x +', ' + y)
+                //     if(this.onClick) this.onClick({x,y})
+                // }
 
                 this.cameraMoved = false
                 this.moveMouseTriggerPressed = false

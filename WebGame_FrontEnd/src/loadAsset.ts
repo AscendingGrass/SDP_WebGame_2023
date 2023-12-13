@@ -1,4 +1,5 @@
 import { Animation } from "./Classes/GameObjects/Animation"
+import { _initializeBarrierVariants } from "./Classes/GameObjects/BarrierVariants"
 import { GroupAnimation } from "./Classes/GameObjects/GroupAnimation"
 import { Tile } from "./Classes/GameObjects/Tile"
 
@@ -80,7 +81,15 @@ export default function loadAsset():void{
             1,
             0
         ),
+        new GroupAnimation(
+            "wall", 
+            wall,
+            {x:32, y:32},
+            1,
+            0
+        ),
     )
 
     Tile._initialize()
+    _initializeBarrierVariants()
 }

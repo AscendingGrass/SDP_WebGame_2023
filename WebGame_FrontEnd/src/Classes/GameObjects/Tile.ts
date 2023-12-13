@@ -9,6 +9,10 @@ import { GroupAnimation } from "./GroupAnimation";
 
 
 export class Tile extends Animated implements IHasCoordinate {
+    public static variantAlias:{[key:string]:string} = {
+        'f':'floor',
+        'g':'grass',
+    }
     public static defaultTileResolution:Point = {x:32, y:32}
     public static variants:Tile[] = []
 

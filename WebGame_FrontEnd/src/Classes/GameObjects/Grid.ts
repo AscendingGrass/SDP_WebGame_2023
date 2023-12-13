@@ -4,6 +4,9 @@ import { Point } from "./Point";
 import { Animated } from "./Animated";
 import { PlayerUnit } from "./PlayerUnit";
 import { GroupAnimation } from "./GroupAnimation";
+import { Barrier } from "./Barrier";
+import { GameState } from "../States/GameState";
+import { generateBarrier } from "./BarrierVariants";
 
 export class Grid{
     public readonly size:Point
@@ -30,6 +33,29 @@ export class Grid{
         for (let i = 0; i < this.size.y; i++) {
             for (let j = 0; j < this.size.x; j++) {
                 this.tiles[i][j] = Tile.generate(tileName, {x:j, y:i}, groupAnimation)
+            }
+        }
+    }
+
+    public loadBarriers(barrierMap:string, gameState:GameState, groupAnimations:GroupAnimation[]){
+        const barrierMapArr = barrierMap.split('\n')
+        for (let i = 0; i < barrierMapArr.length; i++) {
+            for (let j = 0; j < barrierMapArr[i].length; j++) {
+                if(barrierMapArr[i][j] != '0'){
+                    this.addEntity(generateBarrier(Barrier.variantAlias[barrierMapArr[i][j]], {x:j, y:i}, gameState, groupAnimations))
+                }
+            }
+        }
+    }
+
+
+    public loadTiles(tileMap:string, groupAnimations:GroupAnimation[]){
+        const tileMapArr = tileMap.split('\n')
+        for (let i = 0; i < tileMapArr.length; i++) {
+            for (let j = 0; j < tileMapArr[i].length; j++) {
+                if(tileMapArr[i][j] != '0'){
+                    this.tiles[i][j] = Tile.generate(Tile.variantAlias[tileMapArr[i][j]], {x:j, y:i}, groupAnimations)
+                }
             }
         }
     }

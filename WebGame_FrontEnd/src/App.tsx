@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import {loadGame} from './loadGame';
 import { grey } from '@mui/material/colors';
+import { Button } from '@material-tailwind/react';
 
 // INI CUMAN BUAT NGETES AJA, APUS & GANTI2 AJA KALO MAU -Nichoasl, 18 Nov 23
 function App() {
@@ -11,7 +12,7 @@ function App() {
   }, [])
 
   return (
-    <div style={{display:"flex",height:"600px",margin:"0px"}}>
+    <div style={{display:"flex",height:"100%",margin:"0px"}}>
     {/* <div style={{backgroundColor:'white'}}>
       <button onClick={()=> setMode(!mode)}>Toggle</button>
     </div>
@@ -19,8 +20,7 @@ function App() {
       mode &&
       <div className="top">NavBar or something </div>
     } */}
-      <div className="left-side" style={{width:"80%"}}>
-        <div style={{fontSize:"30px"}}>Game Screen</div>
+      <div className="left-side" style={{width:"80%", height:"100%"}}>
         <canvas id="view">
           
         </canvas>
@@ -28,37 +28,37 @@ function App() {
       <div className="right-side"style={{width:"20%"}}>
         <div className="UI">
         <div className="buttonsection">
-                <button id="save" className="button save" style={{width:"30px",height:"30px" ,color:"black"}}>
+                <Button color="blue" id="save"  className="button save ">
                     Save
-                </button>
-                <button id="exit" className="button exit"  style={{width:"30px",height:"30px" ,color:"black"}}>
+                </Button>
+                <Button color="red" id="exit" className="button exit" >
                     Exit
-                </button>
+                </Button>
             </div>
             <div className="Music">
               ini harusnya musik
             </div>
-            <textarea name="console" style={{fontFamily:'monospace'}} className="console" id="console" cols={30} rows={10} spellCheck="false">
+            <textarea name="console" style={{fontFamily:'monospace', width:"100%"}} className="console" id="console" cols={30} rows={10} spellCheck="false">
 
             </textarea>
             <div className="buttonsection">
-                <button id="executeButton" className="button start" style={{width:"30px",height:"30px" ,color:"black"}}>
+                <Button color="green" id="executeButton" className="button start" >
                     Start
-                </button>
-                <button id="stopButton" className="button stop"  style={{width:"30px",height:"30px" ,color:"black"}}>
+                </Button>
+                <Button color="red" id="stopButton" className="button stop" >
                     Stop
-                </button>
+                </Button>
             </div>
             <div id="log" style={{color:"black", width:"200px", height:"200px"}}>
 
             </div>
             <div className="buttonsection">
-                <button id="report" className="button report" style={{width:"30px",height:"30px" ,color:"black"}}>
+                <Button id="report" className="button report" >
                     Report Bug
-                </button>
-                <button id="help" className="button help"  style={{width:"30px",height:"30px" ,color:"black"}}>
+                </Button>
+                <Button id="help" className="button help" >
                     Help
-                </button>
+                </Button>
             </div>
         </div>
       </div>

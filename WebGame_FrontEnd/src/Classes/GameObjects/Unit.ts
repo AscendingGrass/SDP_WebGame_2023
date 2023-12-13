@@ -46,7 +46,7 @@ export abstract class Unit extends Entity{
     }
 
     public update(deltaTime: number): void {
-        if(this.isMoving)  this.lerpProgress += deltaTime * this.moveSpeed
+        if(this.isMoving)  this.lerpProgress += deltaTime * this.unitState.moveSpeed
         if(this.lerpProgress >= 1){
             this.moveIterationProgress += 1;
             this.lerpProgress = 0;
@@ -62,7 +62,6 @@ export abstract class Unit extends Entity{
         }
     }
     
-
     public getSpriteCoordinate(): Point {
         if(!this.isMoving) return this.coordinate;
         const coordDiff:Point = {
