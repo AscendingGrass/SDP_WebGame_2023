@@ -72,7 +72,6 @@ export default function RegisterForm() {
                     className: "before:content-none after:content-none",
                     }}
                 />
-
                 </div>
                 <Checkbox
                 label={

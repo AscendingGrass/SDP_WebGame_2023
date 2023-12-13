@@ -11,7 +11,7 @@ function App() {
   }, [])
 
   return (
-    <div style={{display:"flex",height:"600px",margin:"0px"}}>
+    <div style={{display:"flex",height:"100%",margin:"0px"}}>
     {/* <div style={{backgroundColor:'white'}}>
       <button onClick={()=> setMode(!mode)}>Toggle</button>
     </div>
@@ -19,8 +19,7 @@ function App() {
       mode &&
       <div className="top">NavBar or something </div>
     } */}
-      <div className="left-side" style={{width:"80%"}}>
-        <div style={{fontSize:"30px"}}>Game Screen</div>
+      <div className="left-side" style={{width:"80%", height:"100%"}}>
         <canvas id="view">
           
         </canvas>
