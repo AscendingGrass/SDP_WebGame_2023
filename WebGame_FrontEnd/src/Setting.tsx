@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useData } from './DataContext';
 
 const News = () => {
-
+  const { state, dispatch } = useData();
   const navigate = useNavigate();
   const handleLogOut = ()=>{
-    window.localStorage.removeItem("user");
+    dispatch({ type: 'LOGOUT_USER'})
     navigate("/");
-    window.location.reload();
   }
   return (
     <div className="container ml-60" style={{ overflowX: 'auto' }}> 

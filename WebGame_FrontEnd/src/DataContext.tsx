@@ -1,17 +1,39 @@
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
+const initialState = {
+  user: null,
+  access_token: null
+};
+
+// Define your reducer function
+const dataReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_USER':
+      return { ...state, user: action.user, access_token: action.access_token };
+    case `LOGOUT_USER`:
+      return {...state, user: null, access_token: null};
+    default:
+      return state;
+  }
+};
 
 const DataContext = createContext();
 
-export const DataProvider = ({ children }) => {
-  const [data, setData] = useState(null);
+const DataProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(dataReducer, initialState);
 
   return (
-    <DataContext.Provider value={{ data, setData }}>
+    <DataContext.Provider value={{ state, dispatch }}>
       {children}
     </DataContext.Provider>
   );
 };
 
-export const useData = () => {
-  return useContext(DataContext);
+const useData = () => {
+  const context = useContext(DataContext);
+  if (!context) {
+    throw new Error('useData must be used within a DataProvider');
+  }
+  return context;
 };
+
+export { DataProvider, useData };

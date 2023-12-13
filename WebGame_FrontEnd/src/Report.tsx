@@ -16,8 +16,8 @@ const Report = () => {
   ];
 
   return (
-    <div className="container-fluid">
-      <div className="row align-items-center bg-secondary">
+    <div className="container-fluid bg-gray-200">
+      <div className="row align-items-center bg-secondary flex w-full">
         <div className="col-lg-2">
           Sort By
         </div>
@@ -37,18 +37,18 @@ const Report = () => {
       </div>
       {/* Displaying Report Data */}
       {reportData.map((report) => (
-        <div className="row bg-dark py-2" key={report.id}>
+        <div className="row bg-dark py-2 flex" key={report.id}>
           <div className="col-lg-2">
-            <div className="form-control bg-dark text-white">{report.name}</div>
+            <div className="form-control bg-dark text-black bg-gray-500 w-40 border-2 border-gray-600 rounded-md ml-60">{report.name}</div>
           </div>
           <div className="col-lg-2">
-            <div className="form-control bg-dark text-white">{report.date}</div>
+            <div className="form-control bg-dark text-black bg-zinc-400 w-w-32 border-2 border-gray-600 rounded-md ml-4">{report.date}</div>
           </div>
           <div className="col-lg-6">
-            <div className="form-control bg-dark text-white">{report.title}</div>
+            <div className="form-control bg-dark text-black bg-zinc-400 w-96 border-2 border-gray-600 rounded-md ml-4">{report.title}</div>
           </div>
           <div className="col-lg-2">
-            <select name="" id="" className="form-select bg-dark text-white">
+            <select name="" id="" className="form-select bg-dark text-white bg-zinc-800 border-solid border-2 border-zinc-600 rounded-md ml-8">
               <option value="">Report</option>
             </select>
           </div>

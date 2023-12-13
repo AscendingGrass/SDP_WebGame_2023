@@ -6,7 +6,7 @@ import {
     Typography,
   } from "@material-tailwind/react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function RegisterForm() {
     const [register, setRegister] = useState({
@@ -72,6 +72,7 @@ export default function RegisterForm() {
                     className: "before:content-none after:content-none",
                     }}
                 />
+
                 </div>
                 <Checkbox
                 label={
@@ -94,12 +95,10 @@ export default function RegisterForm() {
                 <Button className="mt-6" fullWidth>
                 sign up
                 </Button>
-                <Typography color="gray" className="mt-4 text-center font-normal">
-                Already have an account?{" "}
-                <a href="#" className="font-medium text-gray-900">
-                    Sign In
-                </a>
-                </Typography>
+                already have an account?
+                <NavLink to="/login" className="font-medium text-gray-900">
+                    Log in
+                </NavLink>   
             </div>
         </Card>
     )

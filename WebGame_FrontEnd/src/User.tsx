@@ -33,26 +33,26 @@ const User = () => {
         </div>
       </div>
 
-      <div className="table-responsive mt-3">
-        <table className="table table-bordered">
+      <div className="table-responsive mt-3 tab-pane fade col-lg-5 show active overflow-y justify-center flex mt-10">
+        <table className="table table-bordered table w-3/6 border-solid border-8 border-zinc-600">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Action</th>
+              <th className="w-1/4" >Name</th>
+              <th className="w-1/4">Username</th>
+              <th className="w-1/4">Email</th>
+              <th className="w-1/4">Action</th>
             </tr>
           </thead>
           <tbody>
             {userData.map(user => (
               <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>
-                  <button className="btn btn-warning me-2">Edit</button>
-                  <button className="btn btn-danger me-2">Delete</button>
-                  <button className="btn btn-outline-danger me-2">Ban</button>
+                <td className={`w-1/4 text-center  text-[#444444]  ${user.id%2 !=0 && 'bg-stone-200'} ${user.id%2 ==0 && 'bg-white-500'}`}>{user.name}</td>
+                <td className={`w-1/4 text-center  text-[#444444]  ${user.id%2 !=0 && 'bg-stone-200'} ${user.id%2 ==0 && 'bg-white-500'}`}>{user.username}</td>
+                <td className={`w-1/4 text-center  text-[#444444]  ${user.id%2 !=0 && 'bg-stone-200'} ${user.id%2 ==0 && 'bg-white-500'}`}>{user.email}</td>
+                <td className={`w-1/4 text-center  text-[#444444]  ${user.id%2 !=0 && 'bg-stone-200'} ${user.id%2 ==0 && 'bg-white-500'}`}>
+                  <button className="btn btn-warning me-2 m-2 w-1/4 border-solid border-2 border-yellow-600 rounded-md">Edit</button>
+                  <button className="btn btn-danger me-2 w-1/4 border-solid border-2 border-red-600 rounded-md">Delete</button>
+                  <button className="btn btn-outline-danger me-2 w-1/4 border-solid border-2 border-red-600 rounded-md">Ban</button>
                 </td>
               </tr>
             ))}
