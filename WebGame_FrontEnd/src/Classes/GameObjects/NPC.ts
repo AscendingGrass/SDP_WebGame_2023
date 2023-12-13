@@ -11,7 +11,7 @@ export class NPC extends Unit{
             name:"Tutorial Guy",
             talkHandler:(self:NPC)=>{
                 const eventState = self.gameState.eventStates[0]
-
+                eventState.update
             },
             // LOAD HANDLER
             loadHandler: (gameState:GameState, data:NPCData)=>{

@@ -6,8 +6,24 @@ export class EventState{
         new EventState(
             "TUT001",
             "Tutorial",
-            [],
-            []
+            [
+                {
+                    name:"progress",
+                    value:0
+                    // 0 Tutorial Start
+                    // 1 Try Talking to NPC
+                    // 2 Talking to NPC Complete
+                    // 3 Try Walking Around
+                    // 4 Walking Complete
+                    // 5 Try Opening Door
+                    // 6 Opening Door Complete
+                }
+            ],
+            [
+                (progressHandler:(progressName:string, currentState:GameState) => void) => {
+                    
+                }
+            ]
         )
     ];
 
@@ -30,5 +46,13 @@ export class EventState{
 
     public update(deltaTime:number, gameState:GameState):void{
         this.onUpdate(deltaTime, gameState)
+    }
+
+    public getValueOf(name:string):unknown{
+        const property = this.properties.find(property => property.name === name)
+        if(property){
+            return property.value
+        }
+        throw Error("Property " + name +" not found")
     }
 }
