@@ -5,6 +5,7 @@ import {
     Button,
     Typography,
   } from "@material-tailwind/react";
+import axios from "axios";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -17,7 +18,12 @@ export default function RegisterForm() {
     
       const handleRegister = async () => {
         const body = {...register};
-        const result = await axios.post("http://localhost:3000", body);
+        const result = await axios.post("http://localhost:3000/register", body);
+
+        setRegister({
+            username: '',
+            password: '',
+        });   
         console.log(result);
         
       };
@@ -45,9 +51,12 @@ export default function RegisterForm() {
                     size="lg"
                     placeholder="Enter your username"
                     className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                    name="username"
                     labelProps={{
-                    className: "before:content-none after:content-none",
+                        className: "before:content-none after:content-none",
                     }}
+                    onChange={handleInputChange}
+                    value={register.username}
                 />
                 <Typography variant="h6" color="blue-gray" className="">
                     Email
@@ -68,9 +77,12 @@ export default function RegisterForm() {
                     size="lg"
                     placeholder="Enter your password"
                     className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                    name="password"
                     labelProps={{
                     className: "before:content-none after:content-none",
                     }}
+                    value={register.password}
+                    onChange={handleInputChange}
                 />
 
                 </div>
@@ -92,7 +104,9 @@ export default function RegisterForm() {
                 }
                 containerProps={{ className: "-ml-2.5" }}
                 />
-                <Button className="mt-6" fullWidth>
+                <Button className="mt-6" fullWidth
+                    onClick={handleRegister}
+                >
                 sign up
                 </Button>
                 already have an account?
