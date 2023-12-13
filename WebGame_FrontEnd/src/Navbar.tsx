@@ -354,7 +354,9 @@ const NavBarFun = () => {
           }
         </div>
         <div className="flex items-center gap-x-1">
-          <Button variant="gradient" color="blue" size="sm" className="hidden lg:inline-block">
+          <Button variant="gradient" color="blue" size="sm" className="hidden lg:inline-block"onClick={()=>{
+            navigate("/login");
+          }}>
             <span>Play</span>
           </Button>
         </div>
@@ -362,7 +364,7 @@ const NavBarFun = () => {
           variant="text"
           className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
           ripple={false}
-          onClick={() => setOpenNav(!openNav)}
+
         >
           {openNav ? (
             <svg

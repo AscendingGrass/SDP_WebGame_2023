@@ -6,7 +6,7 @@ import {
     Button,
     Typography,
   } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useData } from '../DataContext';
    
 export function LoginForm() {
@@ -51,13 +51,13 @@ export function LoginForm() {
         Log In
       </Typography>
       <div className="mt-4 mb-2 w-80 max-w-screen-lg sm:w-96">
-        <div className="mb-1 flex flex-col gap-6">
+          <div className="mb-1 flex flex-col gap-6">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Email
+            Username
           </Typography>
           <Input
             size="lg"
-            placeholder="Enter your email"
+            placeholder="Enter your username"
             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
             labelProps={{
               className: "before:content-none after:content-none",
@@ -78,21 +78,21 @@ export function LoginForm() {
               }}
             name="password"
             onChange={handleInputChange}
-          />
-          <Typography variant="h6" color="red" className="-mb-3">
-              {error}
-          </Typography>
+            />
+            <Typography variant="h6" color="red" className="-mb-3">
+                {error}
+            </Typography>
+          </div>
         </div>
         <Button className="mt-6" fullWidth onClick={handleLogin}>
           Log In
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
           Already have an account?{" "}
-          <a href="#" className="font-medium text-gray-900">
+          <Link to={"/login/register"} className="font-medium text-gray-900">
             Sign In
-          </a>
+          </Link>
         </Typography>
-      </div>
-    </Card>
+      </Card>
   );
 }
