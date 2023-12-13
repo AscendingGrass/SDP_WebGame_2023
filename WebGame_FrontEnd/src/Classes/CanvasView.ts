@@ -143,7 +143,6 @@ export class CanvasView{
                 if(j < 0) continue;
                 const tileSprite:SpriteFrame|undefined = grid.tiles[i]?.at(j)?.currentAnimationFrame();
                 
-
                 if(tileSprite) {
                     const xSize = oneTileSizeX * tileSprite.resolution.x;
                     const ySize = oneTileSizeY * tileSprite.resolution.y;

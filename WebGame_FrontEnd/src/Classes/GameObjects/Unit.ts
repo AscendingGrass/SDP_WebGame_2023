@@ -8,11 +8,9 @@ import { UnitState } from "../States/UnitState";
 export abstract class Unit extends Entity{
     protected originalCoordinate:Point
     protected isMoving:boolean = false
-    private moveSpeed:number = 1
     protected lerpProgress:number = 0
     protected moveIterationProgress:number = 0
     protected moveIterationTarget:number = 0
-    protected direction:Direction = Direction.None;
     protected unitState:UnitState;
 
     constructor(state:UnitState, name:string, gameState:GameState, animations:Animation[]){
@@ -30,20 +28,20 @@ export abstract class Unit extends Entity{
         this.unitState.moveSpeed = value;
         const animation = this.getAnimation('walk');
         if(!animation) return;
-        animation.animationSpeed = animation.spriteFrameNum * animationSpeedMult * this.moveSpeed
+        animation.animationSpeed = animation.spriteFrameNum * animationSpeedMult * this.unitState.moveSpeed
     }
 
     public addAnimation(animation: Animation): void {
         super.addAnimation(animation)
         if(animation.animationName === 'walk'){
-            this.setMoveSpeed(this.moveSpeed)
+            this.setMoveSpeed(this.unitState.moveSpeed)
         }
     }
 
     public createAnimation(animationName: string, spriteSheet: HTMLImageElement, spriteResolution: Point, spriteFrameNum: number, nextAnimation?: string, animationSpeed?: number): void {
         super.createAnimation(animationName, spriteSheet, spriteResolution, spriteFrameNum, nextAnimation, animationSpeed)
         if(animationName === 'walk'){
-            this.setMoveSpeed(this.moveSpeed)
+            this.setMoveSpeed(this.unitState.moveSpeed)
         }
     }
 
@@ -55,12 +53,12 @@ export abstract class Unit extends Entity{
             this.originalCoordinate = this.coordinate;
             this.isMoving = false
             if(this.moveIterationProgress < this.moveIterationTarget) {
-                this.move(this.direction)
+                this.move(this.unitState.direction)
                 return
             }
             this.moveIterationProgress  = 0
             this.moveIterationTarget = 0
-            this.playAnimation('idle')
+            this.playAnimation('idle_down')
         }
     }
     

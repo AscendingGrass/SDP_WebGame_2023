@@ -14,4 +14,8 @@ export class GroupAnimation extends Animation{
         super(animationName, spriteSheet, spriteResolution, spriteFrameNum, animationSpeed)
     }
 
+    public copy():GroupAnimation{   
+        return new GroupAnimation(this.animationName, this.spriteSheet, this.spriteResolution, this.spriteFrameNum, this.animationSpeed)
+    }
+
 }

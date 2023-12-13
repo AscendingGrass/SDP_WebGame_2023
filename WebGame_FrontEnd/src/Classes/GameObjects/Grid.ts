@@ -1,10 +1,9 @@
 import { Entity } from "./Entity";
 import { Tile } from "./Tile";
 import { Point } from "./Point";
-import { Grass } from "./Grass";
 import { Animated } from "./Animated";
-import { GroupAnimation } from "./GroupAnimation";
 import { PlayerUnit } from "./PlayerUnit";
+import { GroupAnimation } from "./GroupAnimation";
 
 export class Grid{
     public readonly size:Point
@@ -17,20 +16,25 @@ export class Grid{
         this.entities = []
         this.entityGrid = []
         this.tiles = []
-
         for (let i = 0; i < size.y; i++) {
             this.entityGrid.push([])
             this.tiles.push([])
             for (let j = 0; j < size.x; j++) {
                 this.entityGrid[i].push(null)
-                this.tiles[i].push(new Grass({x:j, y:i}))
+                this.tiles[i].push(null)
+            }
+        }
+    }
+
+    public fill(tileName:string, groupAnimation:GroupAnimation[]){
+        for (let i = 0; i < this.size.y; i++) {
+            for (let j = 0; j < this.size.x; j++) {
+                this.tiles[i][j] = Tile.generate(tileName, {x:j, y:i}, groupAnimation)
             }
         }
     }
 
     public update(deltaTime:number, updateArea:{position:Point, size:Point} | null = null, prioritizedUpdate:Animated[] = []):void{
-        GroupAnimation.animations.forEach(x => x.nextFrame(deltaTime))
-        
         if(!updateArea){
             for(let i = 0; i < this.size.y; ++i){
                 for(let j = 0; j < this.size.x; ++j){
