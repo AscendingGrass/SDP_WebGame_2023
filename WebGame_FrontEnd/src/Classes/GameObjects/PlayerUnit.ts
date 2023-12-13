@@ -17,7 +17,14 @@ export class PlayerUnit extends Unit{
         super(playerState, "PlayerUnit", gameState, animations);
         this.terminal = new Terminal(this)
         this.playerState = playerState
-    }
+        try{
+
+            this.setDirection(playerState.direction)
+        }
+        catch(err){
+            return
+        }
+    }   
 
 
     public update(deltaTime: number): void {
@@ -68,23 +75,7 @@ export class PlayerUnit extends Unit{
                     if(!this.terminal.running){
                         this.moveIterationProgress  = 0
                         this.moveIterationTarget = 0
-                        switch(this.playerState.direction){
-                            case Direction.Left:
-                                this.playAnimation('idle_left')
-                                break;
-                            case Direction.Right:
-                                this.playAnimation('idle_right')
-                                break;
-                            case Direction.Up:
-                                this.playAnimation('idle_up')
-                                break;
-                            case Direction.Down:
-                                this.playAnimation('idle_down')
-                                break;
-                            default:
-                                this.playAnimation('idle_down')
-                                break;
-                        }
+                        this.setDirection(this.playerState.direction)
                         return
                     }
                     this.move(this.playerState.direction)
@@ -101,33 +92,38 @@ export class PlayerUnit extends Unit{
                     this.terminal.stop()
                 }
                 if(!(currentCommand instanceof SingleCommand) || !(currentCommand.getAsyncTask()?.startsWith('move '))){
-                    switch(this.playerState.direction){
-                        case Direction.Left:
-                            this.playAnimation('idle_left')
-                            break;
-                        case Direction.Right:
-                            this.playAnimation('idle_right')
-                            break;
-                        case Direction.Up:
-                            this.playAnimation('idle_up')
-                            break;
-                        case Direction.Down:
-                            this.playAnimation('idle_down')
-                            break;
-                        default:
-                            this.playAnimation('idle_down')
-                            break;
-                    }
+                    this.setDirection(this.playerState.direction)
                 }
             }
         }
     }
 
+    public setDirection(direction: Direction):void{
+        super.setDirection(direction);
+        switch(direction){
+            case Direction.Left:
+                this.playAnimation('idle_left')
+                break;
+            case Direction.Right:
+                this.playAnimation('idle_right')
+                break;
+            case Direction.Up:
+                this.playAnimation('idle_up')
+                break;
+            case Direction.Down:
+                this.playAnimation('idle_down')
+                break;
+            default:
+                this.playAnimation('idle_down')
+                break;
+        }
+    }
+
     public getSpriteCoordinate(): Point {
-        if(!this.getIsMoving()) return this.coordinate;
+        if(!this.getIsMoving()) return this.playerState.coordinate;
         const coordDiff:Point = {
-            x: this.originalCoordinate.x - this.coordinate.x,
-            y: this.originalCoordinate.y - this.coordinate.y,
+            x: this.originalCoordinate.x - this.playerState.coordinate.x,
+            y: this.originalCoordinate.y - this.playerState.coordinate.y,
         }
 
         return {

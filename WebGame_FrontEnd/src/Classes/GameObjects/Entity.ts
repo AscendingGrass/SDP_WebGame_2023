@@ -9,7 +9,7 @@ import { GameState } from "../States/GameState";
 export abstract class Entity extends Animated implements IHasCoordinate{
     protected coordinate:Point
     protected grid:Grid | null = null
-    protected gameState:GameState
+    public gameState:GameState
     private passable:boolean = false
     public holds:Entity|null = null
 
@@ -24,7 +24,7 @@ export abstract class Entity extends Animated implements IHasCoordinate{
     }
 
     public setPassable(value:boolean):void{
-        if(this.holds === null) this.passable = value
+        if(this.holds == null) this.passable = value
         else throw Error('Entity is holding another entity')
     }
 
@@ -46,11 +46,14 @@ export abstract class Entity extends Animated implements IHasCoordinate{
 
             if(entity !== null) {
                 let topmost = entity
+                console.log(topmost);
                 while(topmost.holds != null) topmost = topmost.holds
                 // throw an error if you can't stack the moving entity into the target position (the topmost entity in the target position is impassable)
-                if(!topmost.passable) throw Error('coordinate is not empty')
+                if(!topmost.passable){
+                    throw Error('coordinate is not empty')
+
+                } 
                 topmost.holds = this;
-                return;
             }
             else{
                 row[value.x] = this;

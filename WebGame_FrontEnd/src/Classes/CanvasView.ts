@@ -4,6 +4,7 @@ import { SpriteFrame } from "./GameObjects/SpriteFrame"
 import { Point } from "./GameObjects/Point"
 import { Grid } from "./GameObjects/Grid"
 import { PlayerUnit } from "./GameObjects/PlayerUnit"
+import { Unit } from "./GameObjects/Unit"
 
 export class CanvasView{
     private canvas:HTMLCanvasElement|null = null
@@ -172,14 +173,14 @@ export class CanvasView{
             if(i < 0) continue;
             for (let j = jStart; j < jEnd; j++) {
                 if(j < 0) continue;
-                const entity:Entity|null|undefined = grid.entityGrid[i]?.at(j);
+                let entity:Entity|null = grid.entityGrid[i]?.at(j);
 
-                if(entity) {
+                while(entity) {
                     const entitySprite = entity.currentAnimationFrame()
                     const xSize = oneTileSizeX * entitySprite.resolution.x;
                     const ySize = oneTileSizeY * entitySprite.resolution.y;
 
-                    const spriteCoord = entity instanceof PlayerUnit ? entity.getSpriteCoordinate() : null;
+                    const spriteCoord = entity instanceof Unit ? entity.getSpriteCoordinate() : null;
 
                     const jPos = spriteCoord ? spriteCoord.x : j;
                     const iPos = spriteCoord ? spriteCoord.y : i;
@@ -201,6 +202,8 @@ export class CanvasView{
                         xSizeScaled,
                         ySizeScaled
                     );
+
+                    entity = entity.holds
                 }
             }
         }

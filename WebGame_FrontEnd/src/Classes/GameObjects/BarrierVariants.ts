@@ -50,6 +50,7 @@ export const _initializeBarrierVariants = () => {
             name:"door",
             interactHandler:(interacted: InteractableBarrier) => {
                 const closed = interacted.getPassable()
+                console.log(closed);
                 try{
                     interacted.setPassable(!closed)
                 }

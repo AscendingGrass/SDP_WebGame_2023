@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
-      <div className="flex-grow ">
+      <div className="flex-grow">
         <Outlet />
       </div>
       <Footer></Footer>

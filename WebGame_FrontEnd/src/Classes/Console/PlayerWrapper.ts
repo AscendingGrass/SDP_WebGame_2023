@@ -1,3 +1,6 @@
+import { Direction } from "../GameObjects/Direction";
+import { InteractableBarrier } from "../GameObjects/InteractableBarrier";
+import { NPC } from "../GameObjects/NPC";
 import { PlayerUnit } from "../GameObjects/PlayerUnit";
 import { ExpressionHandler } from "./ExpressionHandler";
 import { NumberWrapper } from "./NumberWrapper";
@@ -28,9 +31,55 @@ export class PlayerWrapper extends Wrapper{
                         return new WaitWrapper('move left 1');
                     case 'moveRight()':
                         return new WaitWrapper('move right 1');
+                    case 'interact()': {
+                        const player = self.getValue()
+                        let temp;
+                        switch(player.getDirection()){
+                            case Direction.Up:
+                                temp = player.getNeighbour({x:0, y:-1}) 
+                                break;
+                            case Direction.Down:
+                                temp = player.getNeighbour({x:0, y:1}) 
+                                break;
+                            case Direction.Left:
+                                temp = player.getNeighbour({x:-1, y:0}) 
+                                break;
+                            case Direction.Right:
+                                temp = player.getNeighbour({x:1, y:0}) 
+                                break;
+                            }
+                        if(temp instanceof InteractableBarrier){
+                            temp.interact(player, player.gameState)
+                        }
+                        return new VoidWrapper();
+                    }
+                    case 'talk()': {
+                        const player = self.getValue()
+                        let temp;
+                        switch(player.getDirection()){
+                            case Direction.Up:
+                                temp = player.getNeighbour({x:0, y:-1}) 
+                                break;
+                            case Direction.Down:
+                                temp = player.getNeighbour({x:0, y:1}) 
+                                break;
+                            case Direction.Left:
+                                temp = player.getNeighbour({x:-1, y:0}) 
+                                break;
+                            case Direction.Right:
+                                temp = player.getNeighbour({x:1, y:0}) 
+                                break;
+                            }
+                        if(temp instanceof NPC){
+                            temp.talk()
+                        }
+                        return new VoidWrapper();
+                    }
                     case 'right':
                         try{
-                            const entityRight = self.getValue().getNeighbour({x:1, y:0})
+                            const player = self.getValue()
+                            player.setDirection(Direction.Right);
+                            const entityRight = player.getNeighbour({x:1, y:0})
                             return new StringWrapper(entityRight ? entityRight.getName() : 'None');
                         }
                         catch(err){
@@ -38,7 +87,9 @@ export class PlayerWrapper extends Wrapper{
                         }
                     case 'left':
                         try{
-                            const entityLeft = self.getValue().getNeighbour({x:-1, y:0})
+                            const player = self.getValue()
+                            player.setDirection(Direction.Left);
+                            const entityLeft = player.getNeighbour({x:-1, y:0})
                             return new StringWrapper(entityLeft ? entityLeft.getName() : 'None');
                         }
                         catch(err){
@@ -46,7 +97,9 @@ export class PlayerWrapper extends Wrapper{
                         }
                     case 'up':
                         try{
-                            const entityUp = self.getValue().getNeighbour({x:0, y:-1})
+                            const player = self.getValue()
+                            player.setDirection(Direction.Up);
+                            const entityUp = player.getNeighbour({x:0, y:-1})
                             return new StringWrapper(entityUp ? entityUp.getName() : 'None');
                         }
                         catch(err){
@@ -54,15 +107,18 @@ export class PlayerWrapper extends Wrapper{
                         }
                     case 'down':
                         try{
-                            const entityDown = self.getValue().getNeighbour({x:0, y:1})
+                            const player = self.getValue()
+                            player.setDirection(Direction.Down);
+                            const entityDown = player.getNeighbour({x:0, y:1})
                             return new StringWrapper(entityDown ? entityDown.getName() : 'None');
                         }
                         catch(err){
                             return new StringWrapper('Boundary')
                         }
-                    case 'ground':
+                    case 'ground':{
                         const tile = self.getValue().getTile()
                         return new StringWrapper(tile ? tile.getName() : "None");
+                    }
                     case 'x':
                         return new NumberWrapper(self.getValue().getCoordinate().x);
                     case 'y':
@@ -86,6 +142,37 @@ export class PlayerWrapper extends Wrapper{
                         return new WaitWrapper('move left ' + args[1].getValue());
                     case 'moveRight()':
                         return new WaitWrapper('move right ' + args[1].getValue());
+                    case 'interact()': {
+                        const player = self.getValue()
+                        const direction = args[1].getValue()
+                        let temp;
+                        switch(direction){
+                            case "up":
+                                player.setDirection(Direction.Up)
+                                temp = player.getNeighbour({x:0, y:-1}) 
+                                break;
+                            case "down":
+                                player.setDirection(Direction.Down)
+                                temp = player.getNeighbour({x:0, y:1}) 
+                                break;
+                            case "left":
+                                player.setDirection(Direction.Left)
+                                temp = player.getNeighbour({x:-1, y:0}) 
+                                break;
+                            case "right":
+                                player.setDirection(Direction.Right)
+                                temp = player.getNeighbour({x:1, y:0}) 
+                                break;
+                            default:
+                                return new VoidWrapper();
+                            }
+
+                        if(temp instanceof InteractableBarrier){
+                            temp.interact(player, player.gameState)
+                            console.log("passable: " + temp.getPassable());
+                        }
+                        return new VoidWrapper();
+                    }
                     case 'setMoveSpeed()':
                         self.getValue().setMoveSpeed(args[1].getValue())
                         return new VoidWrapper();

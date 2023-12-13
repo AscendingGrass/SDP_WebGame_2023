@@ -1,6 +1,7 @@
 import { Animation } from "./Classes/GameObjects/Animation"
 import { _initializeBarrierVariants } from "./Classes/GameObjects/BarrierVariants"
 import { GroupAnimation } from "./Classes/GameObjects/GroupAnimation"
+import { NPC } from "./Classes/GameObjects/NPC"
 import { Tile } from "./Classes/GameObjects/Tile"
 
 export default function loadAsset():void{
@@ -91,5 +92,6 @@ export default function loadAsset():void{
     )
 
     Tile._initialize()
+    NPC._initialize()
     _initializeBarrierVariants()
 }

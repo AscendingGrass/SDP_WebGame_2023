@@ -31,6 +31,14 @@ export abstract class Unit extends Entity{
         animation.animationSpeed = animation.spriteFrameNum * animationSpeedMult * this.unitState.moveSpeed
     }
 
+    public setDirection(direction:Direction):void{
+        this.unitState.direction = direction;
+    }
+
+    public getDirection():Direction{
+        return this.unitState.direction;
+    }
+
     public addAnimation(animation: Animation): void {
         super.addAnimation(animation)
         if(animation.animationName === 'walk'){
@@ -75,6 +83,15 @@ export abstract class Unit extends Entity{
         }
     }
 
+    public getCoordinate():Point{
+        return this.unitState.coordinate;
+    }
+
+    public setCoordinate(value:Point, triggerTile?:boolean):void{
+        super.setCoordinate(value, triggerTile)
+        this.unitState.coordinate = value;
+    }
+
     public move(direction: Direction):void{
         if(this.isMoving || direction == Direction.None) return;
         this.isMoving = true;
@@ -104,4 +121,6 @@ export abstract class Unit extends Entity{
             return
         }
     }
+
+    
 }

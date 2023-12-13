@@ -294,7 +294,7 @@ const NavBarFun = () => {
               href="#"
               className="mr-0 cursor-pointer py-1.5 font-medium"
             >
-              WebGame ITLAND
+              WebGame SDP
             </Typography>
         }
         {

@@ -65,7 +65,11 @@ export class Grid{
             for(let i = 0; i < this.size.y; ++i){
                 for(let j = 0; j < this.size.x; ++j){
                     this.tiles[i]?.at(j)?.nextFrame(deltaTime)
-                    this.entityGrid[i]?.at(j)?.nextFrame(deltaTime)
+                    let entity:Entity|null = this.entityGrid[i]?.at(j)
+                    while(entity){
+                        entity.nextFrame(deltaTime)
+                        entity = entity.holds
+                    }
                 }
             }
             return;
@@ -81,12 +85,15 @@ export class Grid{
             for(let j = xStart; j < xEnd; ++j){
                 if(j < 0) continue;
                 const tile = this.tiles[i]?.at(j)
-                const entity = this.entityGrid[i]?.at(j)
+                let entity:Entity|null = this.entityGrid[i]?.at(j)
                 if(tile && !prioritizedUpdate.includes(tile))
                     tile.nextFrame(deltaTime)
-                if(entity && !prioritizedUpdate.includes(entity)){
-                    if(entity instanceof PlayerUnit) entity.update(deltaTime);
-                    entity.nextFrame(deltaTime)
+                while(entity){
+                    if(!prioritizedUpdate.includes(entity)){
+                        if(entity instanceof PlayerUnit) entity.update(deltaTime);
+                        entity.nextFrame(deltaTime)
+                    }
+                    entity = entity.holds
                 }
             }
         }

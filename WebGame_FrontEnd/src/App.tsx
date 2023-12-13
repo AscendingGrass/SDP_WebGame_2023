@@ -25,41 +25,41 @@ function App() {
           
         </canvas>
       </div>
-      <div className="right-side"style={{width:"20%"}}>
-        <div className="UI">
-        <div className="buttonsection">
-                <Button color="blue" id="save"  className="button save ">
-                    Save
-                </Button>
-                <Button color="red" id="exit" className="button exit" >
-                    Exit
-                </Button>
-            </div>
-            <div className="Music">
-              ini harusnya musik
-            </div>
-            <textarea name="console" style={{fontFamily:'monospace', width:"100%"}} className="console" id="console" cols={30} rows={10} spellCheck="false">
+      <div className="right-side"style={{width:"20%", height:"100%"}}>
+        <div className="UI flex flex-col h-full">
+          <div className="buttonsection">
+            <Button color="blue" id="save"  className="button save ">
+                Save
+            </Button>
+            <Button color="red" id="exit" className="button exit" >
+                Exit
+            </Button>
+          </div>
+          <div className="Music">
+            ini harusnya musik
+          </div>
+          <textarea name="console" style={{fontFamily:'monospace', width:"100%"}} className="console" id="console" cols={30} rows={22} spellCheck="false">
 
-            </textarea>
-            <div className="buttonsection">
-                <Button color="green" id="executeButton" className="button start" >
-                    Start
-                </Button>
-                <Button color="red" id="stopButton" className="button stop" >
-                    Stop
-                </Button>
-            </div>
-            <div id="log" style={{color:"black", width:"200px", height:"200px"}}>
+          </textarea>
+          <div className="buttonsection">
+              <Button color="green" id="executeButton" className="button start" >
+                  Start
+              </Button>
+              <Button color="red" id="stopButton" className="button stop" >
+                  Stop
+              </Button>
+          </div>
+          <div id="log" className="flex-grow basis-1" style={{color:"black", overflow:"scroll", padding:"5px"}}>
 
-            </div>
-            <div className="buttonsection">
-                <Button id="report" className="button report" >
-                    Report Bug
-                </Button>
-                <Button id="help" className="button help" >
-                    Help
-                </Button>
-            </div>
+          </div>
+          <div className="buttonsection">
+              <Button id="report" className="button report" >
+                  Report Bug
+              </Button>
+              <Button id="help" className="button help" >
+                  Help
+              </Button>
+          </div>
         </div>
       </div>
 

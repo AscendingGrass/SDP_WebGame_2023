@@ -8,6 +8,8 @@ import { GameState } from './States/GameState';
 import { LogView } from './LogView';
 import { PlayerState } from './States/PlayerState';
 import { GroupAnimation } from './GameObjects/GroupAnimation';
+import { Direction } from './GameObjects/Direction';
+import { NPC } from './GameObjects/NPC';
 
 export class GameManager {
     private lastTimeStamp: number = 0;
@@ -23,12 +25,12 @@ export class GameManager {
     private groupAnimations:GroupAnimation[] = []
 
     constructor(logView: LogView|null = null, canvasView: CanvasView | null = null, terminalView: TerminalView | null = null, gameState:GameState|null = null)  {
+        this.setCanvasView(canvasView);
+        this.setLogView(logView)
         this.grid = new Grid({ x: 100, y: 100 })
         this.groupAnimations = GroupAnimation.animations.map(x => x.copy())
         this.load(gameState)
-        this.setCanvasView(canvasView);
         this.setTerminalView(terminalView);
-        this.logView = logView
 
     }
 
@@ -90,8 +92,10 @@ export class GameManager {
                 "",
                 4
             )
+            this.player.setDirection(Direction.Up)
             this.player.setMoveSpeed(2);
             this.grid.addEntity(this.player);
+            NPC.loadNPCs(this.currentState).forEach(npc => this.grid.addEntity(npc))
             this.grid.loadBarriers(
                 'wwwwwww00\n' +
                 'w00000w00\n' +
@@ -133,6 +137,14 @@ export class GameManager {
                 const tile = this.grid.tiles[gridCoordinate.y][gridCoordinate.x]
                 tile!.currentAnimationIndex = tile?.currentAnimationIndex == 2 ? Math.round(Math.random()) : 2
             }
+        }
+    }
+
+    public setLogView(logView: LogView | null): void {
+        this.logView = logView
+        if(this.currentState && logView) {
+            console.log("testetest");
+            this.currentState.logs = logView
         }
     }
 
