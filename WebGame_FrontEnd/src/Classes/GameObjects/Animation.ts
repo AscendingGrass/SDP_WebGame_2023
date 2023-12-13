@@ -1,9 +1,16 @@
 import { Animated } from "./Animated";
 import { Point } from "./Point";
 import { SpriteFrame } from "./SpriteFrame";
+import { ChainedAnimation } from "./ChainedAnimation";
 
 export abstract class Animation{
     public static assets:{[key:string]:HTMLImageElement} = {};
+
+    public static makeCopyIfChained:(animations:Animation[], newOwner:Animated)=>Animation[] = (animations:Animation[], newOwner:Animated)=>{
+        return animations.map((x)=>{
+          return x instanceof ChainedAnimation ? x.copy(newOwner) : x
+        })
+    }
 
     protected animationProgress: number = 0;
     
