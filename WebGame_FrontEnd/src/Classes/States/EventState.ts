@@ -3,7 +3,12 @@ import { EventProperty } from "./EventProperty";
 
 export class EventState{
     public static eventBluePrints:EventState[] = [
-
+        new EventState(
+            "TUT001",
+            "Tutorial",
+            [],
+            []
+        )
     ];
 
     public id:string

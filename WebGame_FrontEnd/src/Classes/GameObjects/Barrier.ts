@@ -18,7 +18,6 @@ export  class Barrier extends Entity{
         temp.animations.forEach(x => copy.addAnimation(x instanceof ChainedAnimation ? x.copy(copy) : x))
 
         return copy
-
     }
 
     constructor(name:string, coordinate:Point, gameState:GameState, animations:Animation[] = []){

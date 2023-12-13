@@ -22,6 +22,10 @@ export abstract class Unit extends Entity{
         this.setMoveSpeed(state.moveSpeed)
     }
 
+    public getIsMoving():boolean{
+        return this.isMoving
+    }
+
     public setMoveSpeed(value:number, animationSpeedMult:number = 1):void{
         this.unitState.moveSpeed = value;
         const animation = this.getAnimation('walk');

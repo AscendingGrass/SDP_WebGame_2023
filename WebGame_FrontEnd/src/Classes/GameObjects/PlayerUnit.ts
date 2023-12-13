@@ -55,10 +55,10 @@ export class PlayerUnit extends Unit{
                             break;
                     }
                     this.moveIterationTarget = Number.parseInt(taskDetail[2])
-                    if(!this.isMoving)this.move(this.direction)
+                    if(!this.getIsMoving())this.move(this.direction)
                 }
             }
-            if(this.isMoving)  this.lerpProgress += deltaTime * this.playerState.moveSpeed
+            if(this.getIsMoving())  this.lerpProgress += deltaTime * this.playerState.moveSpeed
             if(this.lerpProgress >= 1){
                 this.moveIterationProgress += 1;
                 this.lerpProgress = 0;
@@ -92,7 +92,7 @@ export class PlayerUnit extends Unit{
     }
 
     public getSpriteCoordinate(): Point {
-        if(!this.isMoving) return this.coordinate;
+        if(!this.getIsMoving()) return this.coordinate;
         const coordDiff:Point = {
             x: this.originalCoordinate.x - this.coordinate.x,
             y: this.originalCoordinate.y - this.coordinate.y,
@@ -104,33 +104,5 @@ export class PlayerUnit extends Unit{
         }
     }
 
-    public move(direction: Direction):void{
-        if(this.isMoving || direction == Direction.None) return;
-        this.isMoving = true;
-        this.playAnimation('walk')
-        const nextCoord:Point = {...this.coordinate};
-        switch (direction) {
-            case Direction.Up:
-                nextCoord.y -= 1;
-                break;
-            case Direction.Down:
-                nextCoord.y += 1;
-                break;
-            case Direction.Left:
-                nextCoord.x -= 1;
-                break;
-            case Direction.Right:
-                nextCoord.x += 1;
-                break;
-            default:
-                break;
-        }
 
-        try{
-            this.setCoordinate(nextCoord, true)
-        }
-        catch(err){
-            return
-        }
-    }
 }

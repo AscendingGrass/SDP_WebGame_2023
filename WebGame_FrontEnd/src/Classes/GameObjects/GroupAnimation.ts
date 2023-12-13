@@ -1,6 +1,4 @@
-import { Animated } from "./Animated";
 import { Point } from "./Point";
-import { SpriteFrame } from "./SpriteFrame";
 import { Animation } from "./Animation";
 
 export class GroupAnimation extends Animation{
