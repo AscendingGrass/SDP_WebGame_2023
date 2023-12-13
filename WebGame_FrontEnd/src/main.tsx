@@ -1,7 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ThemeProvider } from '@material-tailwind/react';
 
 import Error from "./Error.tsx"
 import Home from './Home.tsx';
@@ -19,8 +18,8 @@ import Report from './Report.tsx';
 const router = createBrowserRouter([
   {
     path: "/", //Akses melalui base_url
-    element: <Home   />,
-    errorElement: <Error />,
+    element: <Home/>,
+    errorElement: <Error/>,
     children: [
       {
         path: '',
