@@ -27,49 +27,49 @@ const maleData = [
 
 const Login = () => {
   return (
-    <div className="row justify-content-center">
-      <nav className="col-lg-5">
-        <div className="nav nav-tabs justify-content-evenly" id="nav-tab" role="tablist">
-          <button className="nav-link active col" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Female</button>
-          <button className="nav-link col" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Male</button>
+    <div className="row justify-content-center space-y-4 mt-40 ">
+      <nav className="col-lg-5 place-content-center">
+        <div className="nav nav-tabs justify-content-evenly justify-center flex" id="nav-tab" role="tablist">
+          <button className="nav-link active col bg-red-100 hover:underline " id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Female</button>
+          <button className="nav-link col hover:underline ml-40" id="nav-profile-tab "  data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Male</button>
         </div>
       </nav>
-      <div className="tab-content row justify-content-center" id="nav-tabContent">
-        <div className="tab-pane fade col-lg-5 show active overflow-y" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
-          <table className="table">
-            <thead>
+      <div className="tab-content row justify-content-center " id="nav-tabContent">
+        <div className="tab-pane fade col-lg-5 show active overflow-y justify-center flex mt-10 " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
+          <table className="table w-3/6 border-solid border-4 border-gray-800">
+            <thead className=" ">
               <tr>
-                <th scope="col">Rank</th>
-                <th scope="col">Name</th>
-                <th scope="col">Score</th>
+                <th className="w-1/4 " scope="col">Rank</th>
+                <th className="w-1/4" scope="col">Name</th>
+                <th className="w-1/4" scope="col">Score</th>
               </tr>
             </thead>
             <tbody>
               {femaleData.map((item, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td style={{ width: '60%' }}>{item.name}</td>
-                  <td>{item.score}</td>
+                  <td className="w-1/4 text-center">{index + 1}</td>
+                  <td className="w-1/4 text-center" style={{ width: '60%' }}>{item.name}</td>
+                  <td className="w-1/4 text-center">{item.score}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div className="tab-pane fade col-lg-5" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabIndex="0">
-        <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Rank</th>
-                <th scope="col">Name</th>
-                <th scope="col">Score</th>
+        <div className="tab-pane fade col-lg-5 bg-blue-100 justify-center flex" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabIndex="0">
+        <table className="table w-3/6 border-solid border-4 border-gray-800">
+            <thead className="">
+              <tr className="bg-red-100 ">
+                <th className="w-1/4" scope="col">Rank</th>
+                <th className="w-1/4" scope="col">Name</th>
+                <th className="w-1/4" scope="col">Score</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="mr-8 bg-red-100">
               {maleData.map((item, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td style={{ width: '60%' }}>{item.name}</td>
-                  <td>{item.score}</td>
+                  <td className="w-1/4 text-center">{index + 1}</td>
+                  <td className="w-1/4 text-center" style={{ width: '60%' }}>{item.name}</td>
+                  <td className="w-1/4 text-center">{item.score}</td>
                 </tr>
               ))}
             </tbody>
