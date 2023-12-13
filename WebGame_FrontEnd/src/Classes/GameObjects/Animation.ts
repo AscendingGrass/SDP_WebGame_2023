@@ -12,7 +12,7 @@ export abstract class Animation{
         })
     }
 
-    protected animationProgress: number = 0;
+    public animationProgress: number = 0;
     
     public readonly animationName: string;
     public readonly spriteSheet: HTMLImageElement;

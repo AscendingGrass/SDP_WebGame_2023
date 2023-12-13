@@ -39,23 +39,23 @@ export class PlayerUnit extends Unit{
                 if(taskDetail[0] === 'move'){
                     switch(taskDetail[1]){
                         case 'up':
-                            this.direction = Direction.Up;
+                            this.playerState.direction = Direction.Up;
                             break;
                         case 'down':
-                            this.direction = Direction.Down;
+                            this.playerState.direction = Direction.Down;
                             break;
                         case 'left':
-                            this.direction = Direction.Left;
+                            this.playerState.direction = Direction.Left;
                             break;
                         case 'right':
-                            this.direction = Direction.Right;
+                            this.playerState.direction = Direction.Right;
                             break;
                         default:
-                            this.direction = Direction.None;
+                            this.playerState.direction = Direction.None;
                             break;
                     }
                     this.moveIterationTarget = Number.parseInt(taskDetail[2])
-                    if(!this.getIsMoving())this.move(this.direction)
+                    if(!this.getIsMoving())this.move(this.playerState.direction)
                 }
             }
             if(this.getIsMoving())  this.lerpProgress += deltaTime * this.playerState.moveSpeed
@@ -68,10 +68,26 @@ export class PlayerUnit extends Unit{
                     if(!this.terminal.running){
                         this.moveIterationProgress  = 0
                         this.moveIterationTarget = 0
-                        this.playAnimation('idle')
+                        switch(this.playerState.direction){
+                            case Direction.Left:
+                                this.playAnimation('idle_left')
+                                break;
+                            case Direction.Right:
+                                this.playAnimation('idle_right')
+                                break;
+                            case Direction.Up:
+                                this.playAnimation('idle_up')
+                                break;
+                            case Direction.Down:
+                                this.playAnimation('idle_down')
+                                break;
+                            default:
+                                this.playAnimation('idle_down')
+                                break;
+                        }
                         return
                     }
-                    this.move(this.direction)
+                    this.move(this.playerState.direction)
                     return
                 }
                 this.moveIterationProgress  = 0
@@ -85,7 +101,23 @@ export class PlayerUnit extends Unit{
                     this.terminal.stop()
                 }
                 if(!(currentCommand instanceof SingleCommand) || !(currentCommand.getAsyncTask()?.startsWith('move '))){
-                    this.playAnimation('idle')
+                    switch(this.playerState.direction){
+                        case Direction.Left:
+                            this.playAnimation('idle_left')
+                            break;
+                        case Direction.Right:
+                            this.playAnimation('idle_right')
+                            break;
+                        case Direction.Up:
+                            this.playAnimation('idle_up')
+                            break;
+                        case Direction.Down:
+                            this.playAnimation('idle_down')
+                            break;
+                        default:
+                            this.playAnimation('idle_down')
+                            break;
+                    }
                 }
             }
         }

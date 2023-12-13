@@ -43,9 +43,9 @@ export class TerminalView{
 
     public setExecuteButton(value:HTMLButtonElement|null):void{
         const executeClickListener = () => {
+            console.log(this.terminal);
             if(!this.terminal) return
             try{
-
                 this.terminal.compile()
                 this.terminal.execute()
             }
