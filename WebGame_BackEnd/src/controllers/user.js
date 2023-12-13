@@ -52,7 +52,7 @@ const login = async (req, res)=>{
 }
 
 const register = async (req, res)=>{
-    const { username, email, password, confirm_password, gender } = req.body;
+    const { username, password, gender } = req.body;
 
     const checkUsername = await User.findOne({
         username
@@ -65,34 +65,36 @@ const register = async (req, res)=>{
         })
     }
 
-    const checkEmail = await User.findOne({
-        email
-    })
+    // const checkEmail = await User.findOne({
+    //     email
+    // })
 
-    if(checkEmail){
-        return res.status(200).json({
-            error: true,
-            msg: "Email telah terpakai"
-        })
-    }
+    // if(checkEmail){
+    //     return res.status(200).json({
+    //         error: true,
+    //         msg: "Email telah terpakai"
+    //     })
+    // }
 
-    if(password != confirm_password){
-        return res.status(200).json({
-            error: true,
-            msg: "Password tidak sama!"
-        })
-    }
+    // if(password != confirm_password){
+    //     return res.status(200).json({
+    //         error: true,
+    //         msg: "Password tidak sama!"
+    //     })
+    // }
 
-    const newUser = new User({
-        username, email, password, gender
+   
+    const result = await User.insertMany({
+        username, password, gender,
+        email: "TEST",
+        role: "user"
     });
 
-    const result = await newUser.save();
     return res.status(200).json({
         error: false,
-        msg: "Berhasil register!",
+        msg: "Berhasil register",
         result
-    });
+    })
 }
 
 const deleteUser = async (req, res) => {
@@ -119,9 +121,34 @@ const deleteUser = async (req, res) => {
     });
 }
 
+const allUser = async (req, res) => {
+    const result = await User.find();
+    
+    console.log(result);
+    return res.status(200).json({
+        error: false,
+        result
+    })
+}
+
+const allUserRole = async (req, res) => {
+    const { role } = req.params;
+    const result = await User.find({
+        role
+    });
+    
+    console.log(result);
+    return res.status(200).json({
+        error: false,
+        result
+    })
+}
+
 module.exports = {
     user,
     login,
     register,
-    deleteUser
+    deleteUser,
+    allUser,
+    allUserRole
 }

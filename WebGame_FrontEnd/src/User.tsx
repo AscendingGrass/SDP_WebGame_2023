@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table } from "./Component/Table";
 
 const User = () => {
   const userData = [
@@ -16,49 +17,8 @@ const User = () => {
   ];
 
   return (
-    <div className="container-fluid py-2">
-      <div className="row justify-content-between">
-        <div className="col">
-          <div className="h3">List Account</div>
-        </div>
-        <div className="col">
-          <div className="row align-items-center">
-            <div className="col-lg-2">
-              Search:
-            </div>
-            <div className="col">
-              <input type="text" className="form-control" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="table-responsive mt-3 tab-pane fade col-lg-5 show active overflow-y justify-center flex mt-10">
-        <table className="table table-bordered table w-3/6 border-solid border-8 border-zinc-600">
-          <thead>
-            <tr>
-              <th className="w-1/4" >Name</th>
-              <th className="w-1/4">Username</th>
-              <th className="w-1/4">Email</th>
-              <th className="w-1/4">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {userData.map(user => (
-              <tr key={user.id}>
-                <td className={`w-1/4 text-center  text-[#444444]  ${user.id%2 !=0 && 'bg-stone-200'} ${user.id%2 ==0 && 'bg-white-500'}`}>{user.name}</td>
-                <td className={`w-1/4 text-center  text-[#444444]  ${user.id%2 !=0 && 'bg-stone-200'} ${user.id%2 ==0 && 'bg-white-500'}`}>{user.username}</td>
-                <td className={`w-1/4 text-center  text-[#444444]  ${user.id%2 !=0 && 'bg-stone-200'} ${user.id%2 ==0 && 'bg-white-500'}`}>{user.email}</td>
-                <td className={`w-1/4 text-center  text-[#444444]  ${user.id%2 !=0 && 'bg-stone-200'} ${user.id%2 ==0 && 'bg-white-500'}`}>
-                  <button className="btn btn-warning me-2 m-2 w-1/4 border-solid border-2 border-yellow-600 rounded-md">Edit</button>
-                  <button className="btn btn-danger me-2 w-1/4 border-solid border-2 border-red-600 rounded-md">Delete</button>
-                  <button className="btn btn-outline-danger me-2 w-1/4 border-solid border-2 border-red-600 rounded-md">Ban</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="flex">
+      <Table/>
     </div>
   );
 }
