@@ -3,7 +3,7 @@ import axios from "axios";
 
 const LoginRegister = () => {
     return (
-        <div className="container-fluid">
+        <div className="flex w-full justify-center">
             <Outlet></Outlet>
             <div className="row justify-content-center text-center mb-3">
                 <div className="col-lg-5">

@@ -143,11 +143,34 @@ const allUserRole = async (req, res) => {
     })
 }
 
+const fetchMale = async (req, res) => {
+    const result = await User.find({
+        gender: "male"
+    });
+    return res.status(200).json({
+        error: false,
+        result
+    })
+}
+
+const fetchFemale = async (req, res) => {
+    const result = await User.find({
+        gender: "female"
+    });
+
+    return res.status(200).json({
+        error: false,
+        result
+    })
+}
+
 module.exports = {
     user,
     login,
     register,
     deleteUser,
     allUser,
-    allUserRole
+    allUserRole,
+    fetchFemale,
+    fetchMale
 }

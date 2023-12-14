@@ -8,12 +8,16 @@ import Footer from "./Footer";
 
 const Home = () => {
   return (
-    <div className="flex flex-col h-screen">
-      <Navbar />
-      <div className="flex-grow">
+    <div className="flex h-screen flex-col">
+      <div className="flex">
+        <Navbar />
+      </div>
+      <div className="flex flex-grow">
         <Outlet />
       </div>
-      <Footer></Footer>
+      <div className="flex">
+        <Footer></Footer>
+      </div>
     </div>
   );
 };
