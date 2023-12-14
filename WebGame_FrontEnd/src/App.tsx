@@ -14,7 +14,7 @@ function App() {
   }, [])
 
   return (
-    <div style={{display:"flex",height:"100%",margin:"0px"}}>
+    <div className='flex h-full w-full'>
     {/* <div style={{backgroundColor:'white'}}>
       <button onClick={()=> setMode(!mode)}>Toggle</button>
     </div>
