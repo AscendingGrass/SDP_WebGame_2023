@@ -332,7 +332,7 @@ const NavBarFun = () => {
         </div>
         <div className="flex items-center gap-x-1">
           <Button variant="gradient" color="blue" size="sm" className="hidden lg:inline-block"onClick={()=>{
-            navigate("/login");
+            navigate("/game");
           }}>
             <span>Play</span>
           </Button>
