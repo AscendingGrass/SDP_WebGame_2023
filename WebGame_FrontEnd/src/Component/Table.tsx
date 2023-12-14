@@ -18,7 +18,7 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
  
 const TABS = [
   {
@@ -37,13 +37,17 @@ const TABS = [
  
 const TABLE_HEAD = ["Member", "Gender", "Status", "Role", "Action"];
  
-const [table, setTable] = useState(
-    (await axios.get("http://localhost:3000/allUser")).data.result
-)
 
 export function Table() {
-    console.log(TABLE_ROWS);
+    const [table, setTable] = useState([]);
     
+    useEffect(()=>{
+        const fetch = async ()=> {
+            setTable((await axios.get("http://localhost:3000/allUser")).data.result);
+        };
+        fetch();
+    }, [])
+
     return (
         <Card className="h-full w-full">
             <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -108,9 +112,9 @@ export function Table() {
                     </tr>
                     </thead>
                     <tbody >
-                    {TABLE_ROWS.map(
+                    {table.map(
                         ({ username, password, gender, role, status }, index) => {
-                        const isLast = index === TABLE_ROWS.length - 1;
+                        const isLast = index === table.length - 1;
                         const classes = isLast
                             ? "p-4"
                             : "p-4 border-b border-blue-gray-50";
