@@ -88,9 +88,9 @@ export function LoginForm() {
           Log In
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
-          Already have an account?{" "}
+          Didn't have Account?{" "}
           <Link to={"/login/register"} className="font-medium text-gray-900">
-            Sign In
+            Register
           </Link>
         </Typography>
       </Card>

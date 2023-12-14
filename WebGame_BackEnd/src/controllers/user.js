@@ -52,11 +52,11 @@ const login = async (req, res)=>{
 }
 
 const register = async (req, res)=>{
-    const { username, password, gender } = req.body;
+    const { username, password, gender, email } = req.body;
 
     const checkUsername = await User.findOne({
         username
-    });
+    }); 
 
     if(checkUsername){
         return res.status(200).json({
@@ -65,16 +65,16 @@ const register = async (req, res)=>{
         })
     }
 
-    // const checkEmail = await User.findOne({
-    //     email
-    // })
+    const checkEmail = await User.findOne({
+        email
+    })
 
-    // if(checkEmail){
-    //     return res.status(200).json({
-    //         error: true,
-    //         msg: "Email telah terpakai"
-    //     })
-    // }
+    if(checkEmail){
+        return res.status(200).json({
+            error: true,
+            msg: "Email telah terpakai"
+        })
+    }
 
     // if(password != confirm_password){
     //     return res.status(200).json({
@@ -85,8 +85,7 @@ const register = async (req, res)=>{
 
    
     const result = await User.insertMany({
-        username, password, gender,
-        email: "TEST",
+        username, password, gender, email,
         role: "user"
     });
 
