@@ -33,32 +33,36 @@ const Login = () => {
       </Tabs>
       <div className="flex flex-col w-full" id="nav-tabContent">
         <div className="tab-pane fade col-lg-5 show active overflow-y justify-center flex mt-10 " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
-        <table className={`table w-3/6 border-solid border-8 border-zinc-600`}>
-          <thead className=" ">
-            <tr className='bg-black text-[#f4f4f4]'>
-              <th className="w-1/4 " scope="col">Rank</th>
-              <th className="w-1/4" scope="col">Name</th>
-              <th className="w-1/4" scope="col">Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              isLoading && 
-              <Spinner/>
-            }
-            {
-              !isLoading && 
-              data.map((item, index) => (
-                <tr key={index}>
-                  <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`}>{index + 1}</td>
-                  <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`} style={{ width: '60%' }}>{item.username}</td>
-                  <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`}>{item.scoreboard}</td>
+          {
+            isLoading && 
+            <Spinner/>
+          }
+          {
+            !isLoading &&
+            <table className={`table w-3/6 border-solid border-8 border-zinc-600`}>
+              <thead className=" ">
+                <tr className='bg-black text-[#f4f4f4]'>
+                  <th className="w-1/4 " scope="col">Rank</th>
+                  <th className="w-1/4" scope="col">Name</th>
+                  <th className="w-1/4" scope="col">Score</th>
                 </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
+              </thead>
+              <tbody>
+                
+                {
+                  !isLoading && 
+                  data.map((item, index) => (
+                    <tr key={index}>
+                      <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`}>{index + 1}</td>
+                      <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`} style={{ width: '60%' }}>{item.username}</td>
+                      <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`}>{item.scoreboard}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          }
+        </div>
       </div>
       
     </div>
