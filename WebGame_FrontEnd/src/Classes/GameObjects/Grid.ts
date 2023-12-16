@@ -60,6 +60,12 @@ export class Grid{
         }
     }
 
+    public setTile(coordinate:Point, tile:string, groupAnimations:GroupAnimation[]): Tile{
+        const temp =  Tile.generate(tile, coordinate, groupAnimations)
+        this.tiles[coordinate.y][coordinate.x] = temp
+        return temp
+    }
+
     public update(deltaTime:number, updateArea:{position:Point, size:Point} | null = null, prioritizedUpdate:Animated[] = []):void{
         if(!updateArea){
             for(let i = 0; i < this.size.y; ++i){
@@ -102,8 +108,6 @@ export class Grid{
             if(x instanceof PlayerUnit) x.update(deltaTime);
             x.nextFrame(deltaTime)
         })
-
-        
     }
 
     public addEntity(entity:Entity):void{

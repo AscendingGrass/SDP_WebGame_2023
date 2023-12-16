@@ -3,14 +3,15 @@ import { Animation } from "./Animation";
 import { Entity } from "./Entity";
 import { Point } from "./Point";
 import { IHasCoordinate } from "./IHasCoordinate";
-import { GameState } from "../States/GameState";
 import { ChainedAnimation } from "./ChainedAnimation";
 import { GroupAnimation } from "./GroupAnimation";
+import { GameManager } from "../GameManager";
 
 
 export class Tile extends Animated implements IHasCoordinate {
     public static variantAlias:{[key:string]:string} = {
         'f':'floor',
+        'F':'marked_floor',
         'g':'grass',
     }
     public static defaultTileResolution:Point = {x:32, y:32}
@@ -25,10 +26,16 @@ export class Tile extends Animated implements IHasCoordinate {
         const floor = new Tile("floor", {x:0, y:0}, ()=>{})
         floor.addAnimation(GroupAnimation.animations[3])
 
+        const marked_floor = new Tile("marked_floor", {x:0, y:0}, ()=>{})
+        marked_floor.addAnimation(GroupAnimation.animations[5])
+
+        // console.log(GroupAnimation.animations[4]);
+
 
         this.variants = [
             grass,
-            floor
+            floor,
+            marked_floor
         ]
 
     }
@@ -57,15 +64,13 @@ export class Tile extends Animated implements IHasCoordinate {
     }
 
     public coordinate:Point;
-    public stepHandler:(tile:Tile,stepper:Entity,gameState:GameState) => void
+    public stepHandler:(tile:Tile,stepper:Entity,gameState:GameManager) => void
 
-    constructor(name:string, coordinate:Point, stepHandler:(tile:Tile,stepper:Entity,gameState:GameState)=>void, animations:Animation[] = []){
+    constructor(name:string, coordinate:Point, stepHandler:(tile:Tile,stepper:Entity,gameState:GameManager)=>void, animations:Animation[] = []){
         super(name, animations)
         this.coordinate = coordinate
         this.stepHandler = stepHandler
     }
-
-
 
     public setCoordinate(value:Point):void{
         this.coordinate = value;
@@ -75,7 +80,7 @@ export class Tile extends Animated implements IHasCoordinate {
         return this.coordinate
     }
 
-    public step(stepper:Entity, gameState:GameState):void {
+    public step(stepper:Entity, gameState:GameManager):void {
         this.stepHandler(this,stepper,gameState)
     }
 }

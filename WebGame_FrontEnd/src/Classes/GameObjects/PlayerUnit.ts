@@ -5,15 +5,15 @@ import { Animation } from "./Animation";
 import { Direction } from "./Direction";
 import { Point } from "./Point";
 import { Unit } from "./Unit";
-import { GameState } from "../States/GameState";
 import { PlayerState } from "../States/PlayerState";
+import { GameManager } from "../GameManager";
 
 export class PlayerUnit extends Unit{
     private playerState:PlayerState
     public terminal:Terminal;
     public inventory:Inventory = new Inventory()
 
-    constructor(playerState:PlayerState, gameState:GameState,animations:Animation[]=[]){
+    constructor(playerState:PlayerState, gameState:GameManager,animations:Animation[]=[]){
         super(playerState, "PlayerUnit", gameState, animations);
         this.terminal = new Terminal(this)
         this.playerState = playerState

@@ -5,7 +5,6 @@ import { grey } from '@mui/material/colors';
 import { Button } from '@material-tailwind/react';
 import { useNavigate } from 'react-router';
 
-// INI CUMAN BUAT NGETES AJA, APUS & GANTI2 AJA KALO MAU -Nichoasl, 18 Nov 23
 function App() {
   const [mode, setMode] = useState(false);
   const navigate = useNavigate();

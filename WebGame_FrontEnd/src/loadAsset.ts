@@ -36,6 +36,8 @@ export default function loadAsset():void{
     floor.src = "./Assets/SDP_floor.png"
     const wall = new Image()
     wall.src = "./Assets/SDP_wall.png"
+    const floor_marked = new Image()
+    floor_marked.src = "./Assets/SDP_floor_marked.png"
 
     Animation.assets['grass_tile'] = grass
     Animation.assets['red_grass_tile'] = redgrass
@@ -52,6 +54,7 @@ export default function loadAsset():void{
     Animation.assets['door_opened'] = door_opened
     Animation.assets['floor'] = floor
     Animation.assets['wall'] = wall
+    Animation.assets['floor_marked'] = floor_marked
 
     GroupAnimation.animations.push(
         new GroupAnimation(
@@ -85,6 +88,13 @@ export default function loadAsset():void{
         new GroupAnimation(
             "wall", 
             wall,
+            {x:32, y:32},
+            1,
+            0
+        ),
+        new GroupAnimation(
+            "floor_marked", 
+            floor_marked,
             {x:32, y:32},
             1,
             0
