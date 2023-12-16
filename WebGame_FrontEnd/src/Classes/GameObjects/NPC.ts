@@ -4,8 +4,8 @@ import { Unit } from "./Unit";
 import { NPCData } from "./NPCData";
 import { Point } from "./Point";
 import { ChainedAnimation } from "./ChainedAnimation";
-import { EventState } from "../States/EventState";
 import { GameManager } from "../GameManager";
+import { Event } from "../States/Event";
 
 export class NPC extends Unit{
     public static NPCData:NPCData[] = []
@@ -15,12 +15,12 @@ export class NPC extends Unit{
             {
                 name:"Tutorial Guy",
                 talkHandler:(self:NPC)=>{
-                    const gameState = self.gameState.currentState
+                    const gameState = self.gameState
 
-                    const eventState = gameState?.eventStates.find(x => x.id === "TUT001")
+                    const eventState = gameState?.events.find(x => x.getId() === "TUT001")
                     if(!eventState) {
-                        const temp = EventState.start(self.gameState,"TUT001")
-                        temp.properties.push({name:"NPC", value:self})
+                        const temp = Event.start(self.gameState,"TUT001")
+                        temp.state.properties.push({name:"NPC", value:self})
                     }
 
 
@@ -31,7 +31,7 @@ export class NPC extends Unit{
                             break;
                         case 1:
                             self.dialogIndex = 1
-                            eventState?.progress("talk_complete", self.gameState)
+                            eventState?.progress("talk_complete", self.gameState, [self])
                             break;
                         case 2:
                             self.dialogIndex = 1
@@ -74,7 +74,7 @@ export class NPC extends Unit{
                         
                     Animation.makeCopyIfChained(data.animations,newNPC).forEach(x => newNPC.addAnimation(x))
 
-                    EventState.start(gameState,"TUT001").properties.push({name:"NPC", value:newNPC})
+                    Event.start(gameState,"TUT001").state.properties.push({name:"NPC", value:newNPC})
                     newNPC.talk();
                     
                     return newNPC

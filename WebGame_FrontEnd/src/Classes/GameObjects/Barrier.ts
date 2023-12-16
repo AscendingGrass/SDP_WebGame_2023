@@ -1,7 +1,7 @@
 import { Animation } from "./Animation";
 import { Entity } from "./Entity";
 import { Point } from "./Point";
-import { GameState } from "../States/GameState";
+import { GameManager } from "../GameManager";
 
 export  class Barrier extends Entity{
     public static defaultTileResolution:Point = {x:32, y:32}
@@ -9,10 +9,11 @@ export  class Barrier extends Entity{
     public static variantAlias:{[key:string]:string} = {
         'w':'wall',
         'd':'door',
-        't':'door_tutorial',
+        'D':'door_tutorial',
+        't':'tree',
     }
 
-    constructor(name:string, coordinate:Point, gameState:GameState, animations:Animation[] = []){
+    constructor(name:string, coordinate:Point, gameState:GameManager, animations:Animation[] = []){
         super(name, coordinate,gameState, animations)
     }
 }

@@ -10,6 +10,7 @@ import { PlayerState } from './States/PlayerState';
 import { GroupAnimation } from './GameObjects/GroupAnimation';
 import { Direction } from './GameObjects/Direction';
 import { NPC } from './GameObjects/NPC';
+import { Event } from './States/Event';
 
 export class GameManager {
     private lastTimeStamp: number = 0;
@@ -22,6 +23,7 @@ export class GameManager {
     public logView: LogView | null = null;
     public player: PlayerUnit | null = null;
     public currentState:GameState |null = null
+    public events:Event[] = []
     public groupAnimations:GroupAnimation[] = []
 
     constructor(logView: LogView|null = null, canvasView: CanvasView | null = null, terminalView: TerminalView | null = null, gameState:GameState|null = null)  {
@@ -97,15 +99,27 @@ export class GameManager {
             this.grid.addEntity(this.player);
             NPC.loadNPCs(this).forEach(npc => this.grid.addEntity(npc))
             this.grid.loadBarriers(
-                'wwwwwww00\n' +
-                'w00000w00\n' +
-                'w00000w00\n' +
-                'w00000d00\n' +
-                'w00000w00\n' +
-                'w00000w00\n' +
-                'wwwwwww00\n' 
+                'wwwwwwwtttttttttttttttttttttttttttttttttttttt\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'w00000d0000000000000000000000000000000000000t\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'wwwwwww0000000000000000000000000000000000000t\n' + 
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                'ttttttttttttttttttttttttttttttttttttttttttttt\n'
                 ,
-                this.currentState,
+                this,
                 this.groupAnimations
             )
             this.grid.fill("grass", this.groupAnimations)
@@ -173,7 +187,8 @@ export class GameManager {
     }
 
     private update(): void {
-        this.currentState?.update(this.getDeltatime(), this)
+        this.currentState?.update(this.getDeltatime())
+        this.events.forEach(x => x.update(this.getDeltatime(),this))
         if (!this.canvasView) {
             this.grid.update(this.getDeltatime())
             return

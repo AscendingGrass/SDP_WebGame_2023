@@ -1,5 +1,4 @@
 import { ColoredText } from "../ColoredText";
-import { GameManager } from "../GameManager";
 import { EventState } from "./EventState";
 import { PlayerState } from "./PlayerState";
 
@@ -21,11 +20,8 @@ export class GameState{
         this.logs = logs
     }
 
-    public update(deltaTime:number, gameManager:GameManager) {
+    public update(deltaTime:number) {
         this.playtime += deltaTime
-        this.eventStates.forEach(eventState => {
-            eventState.update(deltaTime, gameManager)
-        })
     }
 
     // public copy():GameState{

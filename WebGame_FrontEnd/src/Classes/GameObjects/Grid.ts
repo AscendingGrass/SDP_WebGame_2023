@@ -5,8 +5,8 @@ import { Animated } from "./Animated";
 import { PlayerUnit } from "./PlayerUnit";
 import { GroupAnimation } from "./GroupAnimation";
 import { Barrier } from "./Barrier";
-import { GameState } from "../States/GameState";
 import { generateBarrier } from "./BarrierVariants";
+import { GameManager } from "../GameManager";
 
 export class Grid{
     public readonly size:Point
@@ -37,7 +37,7 @@ export class Grid{
         }
     }
 
-    public loadBarriers(barrierMap:string, gameState:GameState, groupAnimations:GroupAnimation[]){
+    public loadBarriers(barrierMap:string, gameState:GameManager, groupAnimations:GroupAnimation[]){
         const barrierMapArr = barrierMap.split('\n')
         for (let i = 0; i < barrierMapArr.length; i++) {
             for (let j = 0; j < barrierMapArr[i].length; j++) {
