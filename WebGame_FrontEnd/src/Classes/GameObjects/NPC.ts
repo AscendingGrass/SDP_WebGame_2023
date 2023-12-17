@@ -39,6 +39,19 @@ export class NPC extends Unit{
                         case 3:
                             self.dialogIndex = 2
                             break;
+                        case 4:
+                            self.dialogIndex = 3
+                            break;
+                        case 5:
+                            self.dialogIndex = 4
+                            eventState?.progress("walk_complete_1", self.gameState, [self])
+                            break;
+                        case 6: // walk test failed
+                            self.dialogIndex = 5
+                            break;
+                        case 7: // walk test success
+                            self.dialogIndex = 6
+                            break;
                     }
 
 
@@ -90,13 +103,29 @@ export class NPC extends Unit{
                         "Try moving to the marked floor to your right!'",
                     ],
                     [
-                        "I don't know what to say...",
-                        "There is someone smart enough to talk!",
+                        "Now try to move to the marked floor down there!",
+                        "You can do it by writing \n self.moveDown(2); \n self.moveLeft();",
+                        "The number you put in the parenthesis is the number of steps you want to walk!"
                     ],
                     [
-                        "You are the one!",
-                        "The only person with at least 3 IQ!!!",
-                        "You must be! because you can talk!"
+                        "you did well!",
+                        "Now go back here and talk to me!",
+                        "You can do it by writing \n self.moveUp(2); \n self.talk();"
+                    ],
+                    [
+                        "For your last tutorial on movement, I want you to step on all the marked floors by just running the whole movement sequence at once",
+                        "If you fail to do it, all the marks will show up again",
+                        "You can't press the start button more than once to run multiple codes",
+                        "You need to do it in one go",
+                        "Don't forget to end each line of code with a semi colon (;)",
+                    ],
+                    [
+                        "You're 3 IQ, and your braincells are leaking...",
+                        "Try again",
+                    ],
+                    [
+                        "Pretty easy isn't it?",
+                        
                     ]
                 ],
                 animations:[

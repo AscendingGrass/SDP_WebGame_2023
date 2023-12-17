@@ -7,6 +7,7 @@ export class EndCommand extends Command{
     }
 
     public Execute(): void {
+        this.terminal.stop()
     }
     
 }
