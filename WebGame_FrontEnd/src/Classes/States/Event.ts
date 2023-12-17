@@ -59,6 +59,7 @@ export class Event{
 
                     const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
                         if(stepper == gameState.player){
+                            tile.stepHandler = () => {}
                             self.progress("try_walk", gameManager, eventArgs)
                         }
                     }
@@ -71,6 +72,7 @@ export class Event{
                     const targetCoordinate2 = self.getProperty("target_coordinate_2").value as Point
                     const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
                         if(stepper == gameState.player){
+                            tile.stepHandler = () => {}
                             self.progress("try_walk_2", gameManager, eventArgs)
                         }
                     }
@@ -107,6 +109,7 @@ export class Event{
                     const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
                         if(stepper == gameState.player){
                             const property = self.getProperty("stepped_target_coordinates")
+                            tile.stepHandler = () => {}
                             gameManager.grid.setTile(tile.coordinate, 'floor', gameManager.groupAnimations);
                             property.value = (property.value as number) + 1
                         }
@@ -130,6 +133,7 @@ export class Event{
                         else {
                             property.value = 0
                             targetCoordinates.forEach(x => {
+                                gameManager.grid.tiles[x.y][x.x]!.stepHandler = () => {}
                                 gameManager.grid.setTile(x, 'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler;
                             })
                             self.getProperty("progress").value = 6;

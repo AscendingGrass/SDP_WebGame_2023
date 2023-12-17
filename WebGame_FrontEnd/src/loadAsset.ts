@@ -4,7 +4,10 @@ import { GroupAnimation } from "./Classes/GameObjects/GroupAnimation"
 import { NPC } from "./Classes/GameObjects/NPC"
 import { Tile } from "./Classes/GameObjects/Tile"
 
+let initialized:boolean = false
+
 export default function loadAsset():void{
+    if(initialized) return
 
     const grass = new Image()
     grass.src = "./Assets/Prototype/itland_ptype_grasstile.png"
@@ -114,4 +117,5 @@ export default function loadAsset():void{
     Tile._initialize()
     NPC._initialize()
     _initializeBarrierVariants()
+    initialized = true
 }
