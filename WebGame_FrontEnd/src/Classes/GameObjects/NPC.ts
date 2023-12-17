@@ -51,11 +51,7 @@ export class NPC extends Unit{
                         )
                         self.dialogProgress++
                     }
-                    self.gameState?.logView?.addLog(
-                        [
-                            {color:"green", value:"=========================="}
-                        ]
-                    )
+                    self.gameState?.logView?.writeSeparator()
                     self.dialogProgress = 0
                     self.dialogIndex = -1
                 },
@@ -73,9 +69,11 @@ export class NPC extends Unit{
                     )
                         
                     Animation.makeCopyIfChained(data.animations,newNPC).forEach(x => newNPC.addAnimation(x))
-
-                    Event.start(gameState,"TUT001").state.properties.push({name:"NPC", value:newNPC})
-                    newNPC.talk();
+                    const event = gameState.events.find(x => x.getId() === "TUT001")
+                    if(!event){
+                        Event.start(gameState,"TUT001")
+                        newNPC.talk();
+                    }
                     
                     return newNPC
                     

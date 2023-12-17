@@ -117,6 +117,8 @@ export class Grid{
             return
         }
         if(this.entityGrid[entity.getCoordinate().y][entity.getCoordinate().x] != null){
+            console.log("coordinate is taken error, entity: ");
+            console.log(this.entityGrid[entity.getCoordinate().y][entity.getCoordinate().x]);
             throw Error("This coordinate is taken")
         }
         this.entities.push(entity)
