@@ -1,32 +1,136 @@
-[{
-  "_id": {
-    "$oid": "65708166aabb061ce50dbc05"
+[
+  {
+    "_id": {
+      "$oid": "657ed740dc599aa08645f5b6"
+    },
+    "username": "adminITLAND",
+    "password": "ITLAND123!",
+    "email": "admin@example.com",
+    "role": "admin",
+    "gender": "Male",
+    "status": "active",
+    "created_at": {
+      "$numberLong": "1702811456858"
+    }
   },
-  "username": "adminITLAND",
-  "password": "ITLAND123!",
-  "email": "admin@example.com",
-  "role": "admin",
-  "gender": "Male",
-  "status": "active",
-  "created_at": {
-    "$numberLong": "1701871974559"
+  {
+    "_id": {
+      "$oid": "657ed740dc599aa08645f5b7"
+    },
+    "username": "johnson",
+    "password": "123456789",
+    "email": "jonhson@gmail.com",
+    "role": "user",
+    "gender": "male",
+    "volume": 42,
+    "scoreboard": {
+      "$oid": "657ed9c4dc599aa08645f5bd"
+    },
+    "status": "active",
+    "created_at": {
+      "$numberLong": "1702811456858"
+    },
+    "updated_at": null,
+    "deleted_at": null
+  },
+  {
+    "_id": {
+      "$oid": "657ed740dc599aa08645f5b8"
+    },
+    "username": "mary_smith",
+    "password": "mary123",
+    "email": "mary.smith@email.com",
+    "role": "user",
+    "gender": "female",
+    "volume": 30,
+    "scoreboard": {
+      "$oid": "657ed9c4dc599aa08645f5be"
+    },
+    "status": "active",
+    "created_at": {
+      "$numberLong": "1702811456858"
+    },
+    "updated_at": null,
+    "deleted_at": null
+  },
+  {
+    "_id": {
+      "$oid": "657ed740dc599aa08645f5b9"
+    },
+    "username": "robert_jones",
+    "password": "robert456",
+    "email": "robert.jones@example.net",
+    "role": "user",
+    "gender": "male",
+    "volume": 18,
+    "scoreboard": {
+      "$oid": "657ed9c4dc599aa08645f5bf"
+    },
+    "status": "active",
+    "created_at": {
+      "$numberLong": "1702811456858"
+    },
+    "updated_at": null,
+    "deleted_at": null
+  },
+  {
+    "_id": {
+      "$oid": "657ed740dc599aa08645f5ba"
+    },
+    "username": "alice_doe",
+    "password": "alice789",
+    "email": "alice.doe@email.com",
+    "role": "user",
+    "gender": "female",
+    "volume": 25,
+    "scoreboard": {
+      "$oid": "657ed9c4dc599aa08645f5c0"
+    },
+    "status": "active",
+    "created_at": {
+      "$numberLong": "1702811456858"
+    },
+    "updated_at": null,
+    "deleted_at": null
+  },
+  {
+    "_id": {
+      "$oid": "657ed740dc599aa08645f5bb"
+    },
+    "username": "peter_green",
+    "password": "green123",
+    "email": "peter.green@example.org",
+    "role": "user",
+    "gender": "male",
+    "volume": 15,
+    "scoreboard": {
+      "$oid": "657ed9c4dc599aa08645f5c1"
+    },
+    "status": "active",
+    "created_at": {
+      "$numberLong": "1702811456858"
+    },
+    "updated_at": null,
+    "deleted_at": null
+  },
+  {
+    "_id": {
+      "$oid": "657ed740dc599aa08645f5bc"
+    },
+    "username": "susan_wilson",
+    "password": "susan456",
+    "email": "susan.wilson@email.com",
+    "role": "user",
+    "gender": "female",
+    "volume": 35,
+    "scoreboard": {
+      "$oid": "657ed9c4dc599aa08645f5c2"
+    },
+    "status": "active",
+    "created_at": {
+      "$numberLong": "1702811456858"
+    },
+    "updated_at": null,
+    "deleted_at": null
   }
-},
-{
-  "_id": {
-    "$oid": "65708166aabb061ce50dbc06"
-  },
-  "username": "user1",
-  "password": "user123!",
-  "email": "user1@example.com",
-  "role": "user",
-  "gender": "male",
-  "volume": 42,
-  "scoreboard": "A",
-  "status": "active",
-  "created_at": {
-    "$numberLong": "1701871974559"
-  },
-  "updated_at": null,
-  "deleted_at": null
-}]
+]

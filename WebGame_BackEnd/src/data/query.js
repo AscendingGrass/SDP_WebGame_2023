@@ -9,9 +9,9 @@ db.users.insertMany([
         "created_at": Date.now()
     },
     {
-        "username": "user1",
-        "password": "user123!",
-        "email": "user1@example.com",
+        "username": "johnson",
+        "password": "123456789",
+        "email": "jonhson@gmail.com",
         "role": "user",
         "gender": "male",
         "volume": 42,
@@ -20,7 +20,72 @@ db.users.insertMany([
         "created_at": Date.now(),
         "updated_at": null,
         "deleted_at": null
-    }
+    },
+    {
+      "username": "mary_smith",
+      "password": "mary123",
+      "email": "mary.smith@email.com",
+      "role": "user",
+      "gender": "female",
+      "volume": 30,
+      "scoreboard": "B",
+      "status": "active",
+      "created_at": Date.now(),
+      "updated_at": null,
+      "deleted_at": null
+  },
+  {
+      "username": "robert_jones",
+      "password": "robert456",
+      "email": "robert.jones@example.net",
+      "role": "user",
+      "gender": "male",
+      "volume": 18,
+      "scoreboard": "C",
+      "status": "active",
+      "created_at": Date.now(),
+      "updated_at": null,
+      "deleted_at": null
+  },
+  {
+      "username": "alice_doe",
+      "password": "alice789",
+      "email": "alice.doe@email.com",
+      "role": "user",
+      "gender": "female",
+      "volume": 25,
+      "scoreboard": "A",
+      "status": "active",
+      "created_at": Date.now(),
+      "updated_at": null,
+      "deleted_at": null
+  },
+  {
+      "username": "peter_green",
+      "password": "green123",
+      "email": "peter.green@example.org",
+      "role": "user",
+      "gender": "male",
+      "volume": 15,
+      "scoreboard": "B",
+      "status": "active",
+      "created_at": Date.now(),
+      "updated_at": null,
+      "deleted_at": null
+  },
+  {
+      "username": "susan_wilson",
+      "password": "susan456",
+      "email": "susan.wilson@email.com",
+      "role": "user",
+      "gender": "female",
+      "volume": 35,
+      "scoreboard": "A",
+      "status": "active",
+      "created_at": Date.now(),
+      "updated_at": null,
+      "deleted_at": null
+  }
 ]);
 
 db.announcement.insertMany(

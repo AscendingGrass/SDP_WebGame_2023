@@ -1,0 +1,91 @@
+[{
+  "_id": {
+    "$oid": "657ed9c4dc599aa08645f5bd"
+  },
+  "user_id": "657ed740dc599aa08645f5b6",
+  "score": 0,
+  "status": "active",
+  "created_at": {
+    "$date": "2023-01-15T08:30:00.000Z"
+  },
+  "updated_at": null,
+  "deleted_at": null
+},
+{
+  "_id": {
+    "$oid": "657ed9c4dc599aa08645f5be"
+  },
+  "user_id": "657ed740dc599aa08645f5b7",
+  "score": 0,
+  "status": "active",
+  "created_at": {
+    "$date": "2023-01-15T08:30:00.000Z"
+  },
+  "updated_at": null,
+  "deleted_at": null
+},
+{
+  "_id": {
+    "$oid": "657ed9c4dc599aa08645f5bf"
+  },
+  "user_id": "657ed740dc599aa08645f5b8",
+  "score": 0,
+  "status": "active",
+  "created_at": {
+    "$date": "2023-01-15T08:30:00.000Z"
+  },
+  "updated_at": null,
+  "deleted_at": null
+},
+{
+  "_id": {
+    "$oid": "657ed9c4dc599aa08645f5c0"
+  },
+  "user_id": "657ed740dc599aa08645f5b9",
+  "score": 0,
+  "status": "active",
+  "created_at": {
+    "$date": "2023-01-15T08:30:00.000Z"
+  },
+  "updated_at": null,
+  "deleted_at": null
+},
+{
+  "_id": {
+    "$oid": "657ed9c4dc599aa08645f5c1"
+  },
+  "user_id": "657ed740dc599aa08645f5ba",
+  "score": 0,
+  "status": "active",
+  "created_at": {
+    "$date": "2023-01-15T08:30:00.000Z"
+  },
+  "updated_at": null,
+  "deleted_at": null
+},
+{
+  "_id": {
+    "$oid": "657ed9c4dc599aa08645f5c2"
+  },
+  "user_id": "657ed740dc599aa08645f5bb",
+  "score": 0,
+  "status": "active",
+  "created_at": {
+    "$date": "2023-01-15T08:30:00.000Z"
+  },
+  "updated_at": null,
+  "deleted_at": null
+},
+{
+  "_id": {
+    "$oid": "657ed9c4dc599aa08645f5c3"
+  },
+  "user_id": "657ed740dc599aa08645f5bc",
+  "score": 0,
+  "status": "active",
+  "created_at": {
+    "$date": "2023-01-15T08:30:00.000Z"
+  },
+  "updated_at": null,
+  "deleted_at": null
+}]

@@ -20,9 +20,11 @@ const ScoreboardSchema = new mongoose.Schema({
     },
     updated_at:{
         type: Date,
+        default: null,
     },
     deleted_at:{
         type: Date,
+        default: null,
     },
     // Other properties specific to your Scoreboard model
 });

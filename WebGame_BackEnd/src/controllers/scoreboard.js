@@ -1,4 +1,5 @@
-const { User, Scoreboard } = require("../models");
+const User = require("../models/Users");
+const Scoreboard = require("../models/Scoreboards");
 
 const insertScoreboard = async (req, res) => {
     const { user_id } = req.params;

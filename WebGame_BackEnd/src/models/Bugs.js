@@ -26,9 +26,11 @@ const BugSchema = new mongoose.Schema({
     },
     updated_at:{
         type: Date,
+        default: null,
     },
     deleted_at:{
         type: Date,
+        default: null,
     },
 })
 

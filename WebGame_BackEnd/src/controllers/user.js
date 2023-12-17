@@ -1,3 +1,4 @@
+const Scoreboard = require("../models/Scoreboards");
 const User = require("../models/Users");
 const jwt = require('jsonwebtoken');
 
@@ -84,10 +85,24 @@ const register = async (req, res)=>{
     // }
 
    
-    const result = await User.insertMany({
+    const newUser = await User.create({
         username, password, gender, email,
         role: "user"
     });
+
+    const scoreboard = await Scoreboard.create({
+        user_id: newUser._id,
+    })
+
+    await User.findOneAndUpdate({
+        _id: newUser._id
+    }, {
+        $set: {
+            scoreboard: scoreboard._id
+        }
+    })
+
+    const result = await User.findById(newUser._id)
 
     return res.status(200).json({
         error: false,
@@ -144,9 +159,35 @@ const allUserStatus = async (req, res) => {
 }
 
 const fetchMale = async (req, res) => {
-    const result = await User.find({
-        gender: "male"
-    });
+    const result = await User.aggregate([
+        {
+            $match: {
+                gender: "male"
+            }
+        },
+        {
+            $lookup: {
+                from: "scoreboards",
+                localField: "scoreboard",
+                foreignField: "_id",
+                as: "scoreboard"
+            }
+        },
+        {
+            $addFields: {
+                score: "$scoreboard.score"
+            }
+        },
+        {
+            $project: {
+                username: "$username",
+                score: {
+                    $arrayElemAt: ["$score", 0]
+                }
+            }
+        }
+        
+    ]);
     return res.status(200).json({
         error: false,
         result
@@ -154,9 +195,33 @@ const fetchMale = async (req, res) => {
 }
 
 const fetchFemale = async (req, res) => {
-    const result = await User.find({
-        gender: "female"
-    });
+    const result = await User.aggregate([
+        {
+            $match: {
+                gender: "female"
+            }
+        },
+        {
+            $lookup: {
+                from: "scoreboards",
+                localField: "scoreboard",
+                foreignField: "_id",
+                as: "scoreboard"
+            }
+        },
+        {
+            $addFields: {
+                score: "$scoreboard.score"
+            }
+        },{
+            $project: {
+                username: "$username",
+                score: {
+                    $arrayElemAt: ["$score", 0]
+                }
+            }
+        }
+    ]);
 
     return res.status(200).json({
         error: false,

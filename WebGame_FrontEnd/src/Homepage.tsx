@@ -24,7 +24,7 @@ const Homepage = () => {
     <div className="flex justify-center">
       <div className="w-3/4">
         <div className="text-4xl mt-8 font-bold">Latest News :</div>
-        <div className="w-full flex flex-grow flex-row mt-10">
+        <div className="w-full flex flex-grow justify-between mt-10">
           {
             news.length == 0 &&
             <div className="text-4xl">No News</div>
@@ -33,7 +33,7 @@ const Homepage = () => {
             news.length > 0 &&
             news.map((item, index) => (
               <div className="basis-1/3 flex" key={index}>
-                <div className="card card rounded-md table w-3/4 border-solid border-8 border-gray-400 bg-gray-400 ">
+                <div className="card card rounded-md table w-3/4 mx-auto border-solid border-8 border-gray-400 bg-gray-400 ">
                   <div className="card-header">
                     <div className="card-title text-2xl font-bold">{item.title}</div>
                   </div>

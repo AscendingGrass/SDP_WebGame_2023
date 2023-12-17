@@ -12,10 +12,12 @@ app.use(cors({
 }));
 
 const userRouter = require("./src/routes/user");
+const scoreboardRouter = require("./src/routes/scoreboard");
 const announcementRouter = require("./src/routes/announcement");
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use("/", userRouter);
+app.use("/", scoreboardRouter);
 app.use("/", announcementRouter);
 
 app.listen(port, async () => {

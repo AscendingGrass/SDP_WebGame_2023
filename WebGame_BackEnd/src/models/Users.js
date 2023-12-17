@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema({
     },
     volume: {
         type: Number,
+        default: 0,
     },
     save: {
         type: mongoose.Schema.Types.ObjectId,
@@ -40,11 +41,13 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    updated_at: {
+    updated_at:{
         type: Date,
+        default: null,
     },
-    deleted_at: {
+    deleted_at:{
         type: Date,
+        default: null,
     },
 });
 
