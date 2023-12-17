@@ -3,7 +3,6 @@ import { Entity } from "./GameObjects/Entity"
 import { SpriteFrame } from "./GameObjects/SpriteFrame"
 import { Point } from "./GameObjects/Point"
 import { Grid } from "./GameObjects/Grid"
-import { PlayerUnit } from "./GameObjects/PlayerUnit"
 import { Unit } from "./GameObjects/Unit"
 
 export class CanvasView{
@@ -107,6 +106,10 @@ export class CanvasView{
         this.cameraPosition = position
     }
 
+    public getCameraMoved():boolean{
+        return this.cameraMoved
+    }
+
     public getCameraPosition():Point{
         return this.cameraPosition
     }
@@ -142,7 +145,7 @@ export class CanvasView{
             if(i < 0) continue;
             for (let j = jStart; j < jEnd; j++) {
                 if(j < 0) continue;
-                const tileSprite:SpriteFrame|undefined = grid.tiles[i]?.at(j)?.currentAnimationFrame();
+                const tileSprite:SpriteFrame|undefined = grid.tiles[i][j]?.currentAnimationFrame();
                 
                 if(tileSprite) {
                     const xSize = oneTileSizeX * tileSprite.resolution.x;
@@ -173,7 +176,7 @@ export class CanvasView{
             if(i < 0) continue;
             for (let j = jStart; j < jEnd; j++) {
                 if(j < 0) continue;
-                let entity:Entity|null = grid.entityGrid[i]?.at(j);
+                let entity:Entity|null = grid.entityGrid[i][j];
 
                 while(entity) {
                     const entitySprite = entity.currentAnimationFrame()

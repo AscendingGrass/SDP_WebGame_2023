@@ -28,6 +28,10 @@ export class Event{
                     {
                         name:"target_coordinate",
                         value:{x:4,y:3}
+                    },
+                    {
+                        name:"NPC_name",
+                        value:"Tutorial Guy"
                     }
                 ]
             ),
@@ -75,7 +79,22 @@ export class Event{
                 // "open_complete":(self:Event,gameManager:GameManager)=>{
                 //     self.getProperty("progress").value = 7
                 // },
-            })
+            },
+            (self:Event, gameManager:GameManager)=>{
+                const progress = self.getValueOf("progress") as number
+                if(progress == 2){
+                    const targetCoordinate = self.getValueOf("target_coordinate") as Point
+
+                    const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
+                        if(stepper == gameState.player){
+                            self.progress("try_walk", gameManager, [gameState.grid.entities.find(x => x.getName() === (self.getValueOf("NPC_name") as string))])
+                        }
+                    }
+
+                    gameManager.grid.setTile(targetCoordinate, 'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler
+                }
+            }
+        )
     ];
 
     public static start(gameState:GameManager, eventId:string, loadedState?:EventState):Event{
@@ -88,32 +107,47 @@ export class Event{
         )
 
         if(!gameState.currentState?.eventStates.find(x => x === state)){
+            gameState.events.push(newEvent)
             gameState.currentState?.eventStates.push(
                 state
             )
+            return newEvent
+        }
+        else{
+            gameState.events[gameState.events.findIndex(x=>x.getId()===eventId)] = newEvent
+            gameState.currentState!.eventStates[gameState.currentState?.eventStates.findIndex(x=>x.id===state.id)] = state
         }
 
-        gameState.events.push(newEvent)
-        return newEvent
+        if(loadedState){
+            newEvent.load(gameState)
+        }
+
+        throw Error("Event " + eventId + " already started")
     }
 
     public state:EventState
     public onEventProgressed:{[progressName:string]:((self:Event, gameManager:GameManager, eventArgs:unknown[]) => void)}
     public onUpdate:(deltaTime:number, gameState:GameManager)=>void
+    public onLoad:(self:Event, gameManager:GameManager)=>void
     
     /**
      *
      */
-    constructor(state:EventState, onEventProgressed:{[progressName:string]:((self:Event, gameManager:GameManager, eventArgs:unknown[]) => void)}, onUpdate:(deltaTime:number, gameState:GameManager)=>void = ()=>{}) {
+    constructor(state:EventState, onEventProgressed:{[progressName:string]:((self:Event, gameManager:GameManager, eventArgs:unknown[]) => void)}, onLoad:(self:Event, gameManager:GameManager)=>void = () => {}, onUpdate:(deltaTime:number, gameState:GameManager)=>void = ()=>{}) {
         this.state = state
         this.onEventProgressed = onEventProgressed        
         this.onUpdate = onUpdate
+        this.onLoad = onLoad
     }
 
     public getId():string { return this.state.id }
 
     public update(deltaTime:number, gameState:GameManager):void{
         this.onUpdate(deltaTime, gameState)
+    }
+
+    public load(gameManager:GameManager):void{
+        this.onLoad(this, gameManager)
     }
 
     public progress(progressName:string, gameState:GameManager, eventArgs:unknown[] = []){

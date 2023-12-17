@@ -11,6 +11,7 @@ import { GroupAnimation } from './GameObjects/GroupAnimation';
 import { Direction } from './GameObjects/Direction';
 import { NPC } from './GameObjects/NPC';
 import { Event } from './States/Event';
+import axios from 'axios';
 
 export class GameManager {
     private lastTimeStamp: number = 0;
@@ -26,23 +27,50 @@ export class GameManager {
     public events:Event[] = []
     public groupAnimations:GroupAnimation[] = []
 
-    constructor(logView: LogView|null = null, canvasView: CanvasView | null = null, terminalView: TerminalView | null = null, gameState:GameState|null = null)  {
+    constructor(logView: LogView|null = null, canvasView: CanvasView | null = null, terminalView: TerminalView | null = null)  {
         this.setCanvasView(canvasView);
         this.setLogView(logView)
         this.grid = new Grid({ x: 100, y: 100 })
         this.groupAnimations = GroupAnimation.animations.map(x => x.copy())
-        this.load(gameState)
         this.setTerminalView(terminalView);
-
     }
 
-    public save():void{
+    public async save(userId:string){
+        this.logView?.addLog([
+            { 
+                value: 'Saving game...',
+                color: 'green'
+            }
+        ]);
 
+        this.logView?.writeSeparator()
+
+        const result = await axios.post(`http://localhost:3000/save/${userId}`, this.currentState).catch(err =>  {
+            this.logView?.addLog([
+                { 
+                    value: 'Error saving game',
+                    color: 'red'
+                }
+            ]);
+        })
+        this.logView?.writeSeparator()
+
+        if(!result) return
+        
+
+        this.logView?.addLog([
+            {
+                value: 'Game saved',
+                color: 'green'
+            }
+        ])
+        this.logView?.writeSeparator()
+
+
+        // await axios.post("http://localhost:3000/login", this.currentState)
     }
 
     public load(gameState:GameState|null = null):void {
-        
-        
         if(gameState == null){
 
             const playerState = new PlayerState({x:3,y:3})
@@ -97,7 +125,13 @@ export class GameManager {
             this.player.setDirection(Direction.Up)
             this.player.setMoveSpeed(2);
             this.grid.addEntity(this.player);
-            NPC.loadNPCs(this).forEach(npc => this.grid.addEntity(npc))
+            try{
+                NPC.loadNPCs(this).forEach(npc => this.grid.addEntity(npc))
+            }
+            catch(err){
+
+                console.log((err as Error).message);
+            }
             this.grid.loadBarriers(
                 'wwwwwwwtttttttttttttttttttttttttttttttttttttt\n' +
                 'w00000w0000000000000000000000000000000000000t\n' +
@@ -108,15 +142,15 @@ export class GameManager {
                 'wwwwwww0000000000000000000000000000000000000t\n' + 
                 't0000000000000000000000000000000000000000000t\n' +
                 't0000000000000000000000000000000000000000000t\n' +
-                't0000000000000000000000000000000000000000000t\n' +
-                't0000000000000000000000000000000000000000000t\n' +
-                't0000000000000000000000000000000000000000000t\n' +
-                't0000000000000000000000000000000000000000000t\n' +
-                't0000000000000000000000000000000000000000000t\n' +
-                't0000000000000000000000000000000000000000000t\n' +
-                't0000000000000000000000000000000000000000000t\n' +
-                't0000000000000000000000000000000000000000000t\n' +
-                't0000000000000000000000000000000000000000000t\n' +
+                't0wwwwwwwwwwwww00000000000000000000000000000t\n' +
+                't0w00000000000w00000000000000000000000000000t\n' +
+                't0w00000000000w00000000000000000000000000000t\n' +
+                't0w00000000000w00000000000000000000000000000t\n' +
+                't0wwdwwwwwwdwww00000000000000000000000000000t\n' +
+                't0w0000wt00000000000000000000000000000000000t\n' +
+                't0w0000w000t000t0000000000000000000000000000t\n' +
+                't0wwwwww00000t000000000000000000000000000000t\n' +
+                't0000000000tt0000000000000000000000000000000t\n' +
                 'ttttttttttttttttttttttttttttttttttttttttttttt\n'
                 ,
                 this,
@@ -130,7 +164,18 @@ export class GameManager {
                 'fffffff00\n' +
                 'fffffff00\n' +
                 'fffffff00\n' +
-                'fffffff00\n' 
+                'fffffff00\n' +
+                '000000000\n' +
+                '000000000\n' +
+                '00fffffffffffff\n' +
+                '00fffffffffffff\n' +
+                '00fffffffffffff\n' +
+                '00fffffffffffff\n' +
+                '00fffffffffffff\n' +
+                '00ffffff\n' +
+                '00ffffff\n' +
+                '00ffffff\n' +
+                '000000000\n'  
                 ,
                 this.groupAnimations
             )
@@ -138,6 +183,8 @@ export class GameManager {
             this.currentState = gameState
             throw Error("Not Implemented");
         }
+
+        this.setTerminalView(this.terminalView)
     }
 
     public getDeltatime(): number {
@@ -162,8 +209,8 @@ export class GameManager {
     }
 
     public setTerminalView(terminalView: TerminalView | null): void {
-        terminalView?.setTerminal(this.player?.terminal ?? null)
         this.terminalView?.setTerminal(null)
+        terminalView?.setTerminal(this.player?.terminal ?? null)
         this.terminalView = terminalView
     }
 
@@ -213,5 +260,6 @@ export class GameManager {
     private render(): void {
         this.canvasView?.render(this.grid)
         this.canvasView?.getContext()?.fillText("fps : " + (1 / this.deltaTime).toFixed(3), 10, 80)
+        this.canvasView?.getContext()?.fillText("Score : " + this.currentState?.score, 10, 100)
     }
 }

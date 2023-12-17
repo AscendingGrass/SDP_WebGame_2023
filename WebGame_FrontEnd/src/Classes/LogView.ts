@@ -18,6 +18,14 @@ export class LogView{
         this.logArea = value
     }
 
+    public writeSeparator(color:string="green"):void{
+        this.addLog(
+            [
+                {color:color, value:"=========================="}
+            ]
+        )
+    }
+
     public addLog(value:ColoredText[]){
         this.logs.push(value)
         

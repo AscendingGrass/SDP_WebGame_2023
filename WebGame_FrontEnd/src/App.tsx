@@ -4,12 +4,15 @@ import {loadGame} from './loadGame';
 import { grey } from '@mui/material/colors';
 import { Button } from '@material-tailwind/react';
 import { useNavigate } from 'react-router';
+import { useData } from './DataContext';
+
 
 function App() {
   const [mode, setMode] = useState(false);
+  const {state, dispatch} = useData();
   const navigate = useNavigate();
   useEffect(() => {
-    loadGame()
+    loadGame(null, state.user?._id)
   }, [])
 
   return (
