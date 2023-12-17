@@ -8,119 +8,88 @@ import {
   } from "@material-tailwind/react";
 import axios from "axios";
 import { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 export default function RegisterForm() {
-    const [register, setRegister] = useState({
-        username: '',
-        password: '',
-        email: '',
-        gender: 'male',
-      })
-      const [error, setError] = useState(false);
-      const [msg, setMsg] = useState('');
-    
-      const handleRegister = async () => {
-        const body = {...register};
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const [error, setError] = useState(false);
+    const [msg, setMsg] = useState('');
+
+    const handleRegister = async (data) => {
+        const body = {...data};
         const result = (await axios.post("http://localhost:3000/register", body)).data;
 
         setError(result.error);
         setMsg(result.msg)
-        setRegister({
-            username: '',
-            password: '',
-            email: '',
-            gender: 'male'
-        });   
-        console.log(result);
-        
+        reset();
       };
     
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-    
-        setRegister((prevMatch) => ({
-          ...prevMatch,
-          [name]: value,
-        }));
-    
-        console.log(name + ' ' + value);
-      };
     return (
         <Card color="transparent" shadow={false}>
             <Typography variant="h4" color="blue-gray">
                 Sign Up
             </Typography>
-            <div className="mt-4 mb-2 w-80 max-w-screen-lg sm:w-96">
+            <form onSubmit={handleSubmit(handleRegister)} className="mt-4 mb-2 w-80 max-w-screen-lg sm:w-96">
                 <div className="mb-1 flex flex-col gap-6">
-                <Typography variant="h6" color="blue-gray" className="">
-                    Username
-                </Typography>
-                <Input
-                    size="lg"
-                    placeholder="Enter your username"
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    name="username"
-                    labelProps={{
-                        className: "before:content-none after:content-none",
-                    }}
-                    onChange={handleInputChange}
-                    value={register.username}
-                />
-                <Typography variant="h6" color="blue-gray" className="">
-                    Email
-                </Typography>
-                <Input
-                    size="lg"
-                    placeholder="Enter your email"
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    labelProps={{
-                        className: "before:content-none after:content-none",
-                    }}
-                    name="email"
-                    value={register.email}
-                    onChange={handleInputChange}
-                />
-                <Typography variant="h6" color="blue-gray" className="">
-                    Password
-                </Typography>
-                <Input
-                    type="password"
-                    size="lg"
-                    placeholder="Enter your password"
-                    className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    name="password"
-                    labelProps={{
-                    className: "before:content-none after:content-none",
-                    }}
-                    value={register.password}
-                    onChange={handleInputChange}
-                />
-                </div>
-                <Typography variant="h6" color="blue-gray" className="mt-4">
-                    Gender
-                </Typography>
-                <div className="flex gap-10">
-                    <Radio 
-                        name="gender" 
-                        label="Male" 
-                        value={"male"}
-                        checked={register.gender === 'male'}
-                        onChange={handleInputChange}    
+                    <Typography variant="h6" color="blue-gray" className="">
+                        Username
+                    </Typography>
+                    <Input
+                        size="lg"
+                        placeholder="Enter your username"
+                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                        labelProps={{
+                            className: "before:content-none after:content-none",
+                        }}
+                        {...register("username")}
                     />
-                    <Radio name="gender"
-                        label="Female"
-                        value="female"
-                        checked={register.gender === 'female'}
-                        onChange={handleInputChange} 
+                    <Typography variant="h6" color="blue-gray" className="">
+                        Email
+                    </Typography>
+                    <Input
+                        size="lg"
+                        placeholder="Enter your email"
+                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                        labelProps={{
+                            className: "before:content-none after:content-none",
+                        }}
+                        {...register("email")}
                     />
+                    <Typography variant="h6" color="blue-gray" className="">
+                        Password
+                    </Typography>
+                    <Input
+                        type="password"
+                        size="lg"
+                        placeholder="Enter your password"
+                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                        labelProps={{
+                        className: "before:content-none after:content-none",
+                        }}
+                        {...register("password")}
+                    />
+                    <Typography variant="h6" color="blue-gray" className="">
+                        Gender
+                    </Typography>
+                    <div className="flex gap-10">
+                        <Radio 
+                            label="Male" 
+                            value={"male"}
+                            {...register("gender")}
+                            checked={true}
+                        />
+                        <Radio
+                            label="Female"
+                            value="female"
+                            {...register("gender")}
+                        />
+                    </div>
                 </div>
                 <Typography variant="h6" color={`${error? "red" : "green"}`} className="mt-4">
                     {msg}
                 </Typography>
-                <Button className="mt-6" fullWidth
-                    onClick={handleRegister}
-                >
+                <Button className="mt-6" fullWidth type="submit">
                 sign up
                 </Button>
                 <Typography color="gray" className="mt-4 text-center font-normal">
@@ -129,7 +98,7 @@ export default function RegisterForm() {
                     Log In
                 </Link>
                 </Typography>
-            </div>
+            </form>
         </Card>
     )
 }
