@@ -2,8 +2,8 @@ import { Animation } from "./Animation";
 import { Direction } from "./Direction";
 import { Entity } from "./Entity";
 import { Point } from "./Point";
-import { GameState } from "../States/GameState";
 import { UnitState } from "../States/UnitState";
+import { GameManager } from "../GameManager";
 
 export abstract class Unit extends Entity{
     protected originalCoordinate:Point
@@ -13,7 +13,7 @@ export abstract class Unit extends Entity{
     protected moveIterationTarget:number = 0
     protected unitState:UnitState;
 
-    constructor(state:UnitState, name:string, gameState:GameState, animations:Animation[]){
+    constructor(state:UnitState, name:string, gameState:GameManager, animations:Animation[]){
         super(name, state.coordinate, gameState, animations)
         this.unitState = state;
         this.originalCoordinate = {...state.coordinate}

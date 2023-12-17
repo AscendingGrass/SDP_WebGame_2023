@@ -1,15 +1,15 @@
 import { Animation } from "./Animation";
 import { ChainedAnimation } from "./ChainedAnimation";
-import { GameState } from "../States/GameState";
 import { InteractableBarrier } from "./InteractableBarrier";
 import { GroupAnimation } from "./GroupAnimation";
 import { Point } from "framer-motion";
 import { Barrier } from "./Barrier";
 import { BarrierData } from "./BarrierData";
+import { GameManager } from "../GameManager";
 
 const BarrierVariants:BarrierData[] = []
 
-export const generateBarrier:(name:string, coordinate:Point, gameState:GameState, groupAnimations:GroupAnimation[]) => Barrier =(name:string, coordinate:Point, gameState:GameState, groupAnimations:GroupAnimation[]) => {
+export const generateBarrier:(name:string, coordinate:Point, gameState:GameManager, groupAnimations:GroupAnimation[]) => Barrier =(name:string, coordinate:Point, gameState:GameManager, groupAnimations:GroupAnimation[]) => {
     const temp = BarrierVariants.find(x => x.name == name)
     if(!temp){throw new Error("No such Barrier " + name)}
 
@@ -17,7 +17,6 @@ export const generateBarrier:(name:string, coordinate:Point, gameState:GameState
         new InteractableBarrier(name, coordinate, temp.interactHandler, gameState, []) :
         new Barrier(name, coordinate, gameState, [])
     
-
     temp.animations.forEach(x => {
         if(x instanceof GroupAnimation){
             const animation = groupAnimations.find(y => y.animationName === x.animationName)
@@ -45,6 +44,11 @@ export const _initializeBarrierVariants = () => {
             name:"wall",
             interactHandler:null,
             animations:[GroupAnimation.animations[4]]
+        },
+        {
+            name:"tree",
+            interactHandler:null,
+            animations:[GroupAnimation.animations[6]]
         },
         {
             name:"door",
@@ -84,23 +88,23 @@ export const _initializeBarrierVariants = () => {
                 ),
             ]
         },
-        {
-            name:"door_tutorial",
-            interactHandler:(interacted: InteractableBarrier, interactor: Unit, gameState: GameState) => {
-                const closed = interacted.getPassable()
-                try{
-                    interacted.setPassable(!closed)
-                }
-                catch(err){return}
+        // {
+        //     name:"door_tutorial",
+        //     interactHandler:(interacted: InteractableBarrier, interactor: Unit, gameState: GameManager) => {
+        //         const closed = interacted.getPassable()
+        //         try{
+        //             interacted.setPassable(!closed)
+        //         }
+        //         catch(err){return}
     
-                if(closed){
-                    interacted.playAnimation("door_close")
-                }
-                else{
-                    interacted.playAnimation("door_open")
-                }
-            },
-            animations:[]
-        }
+        //         if(closed){
+        //             interacted.playAnimation("door_close")
+        //         }
+        //         else{
+        //             interacted.playAnimation("door_open")
+        //         }
+        //     },
+        //     animations:[]
+        // }
     ])
 }

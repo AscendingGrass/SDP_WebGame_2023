@@ -10,19 +10,21 @@ import { PlayerState } from './States/PlayerState';
 import { GroupAnimation } from './GameObjects/GroupAnimation';
 import { Direction } from './GameObjects/Direction';
 import { NPC } from './GameObjects/NPC';
+import { Event } from './States/Event';
 
 export class GameManager {
     private lastTimeStamp: number = 0;
     private deltaTime: number = 0;
     private isRunning: boolean = false;
     private animationFrameId: number = -1;
-    private player: PlayerUnit | null = null;
     private terminalView: TerminalView | null = null;
-    private grid: Grid ;
+    public grid: Grid;
     private canvasView: CanvasView | null = null;
-    private logView: LogView | null = null;
-    private currentState:GameState |null = null
-    private groupAnimations:GroupAnimation[] = []
+    public logView: LogView | null = null;
+    public player: PlayerUnit | null = null;
+    public currentState:GameState |null = null
+    public events:Event[] = []
+    public groupAnimations:GroupAnimation[] = []
 
     constructor(logView: LogView|null = null, canvasView: CanvasView | null = null, terminalView: TerminalView | null = null, gameState:GameState|null = null)  {
         this.setCanvasView(canvasView);
@@ -44,8 +46,8 @@ export class GameManager {
         if(gameState == null){
 
             const playerState = new PlayerState({x:3,y:3})
-            this.currentState = new GameState([], playerState, this.logView as LogView)
-            this.player = new PlayerUnit(playerState, this.currentState)
+            this.currentState = new GameState([], playerState, (this.logView as LogView).getLogs())
+            this.player = new PlayerUnit(playerState, this)
             
             this.player.addAnimation(new ChainedAnimation(
                 this.player,
@@ -95,17 +97,29 @@ export class GameManager {
             this.player.setDirection(Direction.Up)
             this.player.setMoveSpeed(2);
             this.grid.addEntity(this.player);
-            NPC.loadNPCs(this.currentState).forEach(npc => this.grid.addEntity(npc))
+            NPC.loadNPCs(this).forEach(npc => this.grid.addEntity(npc))
             this.grid.loadBarriers(
-                'wwwwwww00\n' +
-                'w00000w00\n' +
-                'w00000w00\n' +
-                'w00000d00\n' +
-                'w00000w00\n' +
-                'w00000w00\n' +
-                'wwwwwww00\n' 
+                'wwwwwwwtttttttttttttttttttttttttttttttttttttt\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'w00000d0000000000000000000000000000000000000t\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'wwwwwww0000000000000000000000000000000000000t\n' + 
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                'ttttttttttttttttttttttttttttttttttttttttttttt\n'
                 ,
-                this.currentState,
+                this,
                 this.groupAnimations
             )
             this.grid.fill("grass", this.groupAnimations)
@@ -143,8 +157,7 @@ export class GameManager {
     public setLogView(logView: LogView | null): void {
         this.logView = logView
         if(this.currentState && logView) {
-            console.log("testetest");
-            this.currentState.logs = logView
+            this.currentState.logs = logView.getLogs()
         }
     }
 
@@ -174,8 +187,10 @@ export class GameManager {
     }
 
     private update(): void {
+        this.currentState?.update(this.getDeltatime())
+        this.events.forEach(x => x.update(this.getDeltatime(),this))
         if (!this.canvasView) {
-            this.grid.update(this.deltaTime)
+            this.grid.update(this.getDeltatime())
             return
         }
         const camPos = this.canvasView.getCameraPosition()

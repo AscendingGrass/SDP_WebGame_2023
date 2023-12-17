@@ -4,16 +4,16 @@ import { Grid } from "./Grid";
 import { Point } from "./Point";
 import { Tile } from "./Tile";
 import { IHasCoordinate } from "./IHasCoordinate";
-import { GameState } from "../States/GameState";
+import { GameManager } from "../GameManager";
 
 export abstract class Entity extends Animated implements IHasCoordinate{
     protected coordinate:Point
     protected grid:Grid | null = null
-    public gameState:GameState
+    public gameState:GameManager
     private passable:boolean = false
     public holds:Entity|null = null
 
-    constructor(name:string, coordinate:Point, gameState:GameState, animations:Animation[] = []){
+    constructor(name:string, coordinate:Point, gameState:GameManager, animations:Animation[] = []){
         super(name, animations)
         this.coordinate = coordinate
         this.gameState = gameState

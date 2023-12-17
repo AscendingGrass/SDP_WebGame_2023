@@ -1,11 +1,11 @@
 import { NPC } from "./NPC"
 import { Animation } from "./Animation"
-import { GameState } from "../States/GameState"
+import { GameManager } from "../GameManager"
 
 export type NPCData = {
     name:string,
     talkHandler:(self:NPC)=>void,
-    loadHandler:(gameState:GameState, data:NPCData)=>NPC,
+    loadHandler:(gameState:GameManager, data:NPCData)=>NPC,
     dialogs:string[][],
     animations:Animation[]
 }

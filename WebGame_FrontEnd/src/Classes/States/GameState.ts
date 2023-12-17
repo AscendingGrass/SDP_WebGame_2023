@@ -1,4 +1,4 @@
-import { LogView } from "../LogView";
+import { ColoredText } from "../ColoredText";
 import { EventState } from "./EventState";
 import { PlayerState } from "./PlayerState";
 
@@ -7,12 +7,12 @@ export class GameState{
     public score:number
     public eventStates:EventState[]
     public playerState:PlayerState
-    public logs:LogView
+    public logs:ColoredText[][]
 
     /**
      *
      */
-    constructor(eventStates:EventState[], playerState:PlayerState, logs:LogView, playtime:number = 0, score:number = 0) {
+    constructor(eventStates:EventState[], playerState:PlayerState, logs:ColoredText[][], playtime:number = 0, score:number = 0) {
         this.playtime = playtime
         this.score = score
         this.eventStates = eventStates
@@ -20,11 +20,8 @@ export class GameState{
         this.logs = logs
     }
 
-    public update(deltaTime:number){
+    public update(deltaTime:number) {
         this.playtime += deltaTime
-        this.eventStates.forEach(eventState => {
-            eventState.update(deltaTime, this)
-        })
     }
 
     // public copy():GameState{

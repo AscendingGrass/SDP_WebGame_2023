@@ -56,7 +56,14 @@ export abstract class Animated{
     }
 
     public currentAnimationFrame():SpriteFrame{
-        return this.animations[this.currentAnimationIndex].currentAnimationFrame()
+        try{
+
+            return this.animations[this.currentAnimationIndex].currentAnimationFrame()
+        }
+        catch(err){
+            console.log(err);
+            return this.animations[this.currentAnimationIndex].currentAnimationFrame()
+        }
     }
 
     public getAvailableAnimations(): string[]{
