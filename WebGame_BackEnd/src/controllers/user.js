@@ -130,10 +130,10 @@ const allUser = async (req, res) => {
     })
 }
 
-const allUserRole = async (req, res) => {
-    const { role } = req.params;
+const allUserStatus = async (req, res) => {
+    const { status } = req.params;
     const result = await User.find({
-        role
+        status
     });
     
     console.log(result);
@@ -170,7 +170,7 @@ module.exports = {
     register,
     deleteUser,
     allUser,
-    allUserRole,
+    allUserStatus,
     fetchFemale,
     fetchMale
 }

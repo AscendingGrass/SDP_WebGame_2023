@@ -17,7 +17,7 @@ const User = () => {
   ];
 
   return (
-    <div className="flex">
+    <div className="flex w-full">
       <Table/>
     </div>
   );

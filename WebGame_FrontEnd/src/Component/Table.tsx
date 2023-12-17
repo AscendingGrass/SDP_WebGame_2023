@@ -23,7 +23,7 @@ import { useEffect, useState } from "react";
 const TABS = [
   {
     label: "All",
-    value: "all",
+    value: "",
   },
   {
     label: "Active",
@@ -40,13 +40,15 @@ const TABLE_HEAD = ["Member", "Gender", "Status", "Role", "Action"];
 
 export function Table() {
     const [table, setTable] = useState([]);
-    
+    const [mode, setMode] = useState('');
     useEffect(()=>{
         const fetch = async ()=> {
-            setTable((await axios.get("http://localhost:3000/allUser")).data.result);
+            setTable((await axios.get(`http://localhost:3000/allUser/${mode}`)).data.result);
+            console.log(table);
+            
         };
         fetch();
-    }, [])
+    }, [mode])
 
     return (
         <Card className="h-full w-full">
@@ -74,8 +76,8 @@ export function Table() {
                     <TabsHeader>
                         {TABS.map(({ label, value }) => (
                         <Tab key={value} value={value} className="px-5"
-                            onClick={async()=>{
-                                setTable(await axios.get(`http://localhost:3000/allUser/${value}`).data.result)
+                            onClick={()=>{
+                                setMode(value);
                             }}
                         >
                             {label}
