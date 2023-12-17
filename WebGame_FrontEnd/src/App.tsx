@@ -12,7 +12,7 @@ function App() {
   const {state, dispatch} = useData();
   const navigate = useNavigate();
   useEffect(() => {
-    loadGame(null, state.user._id)
+    loadGame(null, state.user?._id)
   }, [])
 
   return (
