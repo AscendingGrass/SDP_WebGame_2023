@@ -216,7 +216,7 @@ export class GameManager {
 
     public start(): void {
         if (this.isRunning) return
-
+        
         const run = (timestamp: number): void => {
             this.deltaTime = (timestamp - this.lastTimeStamp) / 1000
             this.update()
@@ -229,8 +229,9 @@ export class GameManager {
     }
 
     public pause(): void {
-        if (!this.isRunning) return
         cancelAnimationFrame(this.animationFrameId)
+        this.isRunning = false
+        console.log("pausing Game");
     }
 
     private update(): void {

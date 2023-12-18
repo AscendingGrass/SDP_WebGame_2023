@@ -1,19 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import {loadGame} from './loadGame';
 import { grey } from '@mui/material/colors';
 import { Button } from '@material-tailwind/react';
 import { useNavigate } from 'react-router';
 import { useData } from './DataContext';
+import { useBeforeUnload } from 'react-router-dom';
+import { GameManager } from './Classes/GameManager';
 
 
 function App() {
   const [mode, setMode] = useState(false);
-  const {state, dispatch} = useData();
+  const {state} = useData();
   const navigate = useNavigate();
   useEffect(() => {
-    loadGame(null, state.user?._id)
+    const game = loadGame(null, state.user?._id)
+
+    return () => {
+      game.pause()
+    }
   }, [])
+
 
   return (
     <div className='flex h-full w-full'>

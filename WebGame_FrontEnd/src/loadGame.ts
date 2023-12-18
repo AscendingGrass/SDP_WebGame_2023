@@ -31,6 +31,7 @@ const loadGame  = (gameState:GameState|null = null, userId:string) => {
     game.load(gameState)
     saveButton.onclick = () => {game.save(userId)}
     game.start()
+    return game
 }
 export { loadGame }
 
