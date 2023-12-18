@@ -1,10 +1,10 @@
+'use strict';
 import { CanvasView } from './Classes/CanvasView';
 import { TerminalView } from './Classes/TerminalView';
 import { GameManager } from './Classes/GameManager';
 import loadAsset from './loadAsset'
 import { LogView } from './Classes/LogView';
 import { GameState } from './Classes/States/GameState';
-let game: GameManager;
 
 const loadGame  = (gameState:GameState|null = null, userId:string) => {
     console.log("loading Game");
@@ -23,7 +23,7 @@ const loadGame  = (gameState:GameState|null = null, userId:string) => {
     canvas.height = canvas.parentElement?.clientHeight ?? window.innerHeight
 
     loadAsset()
-    game = new GameManager(
+    const game = new GameManager(
         new LogView(log,-1),
         new CanvasView(canvas),
         new TerminalView(terminal, executeButton, stopButton)

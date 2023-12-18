@@ -17,6 +17,8 @@ export class Terminal{
     public content:string = "";
     public running:boolean = false
     public currentCommand:Command|null = null
+    public lastCompiledCommand:Command|null = null
+    public onStopped:((lastCompiledCommand:Command|null)=>void)[] = [];
     private variables:Map<string, Wrapper> = new Map();
     private player:PlayerWrapper;
     private constGlobalVariables:Map<string, Wrapper>  = new Map()
@@ -882,8 +884,9 @@ export class Terminal{
         })
         this.variables = new Map()
         this.currentCommand = new StartCommand(this, compiled.startCommand)
-        console.log(Terminal.tokenize(this.content))
-        console.log(this.currentCommand)
+        this.lastCompiledCommand = this.currentCommand
+        // console.log(Terminal.tokenize(this.content))
+        // console.log(this.currentCommand)
     }
 
     public execute():void{
@@ -891,6 +894,9 @@ export class Terminal{
     }
 
     public stop():void{
-        this.running = false
+        if(this.running){
+            this.onStopped.forEach(x => x(this.lastCompiledCommand))
+            this.running = false
+        }
     }
 }
