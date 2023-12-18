@@ -305,25 +305,36 @@ const deleteUser = async (req, res) => {
 }
 
 const allUser = async (req, res) => {
-    const result = await User.find();
-    
-    console.log(result);
-    return res.status(200).json({
-        error: false,
-        result
-    })
-}
-
-const allUserStatus = async (req, res) => {
     const { status } = req.params;
-    const result = await User.find({
-        status
-    });
+    const page = parseInt(req.query.page)
+    console.log(req.body);
+
+    let totalUsers;
+    let totalPages;
+
+    let result;
+    if(status){
+        totalUsers = await User.countDocuments({
+            status
+        });
+
+        totalPages = Math.ceil(totalUsers / 4);
+
+        result = await User.find({
+            status
+        }).skip((page - 1) * 4).limit(4);
+    }else{
+        totalUsers = await User.countDocuments();
+        
+        totalPages = Math.ceil(totalUsers / 4);
+
+        result = await User.find().skip((page - 1) * 4).limit(4);
+    }
     
-    console.log(result);
     return res.status(200).json({
         error: false,
-        result
+        result,
+        totalPages,
     })
 }
 
@@ -403,7 +414,6 @@ module.exports = {
     register,
     deleteUser,
     allUser,
-    allUserStatus,
     fetchFemale,
     fetchMale
 }

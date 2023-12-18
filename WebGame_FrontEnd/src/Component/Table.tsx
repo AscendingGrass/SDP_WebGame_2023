@@ -41,17 +41,32 @@ const TABLE_HEAD = ["Member", "Gender", "Status", "Role", "Action"];
 export function Table() {
     const [table, setTable] = useState([]);
     const [mode, setMode] = useState('');
+    const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1);
     useEffect(()=>{
         const fetch = async ()=> {
-            setTable((await axios.get(`http://localhost:3000/allUser/${mode}`)).data.result);
-            console.log(table);
+            const body = {
+                page
+            }
+            const data = (await axios.get(`http://localhost:3000/allUser/${mode}?page=${page}`, body)).data;
+            console.log(data);
             
+            setTable(data.result);
+            setTotalPage(data.totalPages);
         };
         fetch();
-    }, [mode])
+    }, [page, mode])
+
+    const incremetPage = ()=>{
+        setPage(page + 1);
+    }
+
+    const decrementPage = ()=>{
+        setPage(page - 1);
+    }
 
     return (
-        <Card className="h-2/3 w-full">
+        <Card className="h-full w-full">
             <CardHeader floated={false} shadow={false} className="rounded-none">
                 <div className="mb-8 flex items-center justify-between gap-8">
                     <div>
@@ -78,6 +93,7 @@ export function Table() {
                         <Tab key={value} value={value} className="px-5"
                             onClick={()=>{
                                 setMode(value);
+                                setPage(1);
                             }}
                         >
                             {label}
@@ -209,14 +225,14 @@ export function Table() {
             </CardBody>
             <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    Page 1 of 10
+                    Page {page} of {totalPage}
                 </Typography>
                 <div className="flex gap-2">
-                    <Button variant="outlined" size="sm">
-                    Previous
+                    <Button variant="outlined" size="sm" disabled={page == 1? true: false} onClick={decrementPage}>
+                        Previous
                     </Button>
-                    <Button variant="outlined" size="sm">
-                    Next
+                    <Button variant="outlined" size="sm" disabled={page == totalPage? true: false} onClick={incremetPage}>
+                        Next
                     </Button>
                 </div>
             </CardFooter>
