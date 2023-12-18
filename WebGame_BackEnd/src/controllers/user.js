@@ -253,7 +253,7 @@ const register = async (req, res)=>{
             msg: "Email telah terpakai"
         })
     }
-    
+
     const newUser = await User.create({
         username, password, gender, email,
         role: "user"
@@ -261,7 +261,7 @@ const register = async (req, res)=>{
 
     const scoreboard = await Scoreboard.create({
         user_id: newUser._id,
-    })
+    });
 
     await User.findOneAndUpdate({
         _id: newUser._id
