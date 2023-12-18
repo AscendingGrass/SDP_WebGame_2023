@@ -45,7 +45,7 @@ export class GameManager {
 
         this.logView?.writeSeparator()
 
-        const result = await axios.post(`http://localhost:3000/save/${userId}`, this.currentState).catch(err =>  {
+        const result = await axios.post(`http://localhost:3000/save/${userId}`, this.currentState).catch(() =>  {
             this.logView?.addLog([
                 { 
                     value: 'Error saving game',

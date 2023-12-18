@@ -13,7 +13,7 @@ export class Event{
         new Event(
             new EventState(
                 "TUT001",
-                "Tutorial",
+                "Movement Tutorial",
                 [
                     {
                         name:"progress",
@@ -53,7 +53,8 @@ export class Event{
                         name:"NPC_name",
                         value:"Tutorial Guy"
                     }
-                ]
+                ],
+                0 // easy
             ),
             {
                 "try_talk":(self:Event)=>{
@@ -199,7 +200,7 @@ export class Event{
                     
                 }
             },
-            (self:Event, gameManager:GameManager)=>{
+            (self:Event, gameManager:GameManager)=>{ // onload handler
                 const progress = self.getValueOf("progress") as number
                 if(progress == 2){
                     const targetCoordinate = self.getValueOf("target_coordinate") as Point
@@ -211,15 +212,158 @@ export class Event{
                     }
 
                     gameManager.grid.setTile(targetCoordinate, 'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler
+                }else if(progress == 3){
+                    const targetCoordinate2 = self.getProperty("target_coordinate_2").value as Point
+                    const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
+                        if(stepper == gameState.player){
+                            tile.stepHandler = () => {}
+                            self.progress("try_walk_2", gameManager, [gameManager.grid.entityGrid[3][2]])
+                        }
+                    }
+
+                    gameManager.grid.setTile(targetCoordinate2, 'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler;
+                }else if(progress == 4){
+                    self.getProperty("progress").value = 5;
+                    (gameManager.grid.entityGrid[3][2] as NPC).talk()
+                }else if(progress == 5 || progress == 6){
+                    const npc = gameManager.grid.entityGrid[3][2] as NPC
+                    const targetCoordinates = self.getValueOf("target_coordinates") as Point[]
+                    const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
+                        if(stepper == gameState.player){
+                            const property = self.getProperty("stepped_target_coordinates")
+                            tile.stepHandler = () => {}
+                            gameManager.grid.setTile(tile.coordinate, 'floor', gameManager.groupAnimations);
+                            property.value = (property.value as number) + 1
+                            console.log(property.value);
+                            console.log(self.getValueOf("progress"));
+                            if(property.value as number == targetCoordinates.length && self.getValueOf("flag") == 0){
+                                self.getProperty("progress").value = 7
+                                gameManager.player?.terminal.onStopped.splice(
+                                    gameManager.player?.terminal.onStopped.indexOf(onFinishRunning), 
+                                    1
+                                );
+                                npc?.talk()
+                            }
+                        }
+                    }
+                    const onFinishRunning = () => {
+                        const property = self.getProperty("stepped_target_coordinates")
+                        const progress = self.getProperty("progress")
+                        
+
+                        if(property.value as number === targetCoordinates.length || progress.value == 7){
+                            self.getProperty("progress").value = 7
+                            gameManager.player?.terminal.onStopped.splice(
+                                gameManager.player?.terminal.onStopped.indexOf(onFinishRunning), 
+                                1
+                            );
+                        }
+                        else {
+                            property.value = 0
+                            targetCoordinates.forEach(x => {
+                                gameManager.grid.tiles[x.y][x.x]!.stepHandler = () => {}
+                                gameManager.grid.setTile(x, 'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler;
+                            })
+                            self.getProperty("progress").value = 6;
+                        }
+
+                        npc?.talk()
+                    }
+
+                    gameManager.player?.terminal.onStopped.push(onFinishRunning)
+                    
+                    targetCoordinates.forEach(x => {
+                        gameManager.grid.setTile(x, 'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler;
+                    })
+                }else if(progress == 7 || progress == 8){
+                    self.getProperty("progress").value = 8;
+                    const doorCoordinate:Point = {x:6,y:3}
+                    const noDoor = Error(`There is no door at ${doorCoordinate.x}, ${doorCoordinate.y}`)
+                    const onInteract = (interacted:InteractableBarrier,interactor:Unit, gameState:GameManager) => {
+                        if(!interacted.getPassable() && interactor == gameState.player && interactor.getCoordinate().x > 6){
+                            // If the player went out and closed the door
+                            interacted.onInteract = () => {}
+                            self.progress("tutorial_finished", gameManager)
+                        }
+                    }
+
+                    const door = gameManager.grid.entityGrid[doorCoordinate.y][doorCoordinate.x] as InteractableBarrier
+                    if(!door) throw noDoor
+                    if(door.getName() != "door") throw noDoor
+
+                    door.onInteract = onInteract
+                }else if(progress == 9){
+                    null;
+                }else{
+                    throw new Error("unhandled progress state when loading tutorial")
                 }
+
             }
-        )
+        ),
+        // new Event(
+        //     new EventState(
+        //         "TUT002",
+        //         "Branching Tutorial",
+        //         [
+        //             {
+        //                 name:"progress",
+        //                 value:0
+        //                 // 0 Event Start
+        //                 // 1 Try Talking to NPC
+        //                 // 2 Talking to NPC Complete
+        //                 // 3 Try Walking Around
+        //                 // 4 Try Walking Around 2
+        //                 // 5 Walk complete 1
+        //                 // 6 Walk failed
+        //                 // 7 Walk completed
+        //                 // 8 Exiting
+        //                 // 9 Tutorial Complete
+        //             },
+        //         ],
+        //         1 // medium
+        //     ),
+        //     {
+
+        //     },
+        //     (self:Event, gameManager:GameManager)=>{ // onload handler
+
+        //     }
+        // ),
+        // new Event(
+        //     new EventState(
+        //         "TUT003",
+        //         "Looping Tutorial",
+        //         [
+        //             {
+        //                 name:"progress",
+        //                 value:0
+        //                 // 0 Event Start
+        //                 // 1 Try Talking to NPC
+        //                 // 2 Talking to NPC Complete
+        //                 // 3 Try Walking Around
+        //                 // 4 Try Walking Around 2
+        //                 // 5 Walk complete 1
+        //                 // 6 Walk failed
+        //                 // 7 Walk completed
+        //                 // 8 Exiting
+        //                 // 9 Tutorial Complete
+        //             },
+        //         ],
+        //         1 // medium
+        //     ),
+        //     {
+
+        //     },
+        //     (self:Event, gameManager:GameManager)=>{ // onload handler
+
+        //     }
+        // )
     ];
 
     public static start(gameState:GameManager, eventId:string, loadedState?:EventState):Event{
         const event = Event.eventBluePrints.find(event => event.getId() === eventId)
         if(!event) throw Error("Event " + eventId + " not found")
-        const state = loadedState ?? new EventState(event.state.id, event.state.name, event.state.properties.map(x => {return {...x} as EventProperty}))
+        const state = loadedState ?? new EventState(event.state.id, event.state.name, event.state.properties.map(x => {return {...x} as EventProperty}), event.state.difficulty)
         const newEvent = new Event(
             state,
             event.onEventProgressed,
