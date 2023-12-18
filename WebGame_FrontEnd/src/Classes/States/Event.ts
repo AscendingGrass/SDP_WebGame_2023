@@ -5,6 +5,8 @@ import { Tile } from "../GameObjects/Tile";
 import { Entity } from "../GameObjects/Entity";
 import { Point } from "../GameObjects/Point";
 import { EventState } from "./EventState";
+import { InteractableBarrier } from "../GameObjects/InteractableBarrier";
+import { Unit } from "../GameObjects/Unit";
 
 export class Event{
     public static eventBluePrints:Event[] = [
@@ -22,9 +24,10 @@ export class Event{
                         // 3 Try Walking Around
                         // 4 Try Walking Around 2
                         // 5 Walk complete 1
-                        // 6 Try Opening Door
-                        // 7 Opening compelte
-                        // 8 Tutorial Complete
+                        // 6 Walk failed
+                        // 7 Walk completed
+                        // 8 Exiting
+                        // 9 Tutorial Complete
                     },
                     {
                         name:"target_coordinate",
@@ -39,8 +42,12 @@ export class Event{
                         value:[{x:1,y:1}, {x:2,y:4}, {x:5,y:2}]
                     },
                     {
+                        name:"flag",
+                        value:0 
+                    },
+                    {
                         name:"stepped_target_coordinates",
-                        value:-1 // set to -1 to prevent the NPC from talking twice
+                        value:0 
                     },
                     {
                         name:"NPC_name",
@@ -112,18 +119,30 @@ export class Event{
                             tile.stepHandler = () => {}
                             gameManager.grid.setTile(tile.coordinate, 'floor', gameManager.groupAnimations);
                             property.value = (property.value as number) + 1
+                            console.log(property.value);
+                            console.log(self.getValueOf("progress"));
+                            if(property.value as number == targetCoordinates.length && self.getValueOf("flag") == 0){
+                                self.getProperty("progress").value = 7
+                                gameManager.player?.terminal.onStopped.splice(
+                                    gameManager.player?.terminal.onStopped.indexOf(onFinishRunning), 
+                                    1
+                                );
+                                (eventArgs[0] as NPC)?.talk()
+                            }
                         }
                     }
                     const onFinishRunning = () => {
+                        const flag = self.getProperty("flag")
                         const property = self.getProperty("stepped_target_coordinates")
+                        const progress = self.getProperty("progress")
                         // if property.value == -1 the NPC wont talk
                         // initially set to -1 to prevent a bug
-                        if(property.value == -1){ 
-                            property.value = 0
+                        if(flag.value == 0 && progress.value != 7){ 
+                            flag.value = 1
                             return
                         }
 
-                        if(property.value as number === targetCoordinates.length){
+                        if(property.value as number === targetCoordinates.length || progress.value == 7){
                             self.getProperty("progress").value = 7
                             gameManager.player?.terminal.onStopped.splice(
                                 gameManager.player?.terminal.onStopped.indexOf(onFinishRunning), 
@@ -137,7 +156,6 @@ export class Event{
                                 gameManager.grid.setTile(x, 'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler;
                             })
                             self.getProperty("progress").value = 6;
-                            
                         }
 
                         (eventArgs[0] as NPC)?.talk()
@@ -149,15 +167,37 @@ export class Event{
                         gameManager.grid.setTile(x, 'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler;
                     })
                 },
-                // "walk_complete":(self:Event,gameManager:GameManager)=>{
-                //     self.getProperty("progress").value = 5;
-                // },
-                // "open":(self:Event,gameManager:GameManager)=>{
-                //     self.getProperty("progress").value = 6;
-                // },
-                // "open_complete":(self:Event,gameManager:GameManager)=>{
-                //     self.getProperty("progress").value = 7
-                // },
+                "exit":(self:Event,gameManager:GameManager)=>{
+                    self.getProperty("progress").value = 8;
+                    const doorCoordinate:Point = {x:6,y:3}
+                    const noDoor = Error(`There is no door at ${doorCoordinate.x}, ${doorCoordinate.y}`)
+                    const onInteract = (interacted:InteractableBarrier,interactor:Unit, gameState:GameManager) => {
+                        if(!interacted.getPassable() && interactor == gameState.player && interactor.getCoordinate().x > 6){
+                            // If the player went out and closed the door
+                            interacted.onInteract = () => {}
+                            self.progress("tutorial_finished", gameManager)
+                        }
+                    }
+
+                    const door = gameManager.grid.entityGrid[doorCoordinate.y][doorCoordinate.x] as InteractableBarrier
+                    if(!door) throw noDoor
+                    if(door.getName() != "door") throw noDoor
+
+                    door.onInteract = onInteract
+
+                },
+                "tutorial_finished":(self:Event,gameManager:GameManager)=>{
+                    self.getProperty("progress").value = 9;
+                    const state = gameManager.currentState
+                    if(!state) throw Error("GameManager has no GameState")
+                    const reward = 100 + Math.round(Math.max((750 - (state.playtime)), 0)/ 10)
+                    state.score += reward
+                    gameManager.logView?.addLog([
+                        {color:"green", value:`YOU CLEARED THE TUTORIAL! YOU GOT ${reward} POINTS`},
+                    ])
+                    gameManager.logView?.writeSeparator()
+                    
+                }
             },
             (self:Event, gameManager:GameManager)=>{
                 const progress = self.getValueOf("progress") as number
