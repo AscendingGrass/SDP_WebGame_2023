@@ -338,11 +338,12 @@ const allUser = async (req, res) => {
     })
 }
 
-const fetchMale = async (req, res) => {
+const fetchUser = async (req, res) => {
+    const { gender } = req.query;
     const result = await User.aggregate([
         {
             $match: {
-                gender: "male"
+                gender
             }
         },
         {
@@ -371,42 +372,6 @@ const fetchMale = async (req, res) => {
     })
 }
 
-const fetchFemale = async (req, res) => {
-    const result = await User.aggregate([
-        {
-            $match: {
-                gender: "female"
-            }
-        },
-        {
-            $lookup: {
-                from: "scoreboards",
-                localField: "scoreboard",
-                foreignField: "_id",
-                as: "scoreboard"
-            }
-        },
-        {
-            $unwind: "$scoreboard"
-        },
-        {
-            $project: {
-                username: "$username",
-                score: "$scoreboard.score"
-            }
-        }
-    ]);
-
-    // const result = await User.find({
-    //     gender: "female"
-    // }).populate("scoreboard");
-
-    return res.status(200).json({
-        error: false,
-        result
-    })
-}
-
 module.exports = {
     user,
     insertDummy,
@@ -414,6 +379,5 @@ module.exports = {
     register,
     deleteUser,
     allUser,
-    fetchFemale,
-    fetchMale
+    fetchUser
 }

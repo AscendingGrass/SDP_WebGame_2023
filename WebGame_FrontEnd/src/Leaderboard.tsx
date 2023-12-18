@@ -12,7 +12,7 @@ const Login = () => {
   useEffect(()=>{
     const fetchAll = async() => {
       setIsLoading(true);
-      const temp = (await axios.get(`http://localhost:3000/user${gender? "Male": "Female"}`)).data.result;
+      const temp = (await axios.get(`http://localhost:3000/user?gender=${gender? "male": "female"}`)).data.result;
       setData(temp);
       setIsLoading(false);
     }
