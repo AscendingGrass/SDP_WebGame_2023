@@ -27,21 +27,6 @@ const router = createBrowserRouter([
         element: <Homepage/>,
       },
       {
-        path: "/login", //Akses melalui base_url/about
-        element: <LoginRegister/>,
-        children: [
-          {
-            index: true,
-
-            element: <Login/>
-          },
-          {
-            path: "register",
-            element: <Register/>
-          }
-        ]
-      },
-      {
         path: "game", //Akses melalui base_url/about
         element: <App/>,
       },
@@ -66,6 +51,21 @@ const router = createBrowserRouter([
         element: <Report/>,
       },
     ],
+  },
+  {
+    path: "/login", //Akses melalui base_url/about
+    element: <LoginRegister/>,
+    children: [
+      {
+        index: true,
+
+        element: <Login/>
+      },
+      {
+        path: "register",
+        element: <Register/>
+      }
+    ]
   },
   {
     path: "/fullGame",
