@@ -67,6 +67,11 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/fullGame",
+    element: <App/>,
+    errorElement: <Error/>
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

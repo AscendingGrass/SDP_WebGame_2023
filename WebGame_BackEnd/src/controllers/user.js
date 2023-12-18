@@ -174,20 +174,21 @@ const fetchMale = async (req, res) => {
             }
         },
         {
-            $addFields: {
-                score: "$scoreboard.score"
-            }
+            $unwind: "$scoreboard"
         },
         {
             $project: {
                 username: "$username",
-                score: {
-                    $arrayElemAt: ["$score", 0]
-                }
+                score: "$scoreboard.score"
             }
         }
         
     ]);
+    
+    // const result = await User.find({
+    //     gender: "male",
+    // }).populate("scoreboard")
+
     return res.status(200).json({
         error: false,
         result
@@ -210,18 +211,19 @@ const fetchFemale = async (req, res) => {
             }
         },
         {
-            $addFields: {
-                score: "$scoreboard.score"
-            }
-        },{
+            $unwind: "$scoreboard"
+        },
+        {
             $project: {
                 username: "$username",
-                score: {
-                    $arrayElemAt: ["$score", 0]
-                }
+                score: "$scoreboard.score"
             }
         }
     ]);
+
+    // const result = await User.find({
+    //     gender: "female"
+    // }).populate("scoreboard");
 
     return res.status(200).json({
         error: false,
