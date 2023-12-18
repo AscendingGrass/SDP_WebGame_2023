@@ -353,10 +353,6 @@ const fetchMale = async (req, res) => {
         }
         
     ]);
-    
-    // const result = await User.find({
-    //     gender: "male",
-    // }).populate("scoreboard")
 
     return res.status(200).json({
         error: false,
