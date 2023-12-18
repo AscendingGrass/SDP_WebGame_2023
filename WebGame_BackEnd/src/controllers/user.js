@@ -253,15 +253,7 @@ const register = async (req, res)=>{
             msg: "Email telah terpakai"
         })
     }
-
-    // if(password != confirm_password){
-    //     return res.status(200).json({
-    //         error: true,
-    //         msg: "Password tidak sama!"
-    //     })
-    // }
-
-   
+    
     const newUser = await User.create({
         username, password, gender, email,
         role: "user"
