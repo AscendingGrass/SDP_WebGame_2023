@@ -173,9 +173,9 @@ export class PlayerWrapper extends Wrapper{
                         }
                         return new VoidWrapper();
                     }
-                    case 'setMoveSpeed()':
-                        self.getValue().setMoveSpeed(args[1].getValue())
-                        return new VoidWrapper();
+                    // case 'setMoveSpeed()':
+                    //     self.getValue().setMoveSpeed(args[1].getValue())
+                    //     return new VoidWrapper();
                     default:
                         throw Error("this method / property, '" + args[0].getValue() + "' doesn't exist in a player unit");
                 }
