@@ -38,6 +38,14 @@ const TABS = [
     label: "Fixed",
     value: "fixed",
   },
+  {
+    label: "Duplicate",
+    value: "duplicate",
+  },
+  {
+    label: "Accepted",
+    value: "accepted",
+  },
 ];
  
 const TABLE_HEAD = ["Report", "User", "Role", "Action"];

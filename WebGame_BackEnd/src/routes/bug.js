@@ -3,6 +3,7 @@ const { fetchBugReport, dummyBug, updateBug } = require('../controllers/bug');
 const router = express();
 
 // GET
+router.get("/fetchBugsReport", fetchBugReport);
 router.get("/fetchBugsReport/:status", fetchBugReport);
 
 // POST
