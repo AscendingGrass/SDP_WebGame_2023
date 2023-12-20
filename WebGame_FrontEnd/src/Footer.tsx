@@ -19,7 +19,7 @@ const Footer = ()=> {
     return (
         
 
-        <Navbar className="m-auto flex justify-evenly h-15 bg-black text-white rounded-none "variant="gradient">
+        <Navbar className="m-auto flex justify-evenly py-15 bg-black text-white rounded-none "variant="gradient">
             
                 
                 <>
