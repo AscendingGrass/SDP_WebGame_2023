@@ -306,8 +306,7 @@ const deleteUser = async (req, res) => {
 
 const allUser = async (req, res) => {
     const { status } = req.params;
-    const page = parseInt(req.query.page)
-    console.log(req.body);
+    const page = parseInt(req.query.page);
 
     let totalUsers;
     let totalPages;
