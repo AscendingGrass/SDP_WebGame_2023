@@ -234,6 +234,82 @@ export class NPC extends Unit{
                     )
                 ]
             },
+            {
+                name:"Ruben of the IFJ",
+                talkHandler:(self:NPC)=>{
+                    const gameState = self.gameState
+
+                    let eventState = gameState?.events.find(x => x.getId() === "CMP002")
+                    if(!eventState) {
+                        eventState = Event.start(self.gameState,"CMP002")
+                    }
+
+                    switch(eventState?.getValueOf("progress")){
+                        case 0:
+                            self.dialogIndex = 0
+                            eventState?.progress("start", self.gameState)
+                            break;
+                        case 1:
+                            self.dialogIndex = 1
+                            break;
+                        case 2:
+                            self.dialogIndex = 2
+                            break;
+                    }
+
+                    while(self.dialogProgress < self.dialogs[self.dialogIndex].length){
+                        self.gameState?.logView?.addLog(
+                            [
+                                {color:"green", value:self.name + " : "},
+                                {color:"black", value:self.dialogs[self.dialogIndex][self.dialogProgress]}
+                            ]
+                        )
+                        self.dialogProgress++
+                    }
+                    self.gameState?.logView?.writeSeparator()
+                    self.dialogProgress = 0
+                    self.dialogIndex = -1
+                },
+                // LOAD HANDLER
+                loadHandler: (gameState:GameManager, data:NPCData)=>{
+                    const spawn:Point = {x:13, y:10}
+                    // const eventState = gameState.eventStates[0]
+                    const newNPC = new NPC(
+                        new UnitState(spawn),
+                        data.name,
+                        gameState,
+                        data.talkHandler,
+                        data.dialogs,
+                        []
+                    )
+                        
+                    Animation.makeCopyIfChained(data.animations,newNPC).forEach(x => newNPC.addAnimation(x))
+                    
+                    return newNPC
+                },
+                dialogs:[
+                    [ // 0
+                        "Step to your left!",
+                    ],
+                    [ // 1
+                        "Just step to the tile with the x mark!",
+                    ],
+                    [ // 2
+                        "ez clap",
+                    ],
+                ],
+                animations:[
+                    new ChainedAnimation(
+                        null,
+                        "idle",
+                        Animation.assets['tutorialguy_idle'],
+                        {x:32, y:32},
+                        1,
+                        -1,
+                        0
+                    )
+                ]
+            },
             // {
             //     name:"Tutorial Guy No 2",
             //     talkHandler:(self:NPC)=>{
