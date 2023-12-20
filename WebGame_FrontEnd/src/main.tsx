@@ -15,6 +15,7 @@ import News from './News.tsx';
 import Setting from './Setting.tsx';
 import User from './User.tsx';
 import Report from './Report.tsx';
+import Help from './Help.tsx'
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "admin/report", //Akses melalui base_url/about
         element: <Report/>,
+      },
+      {
+        path: "game/help",
+        element: <Help/>,
       },
     ],
   },
