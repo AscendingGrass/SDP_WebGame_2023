@@ -1,0 +1,365 @@
+=====================
+=====================
+== global actions  ==
+=====================
+=====================
+
+METHODS
+
+=====================
+alert();
+alert(message);
+
+print a message in red to the logs, print "ALERT!" instead if message is not specified.
+
+returns the printed message
+
+parameters:
+
+message
+- a string that you want to print out
+
+examples:
+
+alert();
+- prints "ALERT!" in red to the logs and returns "ALERT!"
+
+alert(message);
+- prints the contents of message in red to the logs and returns the message
+
+=====================
+random(start, end);
+
+returns a random number from a range between start and end, start is implicit and end is explicit
+
+parameters:
+
+start
+- the starting range, is implicit
+
+end
+- the end of the range, is explicit
+
+examples:
+
+alert(2, 5);
+- returns a number randomly selected between 2, 3, and 4. the number 5 cannot be selected because the end range is explicit.
+
+=====================
+
+NO OPERATIONS
+
+=====================
+=====================
+== player actions  ==
+=====================
+=====================
+
+METHODS
+
+=====================
+self.moveUp();
+self.moveUp(distance);
+
+move upwards 1 tile if distance is not provided or move upwards according to the distance if provided
+
+returns nothing
+
+distance
+- the number of distance to travel
+
+examples:
+
+self.moveUp();
+- move up 1 tile
+
+self.moveUp(5);
+- move up 5 tiles
+
+=====================
+self.moveDown();
+self.moveDown(distance);
+
+move downwards 1 tile if distance is not provided or move downwards according to the distance if provided
+
+returns nothing
+
+distance
+- the number of distance to travel
+
+examples:
+
+self.moveDown();
+- move down 1 tile
+
+self.moveDown(5);
+- move down 5 tiles
+
+=====================
+self.moveLeft();
+self.moveLeft(distance);
+
+move left 1 tile if distance is not provided or move left according to the distance if provided
+
+returns nothing
+
+distance
+- the number of distance to travel
+
+examples:
+
+self.moveLeft();
+- move left 1 tile
+
+self.moveLeft(5);
+- move left 5 tiles
+
+=====================
+self.moveRight();
+self.moveRight(distance);
+
+move right 1 tile if distance is not provided or move right according to the distance if provided
+
+returns nothing
+
+parameters:
+
+distance
+- the number of distance to travel
+
+examples:
+
+self.moveRight();
+- move right 1 tile
+
+self.moveRight(5);
+- move right 5 tiles
+
+=====================
+self.interact();
+self.interact(direction);
+
+interact with the object in front of the direction the player is facing if a direction is not specified, interact with the object in the direction specified otherwise. examples of interactable objects: doors.
+
+returns nothing
+
+parameters:
+
+direction
+- a string specifying the direction to interact ("up", "down", "left", "right")
+
+examples:
+
+self.interact();
+- interact with the object above if the player is facing upwards
+
+self.interact("right");
+- turn right and interact with the object to the right of the player
+
+=====================
+self.talk();
+
+talk with the NPC in front of the direction the player is facing
+
+returns nothing
+
+parameters:
+
+
+examples:
+
+self.talk();
+- interact with the NPC above if the player is facing upwards
+
+=====================
+self.up;
+
+make the player look upwards
+
+returns the name of the object above the player
+
+parameters:
+
+examples:
+
+self.up;
+- make the player look upwards if not already
+
+=====================
+self.down;
+
+make the player look downwards
+
+returns the name of the object below the player
+
+parameters:
+
+examples:
+
+self.down;
+- make the player look downwards if not already
+
+=====================
+self.left;
+
+make the player look left
+
+returns the name of the object to the left of the player
+
+parameters:
+
+examples:
+
+self.down;
+- make the player look left if not already
+
+=====================
+self.right;
+
+make the player look right
+
+returns the name of the object to the right of the player
+
+parameters:
+
+examples:
+
+self.down;
+- make the player look right if not already
+
+=====================
+self.ground;
+
+returns the name of the tile the player is stepping on
+
+parameters:
+
+examples:
+
+self.ground;
+- returns "floor" if the player is standing on a floor
+
+=====================
+self.x;
+
+returns the x coordinate the player is currently on
+
+parameters:
+
+examples:
+
+self.x;
+- returns 3 if the player is standing on coordinate 3,5
+
+=====================
+self.y;
+
+returns the y coordinate the player is currently on
+
+parameters:
+
+examples:
+
+self.y;
+- returns 5 if the player is standing on coordinate 3,5
+
+=====================
+
+NO OPERATIONS
+
+=====================
+=====================
+== number actions  ==
+=====================
+=====================
+
+METHODS
+
+=====================
+<number>.toString();
+
+returns a string version of the number
+
+parameters:
+
+examples:
+
+5.toString();
+- returns "5", the string version of the number 5
+
+num = 5;
+num.toString();
+- returns "5", the string version of the number 5 which is stored in the variable num
+
+=====================
+
+OPERATIONS
+
+=====================
+<number> + <number>
+<number> + <string>
+<number> - <number>
+<number> * <number>
+<number> / <number>
+<number> % <number>
+<number> == <number>
+<number> != <number>
+<number> < <number>
+<number> > <number>
+<number> <= <number>
+<number> >= <number>
+-<number>
+
+=====================
+=====================
+== string actions  ==
+=====================
+=====================
+
+METHODS
+
+=====================
+<string>.toNumber();
+
+returns a number version of the string
+
+parameters:
+
+examples:
+
+"123".toString();
+- returns 123, the number version of the string "123"
+
+str = "123";
+str.toNumber();
+- returns 123, the number version of the string "123" which is stored in the variable str
+
+=====================
+
+OPERATIONS
+
+=====================
+<string> + <string>
+<string> + <number>
+<string> == <string>
+<string> != <string>
+
+=====================
+=====================
+== boolean actions ==
+=====================
+=====================
+
+NO METHODS
+
+=====================
+
+OPERATIONS
+
+=====================
+<boolean> == <boolean>
+<boolean> != <boolean>
+<boolean> && <boolean>
+<boolean> || <boolean>
+
+

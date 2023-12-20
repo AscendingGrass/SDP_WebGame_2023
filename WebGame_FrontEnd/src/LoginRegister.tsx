@@ -1,16 +1,12 @@
 import { Outlet, NavLink } from "react-router-dom";
 import axios from "axios";
+import NavBarFun from "./Navbar";
 
 const LoginRegister = () => {
     return (
-        <div className="flex w-full justify-center">
+        <div className="flex flex-col w-full h-full justify-center">
+            <NavBarFun></NavBarFun>
             <Outlet></Outlet>
-            <div className="row justify-content-center text-center mb-3">
-                <div className="col-lg-5">
-                    <ul className="nav nav-tabs justify-content-center">                      
-                    </ul>
-                </div>
-            </div>
         </div>
     )
 }

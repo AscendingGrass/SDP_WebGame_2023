@@ -119,7 +119,7 @@ const NavBarFun = () => {
   );
 
   const noUserNavList = (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 ">
       <Typography
         as="li"
         variant="small"
@@ -194,7 +194,7 @@ const NavBarFun = () => {
   )
 
   const userNavList = (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 ">
       <Typography
         as="li"
         variant="small"
@@ -240,7 +240,7 @@ const NavBarFun = () => {
           />
         </svg>
         <Link to={"/leaderboard"} className="flex items-center">
-          Leaderboard
+          Leader
         </Link>
       </Typography>
       <Typography
@@ -294,49 +294,30 @@ const NavBarFun = () => {
   )
   
   return (
-    <Navbar className="mx-auto max-w-100 px-4 py-2 lg:px-8 lg:py-4 bg-black ">
+    <Navbar className="mx-auto max-w-100 px-4 py-2 lg:px-8 lg:py-4 bg-black rounded-none">
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
         {
           !state.user &&
-          <Typography
-              as="a"
-              href="#"
-              className="mr-0 cursor-pointer py-1.5 font-medium"
-            >
-              WebGame SDP
-            </Typography>
+          <Typography as="a" href="#" className="mr-0 cursor-pointer py-1.5 font-medium">WebGame SDP</Typography>
         }
         {
           state.user &&
           <div className="flex">
-            <Typography
-              as="a"
-              href="#"
-              className="mr-0 cursor-pointer py-1.5 font-medium"
-            >
-              Hello, &nbsp; 
-            </Typography>
-            <Typography
-              as="a"
-              href="#"
-              className={`mr-4 cursor-pointer py-1.5 font-medium ${state.user.role == "admin"? "text-red-500" : "text-blue-500"}`}
-            >
+            <Typography as="a" href="#" className="mr-0 cursor-pointer py-1.5 font-medium">Hello, &nbsp; </Typography>
+            <Typography as="a" href="#" className={`mr-4 cursor-pointer py-1.5 font-medium ${state.user.role == "admin"? "text-red-500" : "text-blue-500"}`}>
               {state.user.username}
             </Typography>
-        </div>
+          </div>
         }
         <div className="hidden lg:block">
           {
-            !state.user &&
-            noUserNavList
+            !state.user && noUserNavList
           }
           {
-            state.user && state.user.role == 'admin' && 
-            adminNavList
+            state.user && state.user.role == 'admin' && adminNavList
           }
           {
-            state.user && state.user.role != 'admin' && 
-            userNavList
+            state.user && state.user.role != 'admin' && userNavList
           }
         </div>
         <div className="flex items-center gap-x-1">
@@ -346,40 +327,14 @@ const NavBarFun = () => {
             <span>Play</span>
           </Button>
         </div>
-        <IconButton
-          variant="text"
-          className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-          ripple={false}
-
-        >
+        <IconButton variant="text" className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden" ripple={false} >
           {openNav ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              className="h-6 w-6"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" className="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
           )}
         </IconButton>

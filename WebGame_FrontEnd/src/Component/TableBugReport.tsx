@@ -27,16 +27,16 @@ const TABS = [
     value: "",
   },
   {
-    label: "Active",
-    value: "active",
+    label: "Pending",
+    value: "PENDING",
   },
   {
-    label: "Dead",
-    value: "dead",
+    label: "Done",
+    value: "DONE",
   },
 ];
  
-const TABLE_HEAD = ["Member", "Gender", "Status", "Role", "Action"];
+const TABLE_HEAD = ["Report", "User", "Status", "Date", "Action"];
  
 
 export function Table() {
@@ -75,10 +75,10 @@ export function Table() {
                 <div className="mb-8 flex items-center justify-between gap-8">
                     <div>
                     <Typography variant="h5" color="blue-gray">
-                        Accounts list
+                        Report Bug
                     </Typography>
                     <Typography color="gray" className="mt-1 font-normal">
-                        See information about all members
+                        See information about bug
                     </Typography>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
@@ -119,7 +119,13 @@ export function Table() {
                     <Spinner/>
                 }
                 {
-                    !isLoading &&
+                    !isLoading && totalPage == 0 &&
+                    <div className="text-4xl">
+                        NO DATA
+                    </div>
+                }
+                {
+                    !isLoading && totalPage > 0 &&
                     <table className="mt-4 w-full min-w-max table-auto text-left">
                         <thead>
                         <tr>

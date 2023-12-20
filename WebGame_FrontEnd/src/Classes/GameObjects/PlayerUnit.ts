@@ -15,7 +15,7 @@ export class PlayerUnit extends Unit{
 
     constructor(playerState:PlayerState, gameState:GameManager,animations:Animation[]=[]){
         super(playerState, "PlayerUnit", gameState, animations);
-        this.terminal = new Terminal(this)
+        this.terminal = new Terminal(this, gameState)
         this.playerState = playerState
         try{
 

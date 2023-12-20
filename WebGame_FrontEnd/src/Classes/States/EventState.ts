@@ -5,14 +5,19 @@ export class EventState{
     public id:string
     public name:string
     public properties:EventProperty[]
+    public difficulty:number
+    // 0 : easy
+    // 1 : medium
+    // 2 : hard
     
     /**
      *
      */
-    constructor(id:string, name:string, properties:EventProperty[]) {
+    constructor(id:string, name:string, properties:EventProperty[], difficulty:number) {
         this.id = id
         this.name = name
         this.properties = properties
+        this.difficulty = difficulty
     }
 
     public getValueOf(name:string):unknown{

@@ -45,7 +45,7 @@ export class GameManager {
 
         this.logView?.writeSeparator()
 
-        const result = await axios.post(`http://localhost:3000/save/${userId}`, this.currentState).catch(err =>  {
+        const result = await axios.post(`http://localhost:3000/save/${userId}`, this.currentState).catch(() =>  {
             this.logView?.addLog([
                 { 
                     value: 'Error saving game',
@@ -123,7 +123,7 @@ export class GameManager {
                 4
             )
             this.player.setDirection(Direction.Up)
-            this.player.setMoveSpeed(2);
+            this.player.setMoveSpeed(20);
             this.grid.addEntity(this.player);
             try{
                 NPC.loadNPCs(this).forEach(npc => this.grid.addEntity(npc))
@@ -216,7 +216,7 @@ export class GameManager {
 
     public start(): void {
         if (this.isRunning) return
-
+        
         const run = (timestamp: number): void => {
             this.deltaTime = (timestamp - this.lastTimeStamp) / 1000
             this.update()
@@ -229,8 +229,9 @@ export class GameManager {
     }
 
     public pause(): void {
-        if (!this.isRunning) return
         cancelAnimationFrame(this.animationFrameId)
+        this.isRunning = false
+        console.log("pausing Game");
     }
 
     private update(): void {

@@ -12,6 +12,7 @@ import { BranchCommand } from "./BranchCommand";
 import { ExpressionHandler } from "./ExpressionHandler";
 import { PlayerUnit } from "../GameObjects/PlayerUnit";
 import { PlayerWrapper } from "./PlayerWrapper";
+import { GameManager } from "../GameManager";
 
 export class Terminal{
     public content:string = "";
@@ -21,6 +22,7 @@ export class Terminal{
     public onStopped:((lastCompiledCommand:Command|null)=>void)[] = [];
     private variables:Map<string, Wrapper> = new Map();
     private player:PlayerWrapper;
+    private gameManager:GameManager;
     private constGlobalVariables:Map<string, Wrapper>  = new Map()
     private globalExpressionHandlers:ExpressionHandler[] = [
         {
@@ -28,9 +30,17 @@ export class Terminal{
             arguments:1,
             process:(self:VoidWrapper, args:Wrapper[])=>{
                 switch(args[0].getValue()){
-                    case 'alert()':
-                        console.log('alert')
-                        return new StringWrapper('alert!');
+                    case 'alert()':{
+                        const alertString = "ALERT!"
+                        this.gameManager.logView?.addLog([
+                            {
+                                value:alertString,
+                                color:"red"
+                            }
+                        ])
+                        this.gameManager.logView?.writeSeparator()
+                        return new StringWrapper(alertString);
+                    }
                     default:
                         throw Error("this method / property, '" + args[0].getValue() + "' doesn't exist globally");
                 }
@@ -42,7 +52,13 @@ export class Terminal{
             process:(self:VoidWrapper, args:Wrapper[])=>{
                 switch(args[0].getValue()){
                     case 'alert()':
-                        alert(args[1].getValue())
+                        this.gameManager.logView?.addLog([
+                            {
+                                value:args[1].getValue(),
+                                color:"red"
+                            }
+                        ])
+                        this.gameManager.logView?.writeSeparator()
                         return args[1];
                     default:
                         throw Error("this method, '" + args[0].getValue() + "' doesn't exist globally");
@@ -80,8 +96,9 @@ export class Terminal{
         },
     ]
 
-    constructor(playerUnit:PlayerUnit){
+    constructor(playerUnit:PlayerUnit, gameManager:GameManager){
         this.player = new PlayerWrapper(playerUnit)
+        this.gameManager = gameManager
         this.constGlobalVariables.set('self', this.player)
     }
 
