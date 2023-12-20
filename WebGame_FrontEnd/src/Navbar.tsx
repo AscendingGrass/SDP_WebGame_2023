@@ -320,7 +320,7 @@ const NavBarFun = () => {
   )
   
   return (
-    <Navbar className="mx-auto max-w-100 px-4 py-2 items-center lg:px-8 lg:py-4 bg-black">
+    <Navbar className="mx-auto max-w-100 px-4 py-2 items-center lg:px-8 lg:py-4 bg-black rounded-none">
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
         {
           !state.user &&
