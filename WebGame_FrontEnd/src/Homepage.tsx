@@ -48,7 +48,7 @@ const Homepage = () => {
         <div className="row mt-3 text-center mt-20">
           <div className="h3">About Game</div>
           <p>
-          is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Welcome to WebGame SDP, With a user-friendly approach, immerse in coding while enjoying an adventurous journey. Beyond gaming, it's a fun learning experience, focusing on practical coding within a vast and exciting gaming world. Our inclusive gaming environment, with a separate gender-based leaderboard, fosters a friendly atmosphere, allowing players to enjoy the game without intense competition pressure. Experience real-time gameplay in an open-world setting, where exploration knows no bounds. Join our fun coding learning community, start your adventure, enhance programming skills, and revel in the beauty of the coding world in a more enjoyable way with WebGame SDP
           </p>
         </div>
       </div>
