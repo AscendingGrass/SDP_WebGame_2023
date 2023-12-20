@@ -10,9 +10,13 @@ COPY . .
 
 EXPOSE 3000
 
-# CMD ["npm","run","dev"]
+
 
 RUN npm run build
+
+RUN rm -rf /node_modules
+RUN rm -rf /public
+RUN rm -rf /src
 
 RUN npm i serve -g
 
