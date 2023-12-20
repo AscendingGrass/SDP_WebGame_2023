@@ -27,3 +27,7 @@ const save = async (req, res) => {
         result: result,
     });
 }
+
+module.exports = {
+    save
+}

@@ -15,12 +15,14 @@ const bugRouter = require('./src/routes/bug');
 const userRouter = require("./src/routes/user");
 const scoreboardRouter = require("./src/routes/scoreboard");
 const announcementRouter = require("./src/routes/announcement");
+const saveRouter = require("./src/routes/save");
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use("/", bugRouter);
 app.use("/", userRouter);
 app.use("/", scoreboardRouter);
 app.use("/", announcementRouter);
+app.use("/", saveRouter);
 
 app.listen(port, async () => {
     try{
