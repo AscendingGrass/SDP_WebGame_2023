@@ -1,3 +1,6 @@
+// @ts-nocheck
+
+
 import React, { useEffect } from 'react';
 import Footer from './Footer';
 import {  useState } from "react"

@@ -725,8 +725,8 @@ export class Terminal{
                 continue;
             }
 
+            let op:string|undefined;
             if(expressionTokens[i] === ')'){
-                let op:string|undefined;
                 while((op = peek(postfixOps)) && op !== '('){
                     pushOp()
                 }
@@ -890,7 +890,6 @@ export class Terminal{
             postfixedTokens.push(op)
         }
     }
-
 
     public compile():void{
         const compiled = this._compile(Terminal.tokenize(this.content))

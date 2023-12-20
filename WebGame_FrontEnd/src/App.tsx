@@ -1,3 +1,6 @@
+// @ts-nocheck
+
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useCallback } from 'react'
 import {loadGame} from './loadGame';

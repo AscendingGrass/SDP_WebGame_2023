@@ -1,5 +1,5 @@
 const User = require("../models/Users");
-const Save = require("../models/Save");
+const Save = require("../models/Saves");
 
 const save = async (req, res) => {
     const { user_id } = req.params;
@@ -13,13 +13,11 @@ const save = async (req, res) => {
         })
     }
 
-    const newSave = new Save({
+    const result = await Save.create({
         user_id,
         state: body
-    });
-
-    const result = await newSave.save();
-    await checkUser.set({
+    })
+    const updatePlayer = await checkUser.set({
         save: result._id
     });
 

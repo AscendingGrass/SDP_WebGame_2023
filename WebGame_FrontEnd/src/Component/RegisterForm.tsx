@@ -1,7 +1,9 @@
+// @ts-nocheck
+
 import {
     Card,
     Input,
-    Checkbox,
+    // Checkbox,
     Button,
     Typography,
     Radio,

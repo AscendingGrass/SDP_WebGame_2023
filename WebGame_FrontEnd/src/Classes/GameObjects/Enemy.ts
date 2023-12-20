@@ -2,16 +2,17 @@ import { Animation } from "./Animation";
 import { GameState } from "../States/GameState";
 import { UnitState } from "../States/UnitState";
 import { Unit } from "./Unit";
+import { GameManager } from "../GameManager";
 
 export class Enemy extends Unit{
 
-    public behaviorHandler:(self:Enemy, deltaTime:number,gameState:GameState) => void;
+    public behaviorHandler:(self:Enemy, deltaTime:number,gameState:GameManager) => void;
 
     constructor(
         state:UnitState, 
         name:string, 
-        gameState:GameState, 
-        behaviorHandler:(self:Enemy, deltaTime:number, gameState:GameState) => void, 
+        gameState:GameManager, 
+        behaviorHandler:(self:Enemy, deltaTime:number, gameState:GameManager) => void, 
         animations:Animation[]
         ){
         super(state, name, gameState, animations)
