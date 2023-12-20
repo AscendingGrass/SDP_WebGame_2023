@@ -19,7 +19,7 @@ const Footer = ()=> {
     return (
         
 
-        <Navbar className="m-auto flex justify-evenly py-2 bg-black text-white rounded-none "variant="gradient">
+    <div className="w-full flex justify-evenly py-2 bg-black text-white rounded-none ">
       <Button onClick={handleOpen} className="bg-neutral-750">
         Privacy Policy
       </Button>
@@ -61,9 +61,9 @@ const Footer = ()=> {
 By using this Site, you agree to be bound by, and to comply with, these Terms and Conditions. If you do not agree to these Terms and Conditions, please do not use this site.
 
 PLEASE NOTE: We reserve the right, at our sole discretion, to change, modify or otherwise alter these Terms and Conditions at any time. Unless otherwise indicated, amendments will become effective immediately.
- Please review these Terms and Conditions periodically.
+Please review these Terms and Conditions periodically.
   Your continued use of the Site following the posting of changes and/or modifications will constitute your acceptance of the revised Terms and Conditions and the reasonableness of these standards for notice of changes. For your information,
- this page was last updated as of the date at the top of these terms and conditions.
+this page was last updated as of the date at the top of these terms and conditions.
         </DialogBody>
         <DialogFooter>
           <Button
@@ -81,8 +81,8 @@ PLEASE NOTE: We reserve the right, at our sole discretion, to change, modify or 
       </Dialog>
 
 
-        </Navbar>
-       );
+    </div>
+  );
        
 }
 

@@ -34,15 +34,15 @@ const Login = () => {
           </Tab>
         </TabsHeader>
       </Tabs>
-      <div className="flex flex-col w-full" id="nav-tabContent">
-        <div className="tab-pane fade col-lg-5 show active overflow-y justify-center flex mt-10 " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
+      <div className="flex justify-center w-full" id="nav-tabContent">
+        <div className="tab-pane fade w-3/6 show active overflow-y justify-center flex mt-10 " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
           {
             isLoading && 
             <Spinner/>
           }
           {
             !isLoading &&
-            <table className={`table w-3/6 border-solid border-8 border-zinc-600`}>
+            <table className={`table w-full border-solid border-8 border-zinc-600`}>
               <thead className=" ">
                 <tr className='bg-black text-[#f4f4f4]'>
                   <th className="w-1/4 " scope="col">Rank</th>

@@ -320,8 +320,8 @@ const NavBarFun = () => {
   )
   
   return (
-    <Navbar className="mx-auto max-w-100 px-4 py-2 items-center lg:px-8 lg:py-4 bg-black rounded-none">
-      <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
+    <div className="w-full py-2 outline-0 bg-black rounded-none">
+      <div className="container mx-auto flex items-center justify-between text-white">
         {
           !state.user &&
           <Typography as="a" href="#" className="mr-0 cursor-pointer py-1.5 font-medium">WebGame SDP</Typography>
@@ -378,7 +378,7 @@ const NavBarFun = () => {
           </div>
         </div>
       </MobileNav>
-    </Navbar>
+    </div>
   );
 };
 
