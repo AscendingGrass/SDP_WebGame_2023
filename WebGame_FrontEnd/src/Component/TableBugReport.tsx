@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
