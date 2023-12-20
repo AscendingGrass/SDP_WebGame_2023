@@ -1,59 +1,81 @@
 import React from 'react';
+import { Typography as MaterialTailwindTypography } from '@material-tailwind/react';
 
 const Help = () => {
-  const reportData = [
-    { id: 1, name: 'John Doe', title: 'Monthly Sales Report', date: '2023-01-15' },
-    { id: 2, name: 'Jane Smith', title: 'Quarterly Performance Review', date: '2023-02-20' },
-    { id: 3, name: 'Bob Johnson', title: 'Yearly Financial Summary', date: '2023-03-10' },
-    { id: 4, name: 'Alice Williams', title: 'Marketing Campaign Analysis', date: '2023-04-05' },
-    { id: 5, name: 'Charlie Brown', title: 'Product Development Update', date: '2023-05-22' },
-    { id: 6, name: 'Eva Davis', title: 'Employee Satisfaction Survey Results', date: '2023-06-18' },
-    { id: 7, name: 'Frank White', title: 'Customer Support Report', date: '2023-07-12' },
-    { id: 8, name: 'Grace Lee', title: 'IT Infrastructure Overview', date: '2023-08-29' },
-    { id: 9, name: 'Henry Miller', title: 'Risk Assessment Report', date: '2023-09-14' },
-    { id: 10, name: 'Ivy Taylor', title: 'Project Status Update', date: '2023-10-07' },
-    // Add more report data as needed
-  ];
-
   return (
-    <div className="container-fluid bg-gray-200">
-      <div className="row align-items-center bg-secondary flex w-full">
-        <div className="col-lg-2">
-          Sort By
-        </div>
-        <div className="col-lg-2">
-          Filter By
-        </div>
-        <div className="col-lg-8">
-          <div className="row justify-content-end align-items-center">
-            <div className="col-lg-5">
-              <input type="text" className="form-control" />
+    <div className="bg-gray-200 text-center px-28" style={{width:"100%"}}>
+      <MaterialTailwindTypography variant="h1" className="mb-4"> Global actions </MaterialTailwindTypography>
+      <div className="bg-gray-200 text-left mr-28">
+        <MaterialTailwindTypography variant="h4" className="mb-2">
+          METHODS
+        </MaterialTailwindTypography>
+        <MaterialTailwindTypography variant="paragraph" className="mb-6">
+          <MaterialTailwindTypography variant="h6" className="font-mono">
+            alert();
+            <br />
+            alert(message);
+          </MaterialTailwindTypography>
+          <MaterialTailwindTypography variant="small" className="mb-2">
+            print a message in red to the logs, print "ALERT!" instead if message is not specified. 
+            <br />
+            returns the printed message
+            <br />
+            <MaterialTailwindTypography variant="h5" className="">
+              parameters:
+            </MaterialTailwindTypography>
+            <div className="pl-10">
+              message
+              <br />
+              <span className="ml-2">- a string that you want to print out</span>
             </div>
-            <div className="col-lg-2">
-              <button>Search</button>
+            <MaterialTailwindTypography variant="h5" className="">
+              examples:
+            </MaterialTailwindTypography>
+            <div className="pl-10">
+              <MaterialTailwindTypography variant="h6" className="font-mono">
+                alert(); 
+              </MaterialTailwindTypography>
+              <span className="ml-2">- prints "ALERT!" in red to the logs and returns "ALERT!"</span>
+              <br />
+              <MaterialTailwindTypography variant="h6" className="font-mono">
+                alert(message);
+              </MaterialTailwindTypography>
+              <span className="ml-2">- prints the contents of message in red to the logs and returns the message</span>
             </div>
-          </div>
-        </div>
+          </MaterialTailwindTypography>
+          -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          <MaterialTailwindTypography variant="paragraph" className="mb-6">
+            <MaterialTailwindTypography variant="h6" className="font-mono">
+              random(start, end);
+            </MaterialTailwindTypography>
+            returns a random number from a range between start and end, start is implicit and end is explicit
+            <br />
+            <MaterialTailwindTypography variant="h5" className="">
+              parameters:
+            </MaterialTailwindTypography>
+            <div className="pl-10">
+              start
+              <br />
+              <span className="ml-2">- the starting range, is implicit</span>
+              <br />
+              end
+              <br />
+              <span className="ml-2">- the end of the range, is explicit</span>
+            </div>
+            <MaterialTailwindTypography variant="h5" className="">
+              examples:
+            </MaterialTailwindTypography>
+            <div className="pl-10">
+              <MaterialTailwindTypography variant="h6" className="font-mono">
+                alert(2, 5);
+              </MaterialTailwindTypography>
+              
+              <span className="ml-2">- returns a number randomly selected between 2, 3, and 4. the number 5 cannot be selected because the end range is explicit.</span>
+            </div>
+          </MaterialTailwindTypography>
+        </MaterialTailwindTypography>
+        <hr />
       </div>
-      {/* Displaying Report Data */}
-      {reportData.map((report) => (
-        <div className="row bg-dark py-2 flex" key={report.id}>
-          <div className="col-lg-2">
-            <div className="form-control bg-dark text-black bg-gray-500 w-40 border-2 border-gray-600 rounded-md ml-60">{report.name}</div>
-          </div>
-          <div className="col-lg-2">
-            <div className="form-control bg-dark text-black bg-zinc-400 w-w-32 border-2 border-gray-600 rounded-md ml-4">{report.date}</div>
-          </div>
-          <div className="col-lg-6">
-            <div className="form-control bg-dark text-black bg-zinc-400 w-96 border-2 border-gray-600 rounded-md ml-4">{report.title}</div>
-          </div>
-          <div className="col-lg-2">
-            <select name="" id="" className="form-select bg-dark text-white bg-zinc-800 border-solid border-2 border-zinc-600 rounded-md ml-8">
-              <option value="">Report</option>
-            </select>
-          </div>
-        </div>
-      ))}
     </div>
   );
 }
