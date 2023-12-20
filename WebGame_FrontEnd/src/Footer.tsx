@@ -19,12 +19,9 @@ const Footer = ()=> {
     return (
         
 
-        <Navbar className="m-auto flex justify-evenly py-15 bg-black text-white rounded-none "variant="gradient">
-            
-                
-                <>
+        <Navbar className="m-auto flex justify-evenly py-2 bg-black text-white rounded-none "variant="gradient">
       <Button onClick={handleOpen} className="bg-neutral-750">
-      Privacy Policy
+        Privacy Policy
       </Button>
       <Dialog open={open} handler={handleOpen}>
         <DialogHeader>Privacy Policy.</DialogHeader>
@@ -52,10 +49,6 @@ const Footer = ()=> {
           </Button>
         </DialogFooter>
       </Dialog>
-    </>
-
-
-    <>
       <Button onClick={handleOpen} className="bg-neutral-750">
       Term & Condition
       </Button>
@@ -86,8 +79,6 @@ PLEASE NOTE: We reserve the right, at our sole discretion, to change, modify or 
           </Button>
         </DialogFooter>
       </Dialog>
-    </>
-    
 
 
         </Navbar>
