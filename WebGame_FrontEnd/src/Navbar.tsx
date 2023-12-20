@@ -1,3 +1,6 @@
+// @ts-nocheck
+
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import {

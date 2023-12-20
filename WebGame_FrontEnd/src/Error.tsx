@@ -1,7 +1,7 @@
 import { Link, useRouteError } from "react-router-dom";
 
 const Error = () => {
-  const error = useRouteError();
+  const error = useRouteError() as {status:number};
   return (
     <div className="flex flex-col w-full h-screen justify-center items-center gap-y-4">
 
