@@ -44,12 +44,17 @@ const router = createBrowserRouter([
         element: <Setting/>,
       },
       {
-        path: "admin/user", //Akses melalui base_url/about
-        element: <User/>,
-      },
-      {
-        path: "admin/report", //Akses melalui base_url/about
-        element: <Report/>,
+        path: "admin", //Akses melalui base_url/about
+        children: [
+          {
+            path: "user",
+            element: <User/>
+          },
+          {
+            path: "report", //Akses melalui base_url/about
+            element: <Report/>,
+          },
+        ]
       },
       {
         path: "game/help",

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 
 import { UserPlusIcon } from "@heroicons/react/24/solid";
@@ -73,7 +74,7 @@ export function Table() {
 
     return (
         <Card className="h-full w-full">
-            <CardHeader floated={false} shadow={false} className="rounded-none">
+            <CardHeader floated={false} shadow={false} className="rounded-none h-1/6">
                 <div className="mb-8 flex items-center justify-between gap-8">
                     <div>
                     <Typography variant="h5" color="blue-gray">
@@ -115,10 +116,16 @@ export function Table() {
                     </div>
                 </div>
             </CardHeader>
-            <CardBody className="overflow-scroll px-0">
+            <CardBody className="overflow-scroll h-4/6 mt-4 px-0">
                 {
                     isLoading && 
                     <Spinner/>
+                }
+                {
+                    !isLoading && totalPage == 0 &&
+                    <div className="grid place-content-center h-full text-4xl">
+                        NO DATA
+                    </div>
                 }
                 {
                     !isLoading &&

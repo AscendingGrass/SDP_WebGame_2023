@@ -54,7 +54,6 @@ export function LoginForm() {
           <Typography variant="h6" color="blue-gray" className="-mb-3">
             Username
           </Typography>
-         
           <Input
             size="lg"
             placeholder="Enter your username"
@@ -75,7 +74,7 @@ export function LoginForm() {
             labelProps={{
                 className: "before:content-none after:content-none",
               }}
-              {...register("password")}
+            {...register("password")}
           />
           <Typography variant="h6" color="red" className="-mb-3">
             {error}
