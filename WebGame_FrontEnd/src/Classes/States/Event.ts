@@ -54,11 +54,28 @@ export class Event{
                         value:"Tutorial Guy"
                     }
                 ],
-                0 // easy
+                2 // easy
             ),
             {
-                "try_talk":(self:Event)=>{
+                "try_talk":(self:Event, gameManager:GameManager)=>{
                     self.getProperty("progress").value = 1;
+                    gameManager.logView?.addLog([
+                        {
+                            value: self.state.name.toUpperCase() + " QUEST STARTED",
+                            color:"green"
+                        }
+                    ])
+                    gameManager.logView?.addLog([
+                        {
+                            value:"DIFFICULTY: ",
+                            color:"green"
+                        },
+                        {
+                            value:"HARD",
+                            color:"red"
+                        }
+                    ])
+                    gameManager.logView?.writeSeparator()
                 },
                 "talk_complete":(self:Event, gameManager:GameManager, eventArgs:unknown[])=>{
                     self.getProperty("progress").value = 2;
@@ -194,7 +211,7 @@ export class Event{
                     const reward = 100 + Math.round(Math.max((750 - (state.playtime)), 0)/ 10)
                     state.score += reward
                     gameManager.logView?.addLog([
-                        {color:"green", value:`YOU CLEARED THE TUTORIAL! YOU GOT ${reward} POINTS`},
+                        {color:"green", value:`${self.state.name.toUpperCase()} QUEST CLEARED! YOU GOT ${reward} POINTS`},
                     ])
                     gameManager.logView?.writeSeparator()
                     
@@ -294,6 +311,182 @@ export class Event{
                     door.onInteract = onInteract
                 }else if(progress == 9){
                     null;
+                }else{
+                    throw new Error("unhandled progress state when loading tutorial")
+                }
+
+            }
+        ),
+        new Event(
+            new EventState(
+                "CMP001",
+                "Go to the other room",
+                [
+                    {
+                        name:"progress",
+                        value:0
+                        // 0 Initial State
+                        // 1 Quest Started
+                        // 2 Quest Completed
+                    },
+                    {
+                        name:"target_coordinate",
+                        value:{x:4,y:14}
+                    },
+                ],
+                1 // medium
+            ),
+            {
+                "start":(self:Event, gameManager:GameManager)=>{
+                    self.getProperty("progress").value = 1;
+                    gameManager.logView?.addLog([
+                        {
+                            value: self.state.name.toUpperCase() + " QUEST STARTED",
+                            color: "green"
+                        }
+                    ])
+                    gameManager.logView?.addLog([
+                        {
+                            value:"DIFFICULTY: ",
+                            color:"green"
+                        },
+                        {
+                            value:"MEDIUM",
+                            color:"yellow"
+                        }
+                    ])
+                    gameManager.logView?.writeSeparator()
+                    
+                    const targetCoordinate = self.getProperty("target_coordinate").value as Point
+
+                    const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
+                        if(stepper == gameState.player){
+                            tile.stepHandler = () => {}
+                            gameManager.grid.setTile(targetCoordinate, 'floor', gameManager.groupAnimations);
+                            self.progress("completed", gameManager)
+                        }
+                    }
+
+                    gameManager.grid.setTile(targetCoordinate,'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler
+                },
+                "completed":(self:Event, gameManager:GameManager)=>{
+                    self.getProperty("progress").value = 2;
+                    const state = gameManager.currentState
+                    const reward = 50
+                    if(!state) throw Error("GameManager has no GameState")
+                    state.score += reward
+                    gameManager.logView?.addLog([
+                        {color:"green", value:`${self.state.name.toUpperCase()} QUEST CLEARED! YOU GOT ${reward} POINTS`},
+                    ])
+                    gameManager.logView?.writeSeparator()
+                },
+            },
+            (self:Event, gameManager:GameManager)=>{ // onload handler
+                const progress = self.getValueOf("progress") as number
+                if(progress == 1){
+                    const targetCoordinate = self.getProperty("target_coordinate").value as Point
+
+                    const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
+                        if(stepper == gameState.player){
+                            tile.stepHandler = () => {}
+                            gameManager.grid.setTile(targetCoordinate, 'floor', gameManager.groupAnimations);
+                            self.progress("completed", gameManager)
+                        }
+                    }
+
+                    gameManager.grid.setTile(targetCoordinate,'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler
+                }else if(progress == 2){
+                    null
+                }else{
+                    throw new Error("unhandled progress state when loading tutorial")
+                }
+
+            }
+        ),
+        new Event(
+            new EventState(
+                "CMP002",
+                "Step Left!",
+                [
+                    {
+                        name:"progress",
+                        value:0
+                        // 0 Initial State
+                        // 1 Quest Started
+                        // 2 Quest Completed
+                    },
+                    {
+                        name:"target_coordinate",
+                        value:{x:0,y:0}
+                    },
+                ],
+                0 // easy
+            ),
+            {
+                "start":(self:Event, gameManager:GameManager)=>{
+                    self.getProperty("progress").value = 1;
+                    gameManager.logView?.addLog([
+                        {
+                            value: self.state.name.toUpperCase() + " QUEST STARTED",
+                            color: "green"
+                        }
+                    ])
+                    gameManager.logView?.addLog([
+                        {
+                            value:"DIFFICULTY: ",
+                            color:"green"
+                        },
+                        {
+                            value:"EASY",
+                            color:"green"
+                        }
+                    ])
+                    gameManager.logView?.writeSeparator()
+                    
+                    const targetCoordinate = self.getProperty("target_coordinate")
+                    let targetCoordinateValue = gameManager.player?.getCoordinate()
+                    if(!targetCoordinateValue) throw Error("there is no player")
+                    targetCoordinateValue = {x:targetCoordinateValue.x - 1, y:targetCoordinateValue.y} as Point
+                    targetCoordinate.value = targetCoordinateValue
+
+                    const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
+                        if(stepper == gameState.player){
+                            tile.stepHandler = () => {}
+                            gameManager.grid.setTile(targetCoordinate.value as Point, 'floor', gameManager.groupAnimations);
+                            self.progress("completed", gameManager)
+                        }
+                    }
+
+                    gameManager.grid.setTile(targetCoordinateValue,'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler
+                },
+                "completed":(self:Event, gameManager:GameManager)=>{
+                    self.getProperty("progress").value = 2;
+                    const state = gameManager.currentState
+                    const reward = 15
+                    if(!state) throw Error("GameManager has no GameState")
+                    state.score += reward
+                    gameManager.logView?.addLog([
+                        {color:"green", value:`${self.state.name.toUpperCase()} QUEST CLEARED! YOU GOT ${reward} POINTS`},
+                    ])
+                    gameManager.logView?.writeSeparator()
+                },
+            },
+            (self:Event, gameManager:GameManager)=>{ // onload handler
+                const progress = self.getValueOf("progress") as number
+                if(progress == 1){
+                    const targetCoordinate = self.getProperty("target_coordinate").value as Point
+
+                    const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
+                        if(stepper == gameState.player){
+                            tile.stepHandler = () => {}
+                            gameManager.grid.setTile(targetCoordinate, 'floor', gameManager.groupAnimations);
+                            self.progress("completed", gameManager)
+                        }
+                    }
+                    gameManager.grid.setTile(targetCoordinate,'marked_floor', gameManager.groupAnimations).stepHandler = stepHandler
+
+                }else if(progress == 2){
+                    null
                 }else{
                     throw new Error("unhandled progress state when loading tutorial")
                 }

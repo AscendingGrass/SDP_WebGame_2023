@@ -19,8 +19,7 @@ export class NPC extends Unit{
 
                     const eventState = gameState?.events.find(x => x.getId() === "TUT001")
                     if(!eventState) {
-                        const temp = Event.start(self.gameState,"TUT001")
-                        temp.state.properties.push({name:"NPC", value:self})
+                        Event.start(self.gameState,"TUT001")
                     }
 
                     switch(eventState?.getValueOf("progress")){
@@ -145,6 +144,159 @@ export class NPC extends Unit{
                     [ // 8
                         "WHY ARE YOU HERE AGAIN!?"
                     ]
+                ],
+                animations:[
+                    new ChainedAnimation(
+                        null,
+                        "idle",
+                        Animation.assets['tutorialguy_idle'],
+                        {x:32, y:32},
+                        1,
+                        -1,
+                        0
+                    )
+                ]
+            },
+            {
+                name:"Bob",
+                talkHandler:(self:NPC)=>{
+                    const gameState = self.gameState
+
+                    let eventState = gameState?.events.find(x => x.getId() === "CMP001")
+                    if(!eventState) {
+                        eventState = Event.start(self.gameState,"CMP001")
+                    }
+
+                    switch(eventState?.getValueOf("progress")){
+                        case 0:
+                            self.dialogIndex = 0
+                            eventState?.progress("start", self.gameState)
+                            break;
+                        case 1:
+                            self.dialogIndex = 1
+                            break;
+                        case 2:
+                            self.dialogIndex = 2
+                            break;
+                    }
+
+                    while(self.dialogProgress < self.dialogs[self.dialogIndex].length){
+                        self.gameState?.logView?.addLog(
+                            [
+                                {color:"green", value:self.name + " : "},
+                                {color:"black", value:self.dialogs[self.dialogIndex][self.dialogProgress]}
+                            ]
+                        )
+                        self.dialogProgress++
+                    }
+                    self.gameState?.logView?.writeSeparator()
+                    self.dialogProgress = 0
+                    self.dialogIndex = -1
+                },
+                // LOAD HANDLER
+                loadHandler: (gameState:GameManager, data:NPCData)=>{
+                    const spawn:Point = {x:8, y:10}
+                    // const eventState = gameState.eventStates[0]
+                    const newNPC = new NPC(
+                        new UnitState(spawn),
+                        data.name,
+                        gameState,
+                        data.talkHandler,
+                        data.dialogs,
+                        []
+                    )
+                        
+                    Animation.makeCopyIfChained(data.animations,newNPC).forEach(x => newNPC.addAnimation(x))
+                    
+                    return newNPC
+                },
+                dialogs:[
+                    [ // 0
+                        "Hello!",
+                        "Can you go to the next room?",
+                    ],
+                    [ // 1
+                        "Go to the next room and stand on the floor marked!",
+                    ],
+                    [ // 2
+                        "Thank you for your help, if you wonder what that was for... it wasn't for anything!",
+                    ],
+                ],
+                animations:[
+                    new ChainedAnimation(
+                        null,
+                        "idle",
+                        Animation.assets['tutorialguy_idle'],
+                        {x:32, y:32},
+                        1,
+                        -1,
+                        0
+                    )
+                ]
+            },
+            {
+                name:"Ruben.IFJ",
+                talkHandler:(self:NPC)=>{
+                    const gameState = self.gameState
+
+                    let eventState = gameState?.events.find(x => x.getId() === "CMP002")
+                    if(!eventState) {
+                        eventState = Event.start(self.gameState,"CMP002")
+                    }
+
+                    switch(eventState?.getValueOf("progress")){
+                        case 0:
+                            self.dialogIndex = 0
+                            eventState?.progress("start", self.gameState)
+                            break;
+                        case 1:
+                            self.dialogIndex = 1
+                            break;
+                        case 2:
+                            self.dialogIndex = 2
+                            break;
+                    }
+
+                    while(self.dialogProgress < self.dialogs[self.dialogIndex].length){
+                        self.gameState?.logView?.addLog(
+                            [
+                                {color:"green", value:self.name + " : "},
+                                {color:"black", value:self.dialogs[self.dialogIndex][self.dialogProgress]}
+                            ]
+                        )
+                        self.dialogProgress++
+                    }
+                    self.gameState?.logView?.writeSeparator()
+                    self.dialogProgress = 0
+                    self.dialogIndex = -1
+                },
+                // LOAD HANDLER
+                loadHandler: (gameState:GameManager, data:NPCData)=>{
+                    const spawn:Point = {x:13, y:10}
+                    // const eventState = gameState.eventStates[0]
+                    const newNPC = new NPC(
+                        new UnitState(spawn),
+                        data.name,
+                        gameState,
+                        data.talkHandler,
+                        data.dialogs,
+                        []
+                    )
+                        
+                    Animation.makeCopyIfChained(data.animations,newNPC).forEach(x => newNPC.addAnimation(x))
+                    
+                    return newNPC
+                },
+                dialogs:[
+                    [ // 0
+                        "Step to your left!",
+                    ],
+                    [ // 1
+                        "Just step to the tile with the x mark!",
+                    ],
+                    [ // 2
+                        "ez clap",
+                    ],
                 ],
                 animations:[
                     new ChainedAnimation(
