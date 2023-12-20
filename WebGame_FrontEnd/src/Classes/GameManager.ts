@@ -123,7 +123,7 @@ export class GameManager {
                 4
             )
             this.player.setDirection(Direction.Up)
-            this.player.setMoveSpeed(2);
+            this.player.setMoveSpeed(20);
             this.grid.addEntity(this.player);
             try{
                 NPC.loadNPCs(this).forEach(npc => this.grid.addEntity(npc))

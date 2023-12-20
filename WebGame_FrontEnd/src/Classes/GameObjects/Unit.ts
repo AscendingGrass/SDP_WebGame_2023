@@ -26,6 +26,12 @@ export abstract class Unit extends Entity{
 
     public setMoveSpeed(value:number, animationSpeedMult:number = 1):void{
         this.unitState.moveSpeed = value;
+        this.gameState.logView?.addLog([
+            {
+                value:`moveSpeed : ${value}`,
+                color:"green"
+            }
+        ])
         const animation = this.getAnimation('walk');
         if(!animation) return;
         animation.animationSpeed = animation.spriteFrameNum * animationSpeedMult * this.unitState.moveSpeed
