@@ -119,7 +119,7 @@ const NavBarFun = () => {
   );
 
   const noUserNavList = (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 ">
       <Typography
         as="li"
         variant="small"
@@ -194,7 +194,7 @@ const NavBarFun = () => {
   )
 
   const userNavList = (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 ">
       <Typography
         as="li"
         variant="small"
@@ -240,7 +240,7 @@ const NavBarFun = () => {
           />
         </svg>
         <Link to={"/leaderboard"} className="flex items-center">
-          Leaderboard
+          Leader
         </Link>
       </Typography>
       <Typography
@@ -294,7 +294,7 @@ const NavBarFun = () => {
   )
   
   return (
-    <Navbar className="mx-auto max-w-100 px-4 py-2 lg:px-8 lg:py-4 bg-black ">
+    <Navbar className="mx-auto max-w-100 px-4 py-2 lg:px-8 lg:py-4 bg-black rounded-none">
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
         {
           !state.user &&
