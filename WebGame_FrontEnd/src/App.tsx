@@ -5,7 +5,7 @@ import { grey } from '@mui/material/colors';
 import { Button } from '@material-tailwind/react';
 import { useNavigate } from 'react-router';
 import { useData } from './DataContext';
-import { useBeforeUnload } from 'react-router-dom';
+import { Link, useBeforeUnload } from 'react-router-dom';
 import { GameManager } from './Classes/GameManager';
 
 
@@ -64,12 +64,14 @@ function App() {
 
           </div>
           <div className="buttonsection flex gap-4">
-              <Button id="report" className="button report w-1/2" >
+              <Link to={"/game/bug"} id="report" className="button report w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded text-center" >
                   Report Bug
-              </Button>
-              <Button id="help" className="button help w-1/2" >
-                  Help
-              </Button>
+              </Link>
+
+              <Link to="/game/help" className="button help w-1/2 bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded text-center">
+                Help
+              </Link>
+
           </div>
         </div>
       </div>
