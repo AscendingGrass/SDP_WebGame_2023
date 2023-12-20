@@ -235,7 +235,7 @@ export class NPC extends Unit{
                 ]
             },
             {
-                name:"Ruben of the IFJ",
+                name:"Ruben.IFJ",
                 talkHandler:(self:NPC)=>{
                     const gameState = self.gameState
 
