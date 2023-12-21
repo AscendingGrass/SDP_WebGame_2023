@@ -1,3 +1,4 @@
+require('dotenv').config()
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require("cors");
@@ -7,7 +8,7 @@ const port = 3000;
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     optionSucessStatus: 200
 }));
 
@@ -26,7 +27,7 @@ app.use("/", saveRouter);
 
 app.listen(port, async () => {
     try{
-        await mongoose.connect('mongodb+srv://team:teamsdp2023@cluster-m0.8pfwkar.mongodb.net/webgame?retryWrites=true&w=majority')
+        await mongoose.connect(process.env.DATABASE_URL)
         console.log('Database connected')
     }
     catch(e){
