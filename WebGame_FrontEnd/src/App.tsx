@@ -5,18 +5,39 @@
 import { useEffect, useState, useCallback } from 'react'
 import {loadGame} from './loadGame';
 import { grey } from '@mui/material/colors';
-import { Button } from '@material-tailwind/react';
+import { 
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  Typography,
+  Input,
+  Textarea,
+ } from '@material-tailwind/react';
 import { useNavigate } from 'react-router';
 import { useData } from './DataContext';
 import { Link, useBeforeUnload } from 'react-router-dom';
 import { GameManager } from './Classes/GameManager';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
 
 
 function App() {
   const [mode, setMode] = useState(false);
-  const {state} = useData();
+  const {state, dispatch} = useData();
+  console.log(state);
+  
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const submitData = async (data) => {
+    const body = {...data, user_id : state.user._id};
+    const result = (await axios.post("http://localhost:3000/postBug", body)).data;
+    
+    reset();
+  };
+  const handleOpen = () => setOpen(!open);
   useEffect(() => {
     if(!state.user) {
       navigate("/login");
@@ -79,9 +100,35 @@ function App() {
 
           </div>
           <div className="buttonsection flex gap-4">
-              <Link to={"/game/bug"} id="report" className="button report w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded text-center" >
+              <Button id="report" onClick={handleOpen} className="button report w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded text-center" >
                   Report Bug
-              </Link>
+              </Button>
+              <Dialog open={open} handler={handleOpen}>
+              <DialogHeader>Report Bug</DialogHeader>
+                <form onSubmit={handleSubmit(submitData)}>
+                  <DialogBody>
+                    <div className="flex mb-3">
+                      <Input label='Title' {...register("title")}/>
+                    </div>
+                    <div className="flex mb-3">
+                      <Textarea label='Description' rows={10} {...register("description")}/>
+                    </div>
+                  </DialogBody>
+                  <DialogFooter>
+                    <Button
+                      variant="text"
+                      color="red"
+                      onClick={handleOpen}
+                      className="mr-1"
+                    >
+                      <span>Cancel</span>
+                    </Button>
+                    <Button variant="gradient" color="green" type='submit'>
+                      <span>Confirm</span>
+                    </Button>
+                  </DialogFooter>
+                </form>
+              </Dialog>
 
               <Link to="/game/help" className="button help w-1/2 bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded text-center">
                 Help

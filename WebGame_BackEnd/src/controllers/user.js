@@ -285,7 +285,7 @@ const deleteUser = async (req, res) => {
     let checkUser = await User.findOne({
         _id: id
     });
-    if(!result) return res.status(200).send({
+    if(!checkUser) return res.status(200).send({
         error: true,
         msg: "Tidak ada user dengan ID : " + id
     })

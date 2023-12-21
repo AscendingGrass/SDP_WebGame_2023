@@ -136,6 +136,7 @@ const updateBug = async (req, res) => {
 
 module.exports = {
     dummyBug,
+    postBug,
     fetchBugReport,
     updateBug
 }

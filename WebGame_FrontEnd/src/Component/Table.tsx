@@ -72,6 +72,11 @@ export function Table() {
         setPage(page - 1);
     }
 
+    const deleteUser = async (id) => {
+        const deletedUser = await axios.delete("http://localhost:3000/deleteUser/" + id);
+        setPage(1);
+    }
+
     return (
         <Card className="h-full w-full">
             <CardHeader floated={false} shadow={false} className="rounded-none h-1/6">
@@ -122,14 +127,14 @@ export function Table() {
                     <Spinner/>
                 }
                 {
-                    !isLoading && totalPage == 0 &&
-                    <div className="grid place-content-center h-full text-4xl">
-                        NO DATA
-                    </div>
-                }
-                {
                     !isLoading &&
                     <table className="mt-4 w-full min-w-max table-auto text-left">
+                        {
+                            totalPage == 0 &&
+                            <div className="grid place-content-center h-full text-4xl">
+                                NO DATA
+                            </div>
+                        }
                         <thead>
                         <tr>
                             {TABLE_HEAD.map((head) => (
@@ -150,7 +155,7 @@ export function Table() {
                         </thead>
                         <tbody >
                         {table.map(
-                            ({ username, password, gender, role, status }, index) => {
+                            ({ _id, username, password, gender, role, status }, index) => {
                             const isLast = index === table.length - 1;
                             const classes = isLast
                                 ? "p-4"
@@ -217,10 +222,10 @@ export function Table() {
                                     </Typography>
                                 </td>
                                 <td className={classes}>
-                                <Tooltip content="View User">
-                                    <IconButton variant="text">
-                                        <MagnifyingGlassIcon className="h-4 w-4" />
-                                    </IconButton>
+                                    <Tooltip content="View User">
+                                        <IconButton variant="text" onClick={()=>{deleteUser(_id)}}>
+                                            <MagnifyingGlassIcon className="h-4 w-4" />
+                                        </IconButton>
                                     </Tooltip>
 
                                     <Tooltip content="Edit User">
