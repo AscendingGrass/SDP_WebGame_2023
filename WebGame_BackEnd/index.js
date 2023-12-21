@@ -26,7 +26,7 @@ app.use("/", saveRouter);
 
 app.listen(port, async () => {
     try{
-        await mongoose.connect('mongodb://127.0.0.1:27017/webgame')
+        await mongoose.connect('mongodb+srv://team:teamsdp2023@cluster-m0.8pfwkar.mongodb.net/webgame?retryWrites=true&w=majority')
         console.log('Database connected')
     }
     catch(e){

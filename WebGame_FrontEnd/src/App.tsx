@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router';
 import { useData } from './DataContext';
 import { Link, useBeforeUnload } from 'react-router-dom';
 import { GameManager } from './Classes/GameManager';
+import axios from 'axios';
 
 
 function App() {
@@ -17,10 +18,21 @@ function App() {
   const {state} = useData();
   const navigate = useNavigate();
   useEffect(() => {
-    const game = loadGame(null, state.user?._id)
+    if(!state.user) {
+      navigate("/login");
+      return
+    }
+
+    let game = null;
+
+    axios.get(`http://localhost:3000/load/${state.user._id}`).then(res => {
+      console.log(res.data);
+
+      game = loadGame(res.data.result, state.user._id)
+    })
 
     return () => {
-      game.pause()
+      if(game) game.pause()
     }
   }, [])
 

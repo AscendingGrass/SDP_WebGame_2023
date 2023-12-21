@@ -21,7 +21,7 @@ export class GameState{
     }
 
     public update(deltaTime:number) {
-        this.playtime += deltaTime
+        
     }
 
     // public copy():GameState{

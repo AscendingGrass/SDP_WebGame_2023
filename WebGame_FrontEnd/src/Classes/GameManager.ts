@@ -181,7 +181,110 @@ export class GameManager {
             )
         }else{
             this.currentState = gameState
-            throw Error("Not Implemented");
+            this.player = new PlayerUnit(gameState.playerState, this)
+            
+            this.player.addAnimation(new ChainedAnimation(
+                this.player,
+                "idle_down",
+                Animation.assets['player_idle_down'],
+                {x:32, y:32},
+                2,
+                -1,
+                1
+            ))
+            this.player.addAnimation(new ChainedAnimation(
+                this.player,
+                "idle_up",
+                Animation.assets['player_idle_up'],
+                {x:32, y:32},
+                2,
+                -1,
+                1
+            ))
+            this.player.addAnimation(new ChainedAnimation(
+                this.player,
+                "idle_left",
+                Animation.assets['player_idle_left'],
+                {x:32, y:32},
+                2,
+                -1,
+                1
+            ))
+            this.player.addAnimation(new ChainedAnimation(
+                this.player,
+                "idle_right",
+                Animation.assets['player_idle_right'],
+                {x:32, y:32},
+                2,
+                -1,
+                1
+            ))
+
+            this.player.createAnimation(
+                "walk", 
+                Animation.assets['player_walk'],
+                {x:32, y:32},
+                4,
+                "",
+                4
+            )
+
+            this.grid.addEntity(this.player);
+            
+            this.grid.loadBarriers(
+                'wwwwwwwtttttttttttttttttttttttttttttttttttttt\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'w00000d0000000000000000000000000000000000000t\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'w00000w0000000000000000000000000000000000000t\n' +
+                'wwwwwww0000000000000000000000000000000000000t\n' + 
+                't0000000000000000000000000000000000000000000t\n' +
+                't0000000000000000000000000000000000000000000t\n' +
+                't0wwwwwwwwwwwww00000000000000000000000000000t\n' +
+                't0w00000000000w00000000000000000000000000000t\n' +
+                't0w00000000000w00000000000000000000000000000t\n' +
+                't0w00000000000w00000000000000000000000000000t\n' +
+                't0wwdwwwwwwdwww00000000000000000000000000000t\n' +
+                't0w0000wt00000000000000000000000000000000000t\n' +
+                't0w0000w000t000t0000000000000000000000000000t\n' +
+                't0wwwwww00000t000000000000000000000000000000t\n' +
+                't0000000000tt0000000000000000000000000000000t\n' +
+                'ttttttttttttttttttttttttttttttttttttttttttttt\n'
+                ,
+                this,
+                this.groupAnimations
+            )
+            this.grid.fill("grass", this.groupAnimations)
+            this.grid.loadTiles(
+                'fffffff00\n' +
+                'fffffff00\n' +
+                'fffffff00\n' +
+                'fffffff00\n' +
+                'fffffff00\n' +
+                'fffffff00\n' +
+                'fffffff00\n' +
+                '000000000\n' +
+                '000000000\n' +
+                '00fffffffffffff\n' +
+                '00fffffffffffff\n' +
+                '00fffffffffffff\n' +
+                '00fffffffffffff\n' +
+                '00fffffffffffff\n' +
+                '00ffffff\n' +
+                '00ffffff\n' +
+                '00ffffff\n' +
+                '000000000\n'  
+                ,
+                this.groupAnimations
+            )
+            try{
+                NPC.loadNPCs(this).forEach(npc => this.grid.addEntity(npc))
+            }
+            catch(err){
+
+                console.log((err as Error).message);
+            }
         }
 
         this.setTerminalView(this.terminalView)
@@ -235,7 +338,8 @@ export class GameManager {
     }
 
     private update(): void {
-        this.currentState?.update(this.getDeltatime())
+        if(this.currentState)
+            this.currentState.playtime += this.getDeltatime()
         this.events.forEach(x => x.update(this.getDeltatime(),this))
         if (!this.canvasView) {
             this.grid.update(this.getDeltatime())
