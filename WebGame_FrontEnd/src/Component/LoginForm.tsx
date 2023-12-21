@@ -28,7 +28,7 @@ export function LoginForm() {
 
   const handleLogin = async (data) => {
     const body = {...data};
-    const result = (await axios.post("http://localhost:3000/login", body)).data;
+    const result = (await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, body)).data;
     
     if(result.error){
       console.log(result);

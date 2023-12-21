@@ -7,7 +7,7 @@ const Homepage = () => {
 
   useEffect(()=>{
     const fetch = async () =>{
-      setNews((await axios.get("http://localhost:3000/fetchLatestAnnouncement")).data.result)
+      setNews((await axios.get(`${import.meta.env.VITE_BACKEND_URL}/fetchLatestAnnouncement`)).data.result)
     }
 
     fetch();

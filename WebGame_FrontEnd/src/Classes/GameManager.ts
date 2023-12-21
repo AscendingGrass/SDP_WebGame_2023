@@ -38,7 +38,7 @@ export class GameManager {
     public async save(userId:string){
         
 
-        const result = await axios.post(`http://localhost:3000/save/${userId}`, this.currentState).catch(() =>  {
+        const result = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/save/${userId}`, this.currentState).catch(() =>  {
             this.logView?.addLog([
                 { 
                     value: 'Error saving game',

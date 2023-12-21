@@ -2,10 +2,9 @@
 
 
 import React, { useEffect } from 'react';
-import Footer from './Footer';
 import {  useState } from "react"
 import axios from 'axios';
-import { Spinner, Tab, TabPanel, Tabs, TabsBody, TabsHeader } from '@material-tailwind/react';
+import { Spinner, Tab, Tabs, TabsHeader } from '@material-tailwind/react';
 
 const Login = () => {
   const [gender, setgender] = useState(false); // false female, true male
@@ -15,7 +14,7 @@ const Login = () => {
   useEffect(()=>{
     const fetchAll = async() => {
       setIsLoading(true);
-      const temp = (await axios.get(`http://localhost:3000/user?gender=${gender? "male": "female"}`)).data.result;
+      const temp = (await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user?gender=${gender? "male": "female"}`)).data.result;
       setData(temp);
       setIsLoading(false);
     }

@@ -65,7 +65,7 @@ export function TableBugReport() {
     const [updateMode, setUpdateMode] = useState(false);
     const changeStatus = async (_id, status) => {
         setUpdateMode(true);
-        const result = await axios.put("http://localhost:3000/updateBug/"+ _id + "?status=" + status);
+        const result = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/updateBug/`+ _id + "?status=" + status);
         setUpdateMode(false);
     }
     
@@ -75,7 +75,7 @@ export function TableBugReport() {
             const body = {
                 page
             }
-            const data = (await axios.get(`http://localhost:3000/fetchBugsReport/${mode}?page=${page}`, body)).data;
+            const data = (await axios.get(`${import.meta.env.VITE_BACKEND_URL}/fetchBugsReport/${mode}?page=${page}`, body)).data;
             console.log(data);
             
             setTable(data.result);

@@ -10,6 +10,8 @@ const News = () => {
     dispatch({ type: 'LOGOUT_USER'})
     navigate("/");
   }
+
+  import.meta.env.BASE_URL
   return (
     <div className="container ml-60" style={{ overflowX: 'auto' }}> 
     

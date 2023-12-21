@@ -4,27 +4,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState, useCallback } from 'react'
 import {loadGame} from './loadGame';
-import { grey } from '@mui/material/colors';
 import { 
   Button,
   Dialog,
   DialogHeader,
   DialogBody,
   DialogFooter,
-  Typography,
   Input,
   Textarea,
  } from '@material-tailwind/react';
 import { useNavigate } from 'react-router';
 import { useData } from './DataContext';
 import { Link, useBeforeUnload } from 'react-router-dom';
-import { GameManager } from './Classes/GameManager';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
 
 function App() {
-  const [mode, setMode] = useState(false);
   const {state, dispatch} = useData();
   console.log(state);
   
@@ -33,7 +29,7 @@ function App() {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const submitData = async (data) => {
     const body = {...data, user_id : state.user._id};
-    const result = (await axios.post("http://localhost:3000/postBug", body)).data;
+    const result = (await axios.post(`${import.meta.env.VITE_BACKEND_URL}/postBug`, body)).data;
     
     reset();
   };
@@ -46,7 +42,7 @@ function App() {
 
     let game = null;
 
-    axios.get(`http://localhost:3000/load/${state.user._id}`).then(res => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/load/${state.user._id}`).then(res => {
       console.log(res.data);
 
       game = loadGame(res.data.result, state.user._id)

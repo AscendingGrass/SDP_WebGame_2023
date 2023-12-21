@@ -54,7 +54,7 @@ export function Table() {
             const body = {
                 page
             }
-            const data = (await axios.get(`http://localhost:3000/allUser/${mode}?page=${page}`, body)).data;
+            const data = (await axios.get(`${import.meta.env.VITE_BACKEND_URL}/allUser/${mode}?page=${page}`, body)).data;
             console.log(data);
             
             setTable(data.result);
@@ -73,7 +73,7 @@ export function Table() {
     }
 
     const deleteUser = async (id) => {
-        const deletedUser = await axios.delete("http://localhost:3000/deleteUser/" + id);
+        const deletedUser = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/deleteUser/` + id);
         setPage(1);
     }
 

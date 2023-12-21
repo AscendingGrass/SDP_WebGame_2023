@@ -565,6 +565,8 @@ export class Event{
             event.onUpdate
         )
 
+        
+
         if(!gameState.currentState?.eventStates.find(x => x === state)){
             gameState.events.push(newEvent)
             gameState.currentState?.eventStates.push(
