@@ -20,10 +20,6 @@ export class GameState{
         this.logs = logs
     }
 
-    public update(deltaTime:number) {
-        
-    }
-
     // public copy():GameState{
         
     // }

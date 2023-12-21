@@ -89,6 +89,7 @@ export class NPC extends Unit{
                     Animation.makeCopyIfChained(data.animations,newNPC).forEach(x => newNPC.addAnimation(x))
                     const event = gameState.events.find(x => x.getId() === "TUT001")
                     if(!event){
+                        console.log("no Event");
                         Event.start(gameState,"TUT001")
                         newNPC.talk();
                     }

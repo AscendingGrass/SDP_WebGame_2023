@@ -36,14 +36,7 @@ export class GameManager {
     }
 
     public async save(userId:string){
-        this.logView?.addLog([
-            { 
-                value: 'Saving game...',
-                color: 'green'
-            }
-        ]);
-
-        this.logView?.writeSeparator()
+        
 
         const result = await axios.post(`http://localhost:3000/save/${userId}`, this.currentState).catch(() =>  {
             this.logView?.addLog([
@@ -53,6 +46,13 @@ export class GameManager {
                 }
             ]);
         })
+        this.logView?.addLog([
+            { 
+                value: 'Saving game...',
+                color: 'green'
+            }
+        ]);
+
         this.logView?.writeSeparator()
 
         if(!result) return
@@ -75,6 +75,7 @@ export class GameManager {
 
             const playerState = new PlayerState({x:3,y:3})
             this.currentState = new GameState([], playerState, (this.logView as LogView).getLogs())
+            this.setLogs()
             this.player = new PlayerUnit(playerState, this)
             
             this.player.addAnimation(new ChainedAnimation(
@@ -113,7 +114,6 @@ export class GameManager {
                 -1,
                 1
             ))
-
             this.player.createAnimation(
                 "walk", 
                 Animation.assets['player_walk'],
@@ -219,7 +219,6 @@ export class GameManager {
                 -1,
                 1
             ))
-
             this.player.createAnimation(
                 "walk", 
                 Animation.assets['player_walk'],
@@ -278,7 +277,10 @@ export class GameManager {
                 ,
                 this.groupAnimations
             )
+            this.setLogs()
+            this.currentState.eventStates.forEach(x => Event.start(this, x.id, x))
             try{
+                
                 NPC.loadNPCs(this).forEach(npc => this.grid.addEntity(npc))
             }
             catch(err){
@@ -309,6 +311,10 @@ export class GameManager {
         if(this.currentState && logView) {
             this.currentState.logs = logView.getLogs()
         }
+    }
+
+    public setLogs():void{
+        this.logView?.setGameState(this.currentState)
     }
 
     public setTerminalView(terminalView: TerminalView | null): void {

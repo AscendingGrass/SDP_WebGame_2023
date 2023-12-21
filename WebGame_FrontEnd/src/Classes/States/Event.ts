@@ -219,6 +219,7 @@ export class Event{
             },
             (self:Event, gameManager:GameManager)=>{ // onload handler
                 const progress = self.getValueOf("progress") as number
+                console.log("OOOOOOOH : " + progress);
                 if(progress == 2){
                     const targetCoordinate = self.getValueOf("target_coordinate") as Point
 
@@ -560,6 +561,8 @@ export class Event{
         const newEvent = new Event(
             state,
             event.onEventProgressed,
+            event.onLoad,
+            event.onUpdate
         )
 
         if(!gameState.currentState?.eventStates.find(x => x === state)){
@@ -570,13 +573,15 @@ export class Event{
             return newEvent
         }
         else{
-            gameState.events[gameState.events.findIndex(x=>x.getId()===eventId)] = newEvent
-            gameState.currentState!.eventStates[gameState.currentState?.eventStates.findIndex(x=>x.id===state.id)] = state
+            gameState.events.push(newEvent)
+            // gameState.currentState!.eventStates[gameState.currentState?.eventStates.findIndex(x=>x.id===state.id)] = state
+            newEvent.load(gameState)
+            return newEvent
         }
 
-        if(loadedState){
-            newEvent.load(gameState)
-        }
+        // if(loadedState){
+           
+        // }
 
         throw Error("Event " + eventId + " already started")
     }
