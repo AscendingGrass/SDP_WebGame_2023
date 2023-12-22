@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
-
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
@@ -20,10 +19,8 @@ import {
   IconButton,
   Tooltip,
   Spinner,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -34,35 +31,65 @@ const TABS = [
     value: "",
   },
   {
-    label: "Active",
-    value: "active",
+    label: "Report",
+    value: "report",
   },
   {
-    label: "Dead",
-    value: "dead",
+    label: "Fixed",
+    value: "fixed",
+  },
+  {
+    label: "Duplicate",
+    value: "duplicate",
+  },
+  {
+    label: "Accepted",
+    value: "accepted",
   },
 ];
  
-const TABLE_HEAD = ["Member", "Gender", "Status", "Role", "Action"];
+const TABLE_HEAD = ["Report", "User", "User status", "Role", "Action"];
  
+const formattedDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+};
 
-export function Table() {
+export function TableDateBug() {
     const [table, setTable] = useState([]);
     const [mode, setMode] = useState('');
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const [deletes, setDelete] = useState(false);
-    const [open, setOpen] = useState(false);
-   
-    const handleOpen = () => setOpen(!open);
+    const [updateMode, setUpdateMode] = useState(false);
+    const [date, setDate] = useState(
+        {
+            dateAwal: new Date().toISOString().split('T')[0],
+            dateAkhir: new Date().toISOString().split('T')[0]
+        }
+    )
+    const handleDateChange = (event) => {
+        const { name, value } = event.target;
+    
+        setDate((prevDate) => ({
+          ...prevDate,
+          [name]: value
+        }));
+      };
+    const changeStatus = async (_id, status) => {
+        setUpdateMode(true);
+        const result = await axios.put("http://localhost:3000/updateBug/"+ _id + "?status=" + status);
+        setUpdateMode(false);
+    }
+    
     useEffect(()=>{
         const fetch = async ()=> {
             setIsLoading(true);
             const body = {
                 page
             }
-            const data = (await axios.get(`${import.meta.env.VITE_BACKEND_URL}/allUser/${mode}?page=${page}`, body)).data;
+            const data = (await axios.get(`http://localhost:3000/fetchBugsReportWithDate/${mode}?page=${page}&dateAwal=${date.dateAwal}&dateAkhir=${date.dateAkhir}`, body)).data;
             console.log(data);
             
             setTable(data.result);
@@ -70,7 +97,7 @@ export function Table() {
             setIsLoading(false);
         };
         fetch();
-    }, [page, mode, deletes])
+    }, [page, mode, updateMode, date])
 
     const incremetPage = ()=>{
         setPage(page + 1);
@@ -80,27 +107,34 @@ export function Table() {
         setPage(page - 1);
     }
 
-    const deleteUser = async (id) => {
-        setDelete(true);
-        const deletedUser = await axios.delete("http://localhost:3000/deleteUser/" + id);
-        setDelete(false);
-    }
-
     return (
         <Card className="h-full w-full">
             <CardHeader floated={false} shadow={false} className="rounded-none h-1/6">
                 <div className="mb-8 flex items-center justify-between gap-8">
                     <div>
                     <Typography variant="h5" color="blue-gray">
-                        Accounts list
+                        Report Bug
                     </Typography>
                     <Typography color="gray" className="mt-1 font-normal">
-                        See information about all members
+                        See information about bug
                     </Typography>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                    <Button variant="outlined" size="sm">
-                        view all
+                    <input type="date" name="dateAwal" id="" 
+                        value={date.dateAwal || ''}
+                        onChange={handleDateChange}
+                    />
+                    <input type="date" name="dateAkhir" id="" 
+                        value={date.dateAkhir || ''}
+                        onChange={handleDateChange}
+                    />
+                    <Button variant="outlined" size="sm" onClick={
+                        ()=>{
+                            console.log("H");
+                            
+                        }
+                    }>
+                        Search
                     </Button>
                     <Button className="flex items-center gap-3" size="sm">
                         <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
@@ -136,14 +170,14 @@ export function Table() {
                     <Spinner/>
                 }
                 {
-                    !isLoading &&
+                    !isLoading && totalPage == 0 &&
+                    <div className="grid place-content-center h-full text-4xl">
+                        NO DATA
+                    </div>
+                }
+                {
+                    !isLoading && totalPage > 0 &&
                     <table className="mt-4 w-full min-w-max table-auto text-left">
-                        {
-                            totalPage == 0 &&
-                            <div className="grid place-content-center h-full text-4xl">
-                                NO DATA
-                            </div>
-                        }
                         <thead>
                         <tr>
                             {TABLE_HEAD.map((head) => (
@@ -164,7 +198,7 @@ export function Table() {
                         </thead>
                         <tbody >
                         {table.map(
-                            ({ _id, username, password, gender, role, status }, index) => {
+                            ({ _id, user, statusUser, title, role, status, created_at }, index) => {
                             const isLast = index === table.length - 1;
                             const classes = isLast
                                 ? "p-4"
@@ -181,14 +215,14 @@ export function Table() {
                                         color="blue-gray"
                                         className="font-normal"
                                         >
-                                        {username}
+                                        {title}
                                         </Typography>
                                         <Typography
                                         variant="small"
                                         color="blue-gray"
                                         className="font-normal opacity-70"
                                         >
-                                        {password}
+                                            {formattedDate(created_at)}
                                         </Typography>
                                     </div>
                                     </div>
@@ -200,26 +234,25 @@ export function Table() {
                                         color="blue-gray"
                                         className="font-normal"
                                     >
-                                        {gender}
+                                        
                                     </Typography>
                                     <Typography
                                         variant="small"
                                         color="blue-gray"
                                         className="font-normal opacity-70"
                                     >
-                                        {gender=="male"? "He" : "She"}
+                                        {user}
                                     </Typography>
                                     </div>
                                 </td>
                                 <td className={classes}>
-                                    <div className="w-max">
-                                    <Chip
-                                        variant="ghost"
-                                        size="sm"
-                                        value={status == "active" ? "active" : "dead"}
-                                        color={status == "active" ? "green" : "red"}
-                                    />
-                                    </div>
+                                    <Typography
+                                    variant="small"
+                                    color={statusUser == "active"? "green" : "red"}
+                                    className="font-normal"
+                                    >
+                                        {statusUser}
+                                    </Typography>
                                 </td>
                                 <td className={classes}>
                                     <Typography
@@ -227,47 +260,17 @@ export function Table() {
                                     color={role == "admin"? "red" : "blue"}
                                     className="font-normal"
                                     >
-                                    {role}
+                                        {role}
                                     </Typography>
                                 </td>
                                 <td className={classes}>
-                                    <Tooltip content="View User">
-                                        <IconButton variant="text" onClick={handleOpen}>
-                                            <MagnifyingGlassIcon className="h-4 w-4" />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Dialog open={open} handler={handleOpen}>
-                                    <DialogHeader>User Information</DialogHeader>
-                                    <DialogBody>
-                                        <div className="flex">
-                                            <Input label="Username" />
-                                        </div>
-                                    </DialogBody>
-                                    <DialogFooter>
-                                        <Button
-                                        variant="text"
-                                        color="red"
-                                        onClick={handleOpen}
-                                        className="mr-1"
-                                        >
-                                        <span>Cancel</span>
-                                        </Button>
-                                        <Button variant="gradient" color="green" onClick={handleOpen}>
-                                        <span>Confirm</span>
-                                        </Button>
-                                    </DialogFooter>
-                                    </Dialog>
-                                    <Tooltip content="Edit User">
-                                    <IconButton variant="text">
-                                        <PencilIcon className="h-4 w-4" />
-                                    </IconButton>
-                                    </Tooltip>
+                                    <select className="bg-white border border-blue-500 rounded py-2 w-full px-2 leading-tight focus:outline-none focus:border-blue-700" value={status} onChange={(e) => {changeStatus(_id, e.target.value)}}>
+                                        <option value="report">Report</option>
+                                        <option value="fixed">Fixed</option>
+                                        <option value="duplicate">Duplicate</option>
+                                        <option value="accepted">Accepted</option>
+                                    </select>
 
-                                    <Tooltip content="Delete User">
-                                    <IconButton variant="text"  onClick={()=>{deleteUser(_id)}}>
-                                        <TrashIcon className="h-4 w-4" />
-                                    </IconButton>
-                                </Tooltip>
                                 </td>
                                 </tr>
                             );
