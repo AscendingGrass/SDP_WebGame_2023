@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { Button, Input, Option, Select } from '@material-tailwind/react';
 import { TableBugReport } from "./Component/TableBugReport";
