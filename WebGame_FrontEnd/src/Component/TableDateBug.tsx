@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // @ts-nocheck
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
@@ -49,7 +49,7 @@ const TABS = [
   },
 ];
  
-const TABLE_HEAD = ["Report", "User", "Role", "Action"];
+const TABLE_HEAD = ["Report", "User", "User status", "Role", "Action"];
  
 const formattedDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
@@ -57,16 +57,30 @@ const formattedDate = (dateString) => {
     return new Intl.DateTimeFormat('en-US', options).format(date);
 };
 
-export function TableBugReport() {
+export function TableDateBug() {
     const [table, setTable] = useState([]);
     const [mode, setMode] = useState('');
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [updateMode, setUpdateMode] = useState(false);
+    const [date, setDate] = useState(
+        {
+            dateAwal: new Date().toISOString().split('T')[0],
+            dateAkhir: new Date().toISOString().split('T')[0]
+        }
+    )
+    const handleDateChange = (event) => {
+        const { name, value } = event.target;
+    
+        setDate((prevDate) => ({
+          ...prevDate,
+          [name]: value
+        }));
+      };
     const changeStatus = async (_id, status) => {
         setUpdateMode(true);
-        const result = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/updateBug/`+ _id + "?status=" + status);
+        const result = await axios.put("http://localhost:3000/updateBug/"+ _id + "?status=" + status);
         setUpdateMode(false);
     }
     
@@ -76,7 +90,7 @@ export function TableBugReport() {
             const body = {
                 page
             }
-            const data = (await axios.get(`${import.meta.env.VITE_BACKEND_URL}/fetchBugsReport/${mode}?page=${page}`, body)).data;
+            const data = (await axios.get(`http://localhost:3000/fetchBugsReportWithDate/${mode}?page=${page}&dateAwal=${date.dateAwal}&dateAkhir=${date.dateAkhir}`, body)).data;
             console.log(data);
             
             setTable(data.result);
@@ -84,7 +98,7 @@ export function TableBugReport() {
             setIsLoading(false);
         };
         fetch();
-    }, [page, mode, updateMode])
+    }, [page, mode, updateMode, date])
 
     const incremetPage = ()=>{
         setPage(page + 1);
@@ -107,8 +121,21 @@ export function TableBugReport() {
                     </Typography>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                    <Button variant="outlined" size="sm">
-                        view all
+                    <input type="date" name="dateAwal" id="" 
+                        value={date.dateAwal || ''}
+                        onChange={handleDateChange}
+                    />
+                    <input type="date" name="dateAkhir" id="" 
+                        value={date.dateAkhir || ''}
+                        onChange={handleDateChange}
+                    />
+                    <Button variant="outlined" size="sm" onClick={
+                        ()=>{
+                            console.log("H");
+                            
+                        }
+                    }>
+                        Search
                     </Button>
                     <Button className="flex items-center gap-3" size="sm">
                         <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
@@ -172,7 +199,7 @@ export function TableBugReport() {
                         </thead>
                         <tbody >
                         {table.map(
-                            ({ _id, user, title, role, status, created_at }, index) => {
+                            ({ _id, user, statusUser, title, role, status, created_at }, index) => {
                             const isLast = index === table.length - 1;
                             const classes = isLast
                                 ? "p-4"
@@ -218,6 +245,15 @@ export function TableBugReport() {
                                         {user}
                                     </Typography>
                                     </div>
+                                </td>
+                                <td className={classes}>
+                                    <Typography
+                                    variant="small"
+                                    color={statusUser == "active"? "green" : "red"}
+                                    className="font-normal"
+                                    >
+                                        {statusUser}
+                                    </Typography>
                                 </td>
                                 <td className={classes}>
                                     <Typography

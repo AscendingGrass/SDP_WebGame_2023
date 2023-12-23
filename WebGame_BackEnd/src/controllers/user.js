@@ -296,7 +296,7 @@ const deleteUser = async (req, res) => {
     });
 
     const result = await checkUser.save();
-
+    console.log(result);
     return res.status(200).json({
         error: false,
         msg: "Berhasil delete user dengan ID : " + id,

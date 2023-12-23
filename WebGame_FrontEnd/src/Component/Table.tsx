@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 
@@ -20,6 +21,10 @@ import {
   IconButton,
   Tooltip,
   Spinner,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from "@material-tailwind/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -48,6 +53,10 @@ export function Table() {
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+    const [deletes, setDelete] = useState(false);
+    const [open, setOpen] = useState(false);
+   
+    const handleOpen = () => setOpen(!open);
     useEffect(()=>{
         const fetch = async ()=> {
             setIsLoading(true);
@@ -62,7 +71,7 @@ export function Table() {
             setIsLoading(false);
         };
         fetch();
-    }, [page, mode])
+    }, [page, mode, deletes])
 
     const incremetPage = ()=>{
         setPage(page + 1);
@@ -73,8 +82,9 @@ export function Table() {
     }
 
     const deleteUser = async (id) => {
-        const deletedUser = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/deleteUser/` + id);
-        setPage(1);
+        setDelete(true);
+        const deletedUser = await axios.delete("http://localhost:3000/deleteUser/" + id);
+        setDelete(false);
     }
 
     return (
@@ -223,11 +233,31 @@ export function Table() {
                                 </td>
                                 <td className={classes}>
                                     <Tooltip content="View User">
-                                        <IconButton variant="text" onClick={()=>{deleteUser(_id)}}>
+                                        <IconButton variant="text" onClick={handleOpen}>
                                             <MagnifyingGlassIcon className="h-4 w-4" />
                                         </IconButton>
                                     </Tooltip>
-
+                                    <Dialog open={open} handler={handleOpen}>
+                                    <DialogHeader>User Information</DialogHeader>
+                                    <DialogBody>
+                                        <div className="flex">
+                                            <Input label="Username" />
+                                        </div>
+                                    </DialogBody>
+                                    <DialogFooter>
+                                        <Button
+                                        variant="text"
+                                        color="red"
+                                        onClick={handleOpen}
+                                        className="mr-1"
+                                        >
+                                        <span>Cancel</span>
+                                        </Button>
+                                        <Button variant="gradient" color="green" onClick={handleOpen}>
+                                        <span>Confirm</span>
+                                        </Button>
+                                    </DialogFooter>
+                                    </Dialog>
                                     <Tooltip content="Edit User">
                                     <IconButton variant="text">
                                         <PencilIcon className="h-4 w-4" />
@@ -235,7 +265,7 @@ export function Table() {
                                     </Tooltip>
 
                                     <Tooltip content="Delete User">
-                                    <IconButton variant="text">
+                                    <IconButton variant="text"  onClick={()=>{deleteUser(_id)}}>
                                         <TrashIcon className="h-4 w-4" />
                                     </IconButton>
                                 </Tooltip>

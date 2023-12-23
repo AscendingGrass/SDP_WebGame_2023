@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { Button, Input, Option, Select } from '@material-tailwind/react';
 import { TableBugReport } from "./Component/TableBugReport";
+import { TableDateBug } from "./Component/TableDateBug";
 
 import React from 'react';
 
 const Report = () => {
   return (
-    <TableBugReport/>
+    // <TableBugReport/>
+    <TableDateBug/>
     // <div className="flex flex-col w-full py-5">
     //   <div className="flex w-full mb-5">
     //     <div className="basis-2/12">
