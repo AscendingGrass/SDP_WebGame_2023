@@ -1,0 +1,6 @@
+FRONT END:
+https://sdp-webgame-mgoa5nyvlq-et.a.run.app
+
+BACK END:
+https://sdp-webgame-back-mgoa5nyvlq-et.a.run.app
+
