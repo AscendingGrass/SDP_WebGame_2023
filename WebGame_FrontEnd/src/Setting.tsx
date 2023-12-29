@@ -4,6 +4,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
+import axios from 'axios';
 
 const News = () => {
   const { state, dispatch } = useData();
@@ -12,7 +13,11 @@ const News = () => {
     dispatch({ type: 'LOGOUT_USER'})
     navigate("/");
   }
-
+  const handleDeleteAcc = async ()=> {
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const deleteUser = await axios.delete(`${backendURL}/deleteUser/${state.user._id}`);
+    handleLogOut();
+  }
   import.meta.env.BASE_URL
   return (
     <div className="container ml-60" style={{ overflowX: 'auto' }}> 
@@ -25,7 +30,7 @@ const News = () => {
             </div>
         <div className="col-lg-12">
             <button className='btn text-slate-200 mt-2 btn-outline-danger float-end me-3 float-end bg-red-500 w-40 border-solid border-2 border-red-600 rounded-md'
-              onClick={handleLogOut}
+              onClick={handleDeleteAcc}
             >Delete Account</button>
             
         </div>
