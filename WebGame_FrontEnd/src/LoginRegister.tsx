@@ -3,9 +3,13 @@ import NavBarFun from "./Navbar";
 
 const LoginRegister = () => {
     return (
-        <div className="flex flex-col w-full h-full justify-center">
-            <NavBarFun></NavBarFun>
-            <Outlet></Outlet>
+        <div className="flex flex-col w-full h-screen">
+            <div className="flex">
+                <NavBarFun></NavBarFun>
+            </div>
+            <div className="flex flex-grow w-full h-full justify-center">
+                <Outlet></Outlet>
+            </div>
         </div>
     )
 }

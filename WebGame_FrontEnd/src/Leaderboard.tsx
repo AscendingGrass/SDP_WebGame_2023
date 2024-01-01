@@ -8,6 +8,9 @@ import axios from 'axios';
 import { Spinner, Tab, Tabs, TabsHeader } from '@material-tailwind/react';
 
 const Login = () => {
+
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
   const [gender, setgender] = useState(false); // false female, true male
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -15,7 +18,7 @@ const Login = () => {
   useEffect(()=>{
     const fetchAll = async() => {
       setIsLoading(true);
-      const temp = (await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user?gender=${gender? "male": "female"}`)).data.result;
+      const temp = (await axios.get(`${backendURL}/user?gender=${gender? "male": "female"}`)).data.result;
       setData(temp);
       setIsLoading(false);
     }
@@ -34,36 +37,36 @@ const Login = () => {
           </Tab>
         </TabsHeader>
       </Tabs>
-      <div className="flex justify-center w-full" id="nav-tabContent">
-        <div className="tab-pane fade w-3/6 show active overflow-y justify-center flex mt-10 " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
+      <div className="flex justify-center h-full w-full" id="nav-tabContent">
+        <div className="grid content-center h-5/6 w-full show active overflow-y justify-center" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabIndex="0">
           {
             isLoading && 
             <Spinner/>
           }
           {
             !isLoading &&
-            <table className={`table w-full border-solid border-8 border-zinc-600`}>
-              <thead className=" ">
-                <tr className='bg-black text-[#f4f4f4]'>
-                  <th className="w-1/4 " scope="col">Rank</th>
-                  <th className="w-1/4" scope="col">Name</th>
-                  <th className="w-1/4" scope="col">Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-                {
-                  !isLoading && 
-                  data.map((item, index) => (
-                    <tr key={index}>
-                      <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`}>{index + 1}</td>
-                      <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`} style={{ width: '60%' }}>{item.username}</td>
-                      <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`}>{item.score}</td>
-                    </tr>
-                  ))
-                }
-              </tbody>
-            </table>
+            <div className="flex w-full">
+              <table className={`table w-full bg-black border-solid border-8 border-zinc-600`}>
+                <thead className=" ">
+                  <tr className='bg-black text-[#f4f4f4]'>
+                    <th className=" " scope="col">Rank</th>
+                    <th className="" scope="col">Name</th>
+                    <th className="" scope="col">Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    data.map((item, index) => (
+                      <tr key={index}>
+                        <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`}>{index + 1}</td>
+                        <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`} style={{ width: '60%' }}>{item.username}</td>
+                        <td className={`w-1/4 text-center  text-[#f4f4f4]  ${index%2 !=0 && 'bg-stone-800'} ${index%2 ==0 && 'bg-gray-500'}`}>{item.score}</td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            </div>
           }
         </div>
       </div>

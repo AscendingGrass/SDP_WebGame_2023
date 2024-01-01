@@ -8,7 +8,7 @@ import Footer from "./Footer";
 
 const Home = () => {
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex flex-col h-screen w-full">
       <div className="flex">
         <Navbar />
       </div>

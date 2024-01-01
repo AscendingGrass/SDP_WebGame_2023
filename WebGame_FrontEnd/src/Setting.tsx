@@ -7,14 +7,17 @@ import { useData } from './DataContext';
 import axios from 'axios';
 
 const News = () => {
+  
   const { state, dispatch } = useData();
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
   const navigate = useNavigate();
   const handleLogOut = ()=>{
     dispatch({ type: 'LOGOUT_USER'})
     navigate("/");
   }
   const handleDeleteAcc = async ()=> {
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    
     await axios.delete(`${backendURL}/deleteUser/${state.user._id}`);
     handleLogOut();
   }

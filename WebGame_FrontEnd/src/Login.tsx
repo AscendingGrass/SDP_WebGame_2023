@@ -3,7 +3,7 @@ import { LoginForm } from "./Component/LoginForm";
 
 const Login = () => {
   return (
-    <div className="grid place-items-center">
+    <div className="grid w-full h-full place-items-center">
       <LoginForm/>
     </div>
     // <div className="grid gap-5 place-items-center ">

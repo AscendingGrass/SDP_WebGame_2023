@@ -65,6 +65,7 @@ const router = createBrowserRouter([
   {
     path: "/login", //Akses melalui base_url/about
     element: <LoginRegister/>,
+    errorElement: <Error/>,
     children: [
       {
         index: true,

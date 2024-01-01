@@ -4,7 +4,7 @@ import RegisterForm from "./Component/RegisterForm";
 const Register = () => {
 
   return (
-    <div className="grid place-items-center">
+    <div className="grid w-full h-full place-items-center">
       <RegisterForm/>
     </div>
   );
