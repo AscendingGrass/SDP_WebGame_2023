@@ -15,7 +15,7 @@ const News = () => {
   }
   const handleDeleteAcc = async ()=> {
     const backendURL = import.meta.env.VITE_BACKEND_URL;
-    const deleteUser = await axios.delete(`${backendURL}/deleteUser/${state.user._id}`);
+    await axios.delete(`${backendURL}/deleteUser/${state.user._id}`);
     handleLogOut();
   }
   import.meta.env.BASE_URL
