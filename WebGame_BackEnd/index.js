@@ -1,15 +1,15 @@
-require('dotenv').config()
+require('dotenv').config();
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require("cors");
 const app = express();
 const port = 3000;
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
     origin: process.env.FRONTEND_URL,
-    optionSucessStatus: 200
+    optionSuccessStatus: 200
 }));
 
 const bugRouter = require('./src/routes/bug');
@@ -26,12 +26,11 @@ app.use("/", announcementRouter);
 app.use("/", saveRouter);
 
 app.listen(port, async () => {
-    try{
+    try {
         await mongoose.connect(process.env.DATABASE_URL)
         console.log('Database connected')
-    }
-    catch(e){
+    } catch (e) {
         console.log('Error database connection \n', e)
     }
-    console.log(`listening on port ${port}!`)
-})
+    console.log(`Listening on port ${port}!`);
+});
