@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
     origin: process.env.FRONTEND_URL,
-    optionSuccessStatus: 200
+    optionsSuccessStatus: 200
 }));
 
 const bugRouter = require('./src/routes/bug');
