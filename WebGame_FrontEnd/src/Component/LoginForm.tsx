@@ -10,6 +10,7 @@ import {
     Input,
     Button,
     Typography,
+    Alert,
   } from "@material-tailwind/react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useData } from '../DataContext';
@@ -17,7 +18,8 @@ import { useForm } from "react-hook-form";
    
 export function LoginForm() {
   const { state, dispatch } = useData();
-  const [error, setError] = useState("");
+  const [ error, setError ] = useState(false);
+  const [ msg, setMsg ] = useState("")
   const navigate = useNavigate();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -26,23 +28,22 @@ export function LoginForm() {
     const body = {...data};
 
     if(body.username == "" || body.password == ""){
-      setError("Semua Field Wajib diisi!");
+      setError(true);
+      setMsg("Semua Field Wajib diisi!");
       return;
     }
     
     const result = (await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, body)).data;
     
-    if(result.error){
-      console.log(result);
-      setError(result.msg);
-    }else{
-      console.log(result);
-      
+    setError(result.error);
+    setMsg(result.msg);
+
+    if(!result.error){
       dispatch({ type: 'SET_USER', user: result.result, access_token: result.access_token});
       setError('');
       navigate("/");
     }
-    
+  
     reset();
   };
 
@@ -78,9 +79,12 @@ export function LoginForm() {
               }}
             {...register("password")}
           />
-          <Typography variant="h6" color="red" className="-mb-3">
-            {error}
-          </Typography>
+          {
+            error &&
+            <Alert className="border-l-4 border-red-500 bg-red-500/10 font-medium text-red-500 py-2 ">
+              {msg}
+            </Alert>
+          }
           <Button className="" type="submit">
             Log In
           </Button>

@@ -9,6 +9,7 @@ import {
     Button,
     Typography,
     Radio,
+    Alert,
   } from "@material-tailwind/react";
 import axios from "axios";
 import { useState } from "react";
@@ -98,9 +99,13 @@ export default function RegisterForm() {
                         />
                     </div>
                 </div>
-                <Typography variant="h6" color={`${error? "red" : "green"}`} className="mt-4">
-                    {msg}
-                </Typography>
+                {
+                    msg != "" &&
+                    <Alert className={`border-l-4 ${error ? 'border-red-500' : 'border-[#2ec946]'} bg-${error ? 'red-500' : '[#2ec946]'}/10 font-medium text-${error ? 'red-500' : '[#2ec946]'} py-2`}>
+                        {msg}
+                    </Alert>
+                }
+
                 <Button className="mt-6" fullWidth type="submit">
                 sign up
                 </Button>
