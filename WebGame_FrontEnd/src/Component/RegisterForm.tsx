@@ -22,6 +22,14 @@ export default function RegisterForm() {
 
     const handleRegister = async (data) => {
         const body = {...data};
+        console.log(body);
+        
+        if(body.username == "" || body.email == "" || body.password == ""){
+            setError(true);
+            setMsg("Semua field wajib diisi!")
+            return;
+        }
+
         const result = (await axios.post(`${import.meta.env.VITE_BACKEND_URL}/register`, body)).data;
 
         setError(result.error);

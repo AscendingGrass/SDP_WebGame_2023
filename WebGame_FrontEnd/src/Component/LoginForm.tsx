@@ -16,11 +16,6 @@ import { useData } from '../DataContext';
 import { useForm } from "react-hook-form";
    
 export function LoginForm() {
-  const [login, setLogin] = useState({
-    username: '',
-    password: '',
-  });
-
   const { state, dispatch } = useData();
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -29,6 +24,12 @@ export function LoginForm() {
 
   const handleLogin = async (data) => {
     const body = {...data};
+
+    if(body.username == "" || body.password == ""){
+      setError("Semua Field Wajib diisi!");
+      return;
+    }
+    
     const result = (await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, body)).data;
     
     if(result.error){
