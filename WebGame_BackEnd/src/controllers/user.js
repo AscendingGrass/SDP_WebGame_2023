@@ -226,6 +226,7 @@ const login = async (req, res)=>{
             msg: "Akun sudah dihapus!"
         });
     }
+    
     console.log(result);
     const access_token = jwt.sign({...result}, secret_key, {expiresIn: "3h"});
     return res.status(200).json({
