@@ -32,7 +32,7 @@ import { useEffect, useState } from "react";
 const TABS = [
   {
     label: "All",
-    value: "",
+    value: "all",
   },
   {
     label: "Active",
@@ -63,7 +63,7 @@ export function Table() {
             const body = {
                 page
             }
-            const data = (await axios.get(`${import.meta.env.VITE_BACKEND_URL}/allUser/${mode}?page=${page}`, body)).data;
+            const data = (await axios.get(`${import.meta.env.VITE_BACKEND_URL}/allUser/${mode == "all" ? "" : mode}?page=${page}`, body)).data;
             console.log(data);
             
             setTable(data.result);

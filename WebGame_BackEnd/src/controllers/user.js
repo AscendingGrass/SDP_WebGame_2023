@@ -219,6 +219,13 @@ const login = async (req, res)=>{
             msg: "Password salah!"
         });
     }
+
+    if(result.status == "dead"){
+        return res.status(200).json({
+            error: true,
+            msg: "Akun sudah dihapus!"
+        });
+    }
     console.log(result);
     const access_token = jwt.sign({...result}, secret_key, {expiresIn: "3h"});
     return res.status(200).json({
