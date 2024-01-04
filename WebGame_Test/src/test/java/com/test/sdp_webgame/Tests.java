@@ -154,7 +154,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test register user (sukses)", priority=1)
+	@Test(description="Test register user (sukses)", priority=1 , dependsOnMethods = {"testOpenLink"})
 	public void testUserRegisterSuccess() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
