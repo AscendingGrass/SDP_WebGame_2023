@@ -17,6 +17,7 @@ const userRouter = require("./src/routes/user");
 const scoreboardRouter = require("./src/routes/scoreboard");
 const announcementRouter = require("./src/routes/announcement");
 const saveRouter = require("./src/routes/save");
+const helpRouter = require("./src/routes/help");
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use("/", bugRouter);
@@ -24,6 +25,7 @@ app.use("/", userRouter);
 app.use("/", scoreboardRouter);
 app.use("/", announcementRouter);
 app.use("/", saveRouter);
+app.use("/", helpRouter);
 
 app.listen(port, async () => {
     try {
