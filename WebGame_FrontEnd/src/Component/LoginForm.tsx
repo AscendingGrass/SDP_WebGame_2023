@@ -17,6 +17,7 @@ import { useData } from '../DataContext';
 import { useForm } from "react-hook-form";
    
 export function LoginForm() {
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
   const { state, dispatch } = useData();
   const [ error, setError ] = useState(false);
   const [ msg, setMsg ] = useState("")
@@ -33,7 +34,7 @@ export function LoginForm() {
       return;
     }
     
-    const result = (await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, body)).data;
+    const result = (await axios.post(`${backendURL}/login`, body)).data;
     
     setError(result.error);
     setMsg(result.msg);
@@ -60,7 +61,7 @@ export function LoginForm() {
           <Input
             size="lg"
             placeholder="Enter your username"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+            className=" !border-blue-gray-200 focus:!border-gray-900"
             labelProps={{
               className: "before:content-none after:content-none",
             }}
@@ -73,7 +74,7 @@ export function LoginForm() {
             type="password"
             size="lg"
             placeholder="Enter your password"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+            className=" !border-blue-gray-200 focus:!border-gray-900"
             labelProps={{
                 className: "before:content-none after:content-none",
               }}

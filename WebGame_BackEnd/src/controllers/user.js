@@ -288,6 +288,25 @@ const register = async (req, res)=>{
     })
 }
 
+const updateUser = async (req, res) => {
+    const { id, ...updatedFields } = req.body; 
+    const result = await User.findOneAndUpdate(
+        {
+            _id: id,
+        },
+        {
+            ...updatedFields,
+            updated_at: Date.now()
+        },
+        {new: true}
+    );
+    console.log(result);
+    return res.status(200).json({
+        error: false,
+        result
+    })
+}
+
 const deleteUser = async (req, res) => {
     const { id } = req.params;
     let checkUser = await User.findOne({
@@ -384,6 +403,7 @@ module.exports = {
     insertDummy,
     login,
     register,
+    updateUser,
     deleteUser,
     allUser,
     fetchUser

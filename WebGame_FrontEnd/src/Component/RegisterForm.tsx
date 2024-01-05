@@ -51,7 +51,7 @@ export default function RegisterForm() {
                     <Input
                         size="lg"
                         placeholder="Enter your username"
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                        className=" !border-blue-gray-200 focus:!border-gray-900"
                         labelProps={{
                             className: "before:content-none after:content-none",
                         }}
@@ -63,7 +63,7 @@ export default function RegisterForm() {
                     <Input
                         size="lg"
                         placeholder="Enter your email"
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                        className=" !border-blue-gray-200 focus:!border-gray-900"
                         labelProps={{
                             className: "before:content-none after:content-none",
                         }}
@@ -76,7 +76,7 @@ export default function RegisterForm() {
                         type="password"
                         size="lg"
                         placeholder="Enter your password"
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                        className=" !border-blue-gray-200 focus:!border-gray-900"
                         labelProps={{
                         className: "before:content-none after:content-none",
                         }}

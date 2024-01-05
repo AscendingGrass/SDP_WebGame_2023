@@ -1,72 +1,125 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useData } from './DataContext';
 import axios from 'axios';
+import { Button, Card, Checkbox, Input, Typography } from '@material-tailwind/react';
+import { useForm } from 'react-hook-form';
 
 const News = () => {
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
   
   const { state, dispatch } = useData();
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const [ updateMode, setUpdateMode ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false);
 
   const navigate = useNavigate();
+
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const handleSaveChanges = async (data) => {
+    const body = {id : state.user._id ,...data};
+    console.log(body);
+    
+    setIsLoading(true);
+    const result = (await axios.put(`${backendURL}/updateUser`)).data;
+    console.log(result);
+    
+    alert();
+    dispatch({ type: 'SET_USER', user: result.result, access_token: state.access_token});
+    setIsLoading(false);
+    setUpdateMode(false);
+  }
+
   const handleLogOut = ()=>{
     dispatch({ type: 'LOGOUT_USER'})
     navigate("/");
   }
+
   const handleDeleteAcc = async ()=> {
     
     await axios.delete(`${backendURL}/deleteUser/${state.user._id}`);
     handleLogOut();
   }
-  import.meta.env.BASE_URL
+  
+  console.log(state);
+  
   return (
-    <div className="container ml-60" style={{ overflowX: 'auto' }}> 
-    
-      <div className="row mb-3">
-            <div className="col-lg-5">
-            <button className='btn text-slate-200 btn-danger mt-20 float-end bg-red-500 w-40 border-solid border-2 border-red-600 rounded-md'
-              onClick={handleLogOut}
-            >Log Out</button>
-            </div>
-        <div className="col-lg-12">
-            <button className='btn text-slate-200 mt-2 btn-outline-danger float-end me-3 float-end bg-red-500 w-40 border-solid border-2 border-red-600 rounded-md'
-              onClick={handleDeleteAcc}
-            >Delete Account</button>
-            
+    <div className="flex flex-row w-full h-full px-5">
+      <form className="mt-8 mb-2 w-1/2" onSubmit={handleSubmit(handleSaveChanges)}>
+        <div className="mb-1 flex flex-row items-center">
+          <Typography variant="h6" color="blue-gray" className="-mb-3 basis-3/12">
+            Username
+          </Typography>
+          <Input
+            size="lg"
+            placeholder="name@mail.com"
+            className=" !border-blue-gray-200 focus:!border-gray-900"
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+            disabled={!updateMode}
+            value={state.user.username}
+            {...register("username")}
+          />
         </div>
-        <div className="col-lg-12">
-            
-            <button className='btn text-slate-200 mt-2 btn-outline-success float-end me-3 float-end bg-sky-500 w-40 border-solid border-2 border-sky-600 rounded-md'>Save Account</button>
-            
+        <div className="mb-1 flex flex-row items-center">
+          <Typography variant="h6" color="blue-gray" className="-mb-3 basis-3/12">
+            Email
+          </Typography>
+          <Input
+            size="lg"
+            placeholder="name@mail.com"
+            className=" !border-blue-gray-200 focus:!border-gray-900"
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+            disabled={!updateMode}
+            value={state.user.email}
+            {...register("email")}
+          />
         </div>
-      </div>
-     
-      <br />
-      <br />
-      <br />
-
-      <div className="row mt-3 mb-3">
-        <div className="col-lg-7">
-            <div className="row">
-                <div className="form-label text-xl">Username</div>
-                <input type="text"  className='form-control  float-end  w-96 border-solid border-2 border-gray-600 rounded-md'/>
-            </div>
-            <div className="row">
-                <div className="form-label text-xl">Email</div>
-                <input type="text"  className='form-control float-end  w-96 border-solid border-2 border-gray-600 rounded-md'/>
-            </div>
-            <div className="row">
-                <div className="form-label text-xl">Password</div>
-                <input type="text"  className='form-control float-end  w-96 border-solid border-2 border-gray-600 rounded-md'/>
-            </div>
+        <div className="mb-1 flex flex-row items-center">
+          <Typography variant="h6" color="blue-gray" className="-mb-3 basis-3/12">
+            Password
+          </Typography>
+          <Input
+            type="text"
+            size="lg"
+            placeholder="********"
+            className=" !border-blue-gray-200 focus:!border-gray-900"
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+            disabled={!updateMode}
+            value={state.user.password}
+            {...register("password")}
+          />
+        </div>
+        <div className="mt-2 flex justify-center">
+          {
+            !updateMode &&
+            <Button type='button' className="focus:!border-red-500" color='blue' onClick={()=>{setUpdateMode(true)}}>
+              Edit Account
+            </Button>
+          }
+          {
+            updateMode &&
+            <Button type='submit' className="focus:!border-green-500" color='green'>
+              Save Changes
+            </Button>
+          }
         </div>
         
+      </form>
+      <div className="mt-8 mb-2 w-1/2">
+        <Button className="focus:!border-red-500 float-right" color='red' onClick={handleLogOut}>
+          Log Out
+        </Button>
       </div>
-    </div>
-  );
+  </div>
+  )
 }
 
 export default News;
