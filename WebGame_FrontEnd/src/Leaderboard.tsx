@@ -29,10 +29,10 @@ const Login = () => {
     <div className=" w-full justify-center">
       <Tabs value="html">
         <TabsHeader className='bg-gray-300 w-full'>
-          <Tab key={"female"} value={"female"} onClick={()=>{setgender(false)}}>
+          <Tab value={"female"} onClick={()=>{setgender(false)}}>
             Female
           </Tab>
-          <Tab key={"male"} value={"male"} onClick={()=>{setgender(true)}}>
+          <Tab value={"male"} onClick={()=>{setgender(true)}}>
             Male
           </Tab>
         </TabsHeader>

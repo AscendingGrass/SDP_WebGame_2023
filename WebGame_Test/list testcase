@@ -1,0 +1,20 @@
+Test WebSite :
+    - Test buka websitenya
+
+Test Register :
+    - Test register user (semua field kosong)
+    - Test register user (2 field kosong)
+    - Test register user (1 field kosong)
+    - Test register user (sukses)
+    - Test register user (Username telah terpakai)
+    - Test register user (Email telah terpakai)
+
+Test Login : 
+    - Test login user (semua field kosong)
+    - Test login user (username tidak ada)
+    - Test login user (password salah)
+    - Test login user (sukses)
+
+Test Setting : 
+    - Test logout user
+    - Test delete account user
