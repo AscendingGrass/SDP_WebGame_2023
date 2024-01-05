@@ -1,10 +1,9 @@
 #!/bin/sh
 
-npm install
 npm run build
 rm -rf /node_modules
 rm -rf /public
 rm -rf /src
 
-cd ./dist
-serve
+cp -r ./dist /usr/share/nginx/html
+nginx -g "daemon off;"

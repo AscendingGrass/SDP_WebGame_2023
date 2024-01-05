@@ -220,7 +220,10 @@ export class Event{
             (self:Event, gameManager:GameManager)=>{ // onload handler
                 const progress = self.getValueOf("progress") as number
                 console.log("OOOOOOOH : " + progress);
-                if(progress == 2){
+                if(progress == 1){
+                    null;
+                } 
+                else if(progress == 2){
                     const targetCoordinate = self.getValueOf("target_coordinate") as Point
 
                     const stepHandler = (tile: Tile, stepper: Entity, gameState: GameManager) => {
