@@ -390,6 +390,11 @@ const fetchUser = async (req, res) => {
                 username: "$username",
                 score: "$scoreboard.score"
             }
+        },
+        {
+            $sort: {
+                score: -1
+            }
         }
         
     ]);
