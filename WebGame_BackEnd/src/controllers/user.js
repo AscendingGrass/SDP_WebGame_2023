@@ -300,6 +300,7 @@ const updateUser = async (req, res) => {
         },
         {new: true}
     );
+    
     console.log(result);
     return res.status(200).json({
         error: false,
@@ -369,7 +370,8 @@ const fetchUser = async (req, res) => {
     const result = await User.aggregate([
         {
             $match: {
-                gender
+                gender,
+                status: "active"
             }
         },
         {
