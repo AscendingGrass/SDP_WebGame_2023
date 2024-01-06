@@ -16,19 +16,28 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
+import java.util.UUID;
+
 public class Tests {
 	public WebDriver driver; 
+	public String username, password, email;
 	
 	@BeforeTest
 	public void setup() {
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
+		
+		String temp = UUID.randomUUID().toString(); 
+		this.username = "test-" + temp;
+		this.email = this.username + "@gmail.com";
+		this.password = username;
 	}
 	
 	@AfterTest
 	public void cleanup() {
 		driver.quit();
 	}
+	
 	
 	@Test(description="Test buka websitenya", priority=-99)
 	public void testOpenLink() throws Exception {
@@ -44,6 +53,7 @@ public class Tests {
 			Assert.fail("Timeout fail");
 		}
 	}
+
 	
 	@Test(description="Test register user (semua field kosong)", priority=1 , dependsOnMethods = {"testOpenLink"})
 	public void testUserRegisterFail_1() throws Exception {
@@ -96,7 +106,7 @@ public class Tests {
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
 				Thread.sleep(1000);
 				// username
-				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 				Thread.sleep(1000);
 				signUp.click();
 				
@@ -133,9 +143,9 @@ public class Tests {
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
 				
 				// username
-				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 				// email
-				driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test@gmail.com");
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys(this.email);
 				
 				signUp.click();
 				
@@ -172,11 +182,11 @@ public class Tests {
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
 				
 				// username
-				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 				// email
-				driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test@gmail.com");
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys(this.email);
 				// password
-				driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 				Thread.sleep(3000);
 				signUp.click();
 
@@ -213,11 +223,11 @@ public class Tests {
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
 				
 				// username
-				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 				// email
-				driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test@gmail.com");
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys(this.email);
 				// password
-				driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 				
 				signUp.click();
 				Thread.sleep(3000);
@@ -256,9 +266,9 @@ public class Tests {
 				// username
 				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("testestest");
 				// email
-				driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test@gmail.com");
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys(this.email);
 				// password
-				driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 				
 				signUp.click();
 
