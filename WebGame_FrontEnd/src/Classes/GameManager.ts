@@ -36,8 +36,6 @@ export class GameManager {
     }
 
     public async save(userId:string){
-        
-
         const result = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/save/${userId}`, this.currentState).catch(() =>  {
             this.logView?.addLog([
                 { 
@@ -66,8 +64,6 @@ export class GameManager {
         ])
         this.logView?.writeSeparator()
 
-
-        // await axios.post("http://localhost:3000/login", this.currentState)
     }
 
     public load(gameState:GameState|null = null):void {
