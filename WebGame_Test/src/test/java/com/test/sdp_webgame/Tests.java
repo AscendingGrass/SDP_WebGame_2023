@@ -287,7 +287,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test login user (semua field kosong)", priority=5 , dependsOnMethods = {"testUserRegisterSuccess"})
+	@Test(description="Test login user (semua field kosong)", priority=5 , dependsOnMethods = {"testOpenLink"})
 	public void testUserLoginFail_1() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -296,18 +296,18 @@ public class Tests {
 			Thread.sleep(1000);
 			
 			//login button click
-			driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/button")).click();
+			driver.findElement(By.xpath("//button[text()='Log In']")).click();
 			
 			Thread.sleep(3000);
-			var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/h6[3]"));
-			Assert.assertEquals(msg.getText(), "User tidak terdaftar!");
+			var msg = driver.findElement(By.xpath("//div[contains(text(),'Semua field wajib diisi!')]"));
+			Assert.assertEquals(msg.getText(), "Semua field wajib diisi!");
 		}
 		else {
 			Assert.fail("Login button not found");
 		}
 	}
 	
-	@Test(description="Test login user (username tidak ada)", priority=5)
+	@Test(description="Test login user (username tidak ada)", priority=5 , dependsOnMethods = {"testOpenLink"})
 	public void testUserLoginFail_2() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -315,15 +315,15 @@ public class Tests {
 			Thread.sleep(1000);
 
 			//username
-			driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[1]/input")).sendKeys("USER DOESN'T EXIST");
+			driver.findElement(By.xpath("//input[@name='username']")).sendKeys("USER DOESN'T EXIST");
 			//password
-			driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/input")).sendKeys("password");
+			driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 			//login button click
-			driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/button")).click();
+			driver.findElement(By.xpath("//button[text()='Log In']")).click();
 			
 			Thread.sleep(3000);
 
-			var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/h6[3]"));
+			var msg = driver.findElement(By.xpath("//div[contains(text(),'User tidak terdaftar!"));
 			Assert.assertEquals(msg.getText(), "User tidak terdaftar!");
 		}
 		else {
@@ -331,7 +331,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test login user (password salah)", priority=5)
+	@Test(description="Test login user (password salah)", priority=5, dependsOnMethods = {"testOpenLink"})
 	public void testUserLoginFail_3() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -339,15 +339,15 @@ public class Tests {
 			Thread.sleep(1000);
 
 			//username
-			driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[1]/input")).sendKeys("test");
+			driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 			//password
-			driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/input")).sendKeys("password");
+			driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 			//login button click
-			driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/button")).click();
+			driver.findElement(By.xpath("//button[text()='Log In']")).click();
 			
 			Thread.sleep(3000);
 
-			var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/h6[3]"));
+			var msg = driver.findElement(By.xpath("//div[contains(text(),'Password salah!"));
 			Assert.assertEquals(msg.getText(), "Password salah!");
 		}
 		else {
@@ -355,7 +355,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test login user (sukses)", priority=6, dependsOnMethods = {"testUserRegisterSuccess"})
+	@Test(description="Test login user (sukses)", priority=6 , dependsOnMethods = {"testOpenLink"})
 	public void testUserLoginSuccess() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -363,18 +363,18 @@ public class Tests {
 			Thread.sleep(1000);
 
 			//username
-			driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[1]/input")).sendKeys("test");
+			driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 			//password
-			driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/input")).sendKeys("test");
+			driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 			//login button click
-			driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/button")).click();
+			driver.findElement(By.xpath("//button[text()='Log In']")).click();
 			
 			Thread.sleep(3000);
 			
 			try {
 				
 				var msg = driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div/div[1]/div[1]/a[2]"));
-				Assert.assertEquals(msg.getText(), "test");
+				Assert.assertEquals(msg.getText(), this.username);
 			}
 			catch(Exception e) {
 				Assert.fail("Login failed");
@@ -424,11 +424,11 @@ public class Tests {
 				Thread.sleep(1000);
 
 				//username
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[1]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 				//password
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 				//login button click
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/button")).click();
+				driver.findElement(By.xpath("//button[text()='Log In']")).click();
 				
 				Thread.sleep(3000);
 				
@@ -459,11 +459,11 @@ public class Tests {
 				Thread.sleep(1000);
 
 				//username
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[1]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 				//password
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 				//login button click
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/button")).click();
+				driver.findElement(By.xpath("//button[text()='Log In']")).click();
 				
 				Thread.sleep(3000);
 				
