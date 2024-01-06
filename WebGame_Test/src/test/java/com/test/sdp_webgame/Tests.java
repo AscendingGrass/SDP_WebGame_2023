@@ -237,6 +237,14 @@ public class Tests {
 //				
 //				Thread.sleep(3000);
 //				
+//				Assert.assertEquals(message.getText(), "Username telah terpakai");
+//			}
+//			catch(Exception e) {
+//				Assert.fail(e.getMessage());
+//			}
+//		}
+//		else {
+//			Assert.fail("Login button not found");
 //		}
 //	}
 //	
