@@ -871,6 +871,50 @@ public class Tests {
 			Assert.fail("Setting button not found");
 		}
 	}
+	@Test(description="Test edit 3 field fail", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testEditfail() throws Exception {
+		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			//edit button click
+			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
+			editButton.click();
+			
+			Thread.sleep(1000);
+			
+			//username
+			driver.findElement(By.xpath("//input[@name='username']")).clear();
+			//email
+			driver.findElement(By.xpath("//input[@name='email']")).clear();
+			//password
+			driver.findElement(By.xpath("//input[@name='password']")).clear();
+			//save button click
+			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
+			
+			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
+			HomeNav.click();
+			
+			Thread.sleep(1000);
+			
+			settingsNav.click();
+			
+			Thread.sleep(1000);
+			
+			try {			
+				var msg = driver.findElement(By.xpath("//div[contains(text(),'Semua field tidak boleh kosong!')]"));
+				Assert.assertEquals(msg.getText(), "Semua field tidak boleh kosong!");
+			}
+			catch(Exception e) {
+				Assert.fail("username,email, atau password tidak ter save");		
+			}
+			
+		}
+		else {
+			Assert.fail("Setting button not found");
+		}
+	}
 	
 //	@Test(description="Test Admin Privacy Policy Button click", priority=6 , dependsOnMethods = {"testAdminLoginSuccess"})
 //	public void clickPrivacyPolicyButton() throws Exception {
