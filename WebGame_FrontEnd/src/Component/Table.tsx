@@ -83,7 +83,7 @@ export function Table() {
 
     const deleteUser = async (id) => {
         setDelete(true);
-        const deletedUser = await axios.delete("http://localhost:3000/deleteUser/" + id);
+        const deletedUser = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/deleteUser/` + id);
         setDelete(false);
     }
 
