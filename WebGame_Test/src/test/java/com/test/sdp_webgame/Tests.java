@@ -73,7 +73,7 @@ public class Tests {
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
 				signUp.click();
 				
-				var message = driver.findElement(By.xpath("//div[contains(text(),'Semua field wajib diisi!')]"));
+				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/div"));
 				
 				Thread.sleep(3000);
 				
@@ -110,7 +110,7 @@ public class Tests {
 				Thread.sleep(1000);
 				signUp.click();
 				
-				var message = driver.findElement(By.xpath("//div[contains(text(),'Semua field wajib diisi!')]"));
+				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/div"));
 				
 				Thread.sleep(3000);
 				
@@ -149,7 +149,7 @@ public class Tests {
 				
 				signUp.click();
 				
-				var message = driver.findElement(By.xpath("//div[contains(text(),'Semua field wajib diisi!')]"));
+				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/div"));
 				
 				Thread.sleep(3000);
 				
@@ -187,12 +187,12 @@ public class Tests {
 				driver.findElement(By.xpath("//input[@name='email']")).sendKeys(this.email);
 				// password
 				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 				signUp.click();
 
-				var message = driver.findElement(By.xpath("//div[contains(text(),'Berhasil register'"));
+				Thread.sleep(1000);
+				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/div"));
 				
-				Thread.sleep(3000);
 				
 				Assert.assertEquals(message.getText(), "Berhasil register");
 			}
@@ -231,7 +231,7 @@ public class Tests {
 				
 				signUp.click();
 				Thread.sleep(3000);
-				var message = driver.findElement(By.xpath("//div[contains(text(),'Username telah terpakai'"));
+				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/div"));
 				
 				Thread.sleep(3000);
 				
@@ -271,10 +271,11 @@ public class Tests {
 				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 				
 				signUp.click();
-
-				var message = driver.findElement(By.xpath("//div[contains(text(),'Email telah terpakai'"));
+				Thread.sleep(1000);
 				
-				Thread.sleep(3000);
+				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/div"));
+				
+				Thread.sleep(1000);
 				
 				Assert.assertEquals(message.getText(), "Email telah terpakai");
 			}
@@ -299,8 +300,8 @@ public class Tests {
 			driver.findElement(By.xpath("//button[text()='Log In']")).click();
 			
 			Thread.sleep(3000);
-			var msg = driver.findElement(By.xpath("//div[contains(text(),'Semua field wajib diisi!')]"));
-			Assert.assertEquals(msg.getText(), "Semua field wajib diisi!");
+			var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/div/form/div[3]/div"));
+			Assert.assertEquals(msg.getText(), "Semua Field Wajib diisi!");
 		}
 		else {
 			Assert.fail("Login button not found");
@@ -323,7 +324,7 @@ public class Tests {
 			
 			Thread.sleep(3000);
 
-			var msg = driver.findElement(By.xpath("//div[contains(text(),'User tidak terdaftar!"));
+			var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/div/form/div[3]/div"));
 			Assert.assertEquals(msg.getText(), "User tidak terdaftar!");
 		}
 		else {
@@ -331,7 +332,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test login user (password salah)", priority=5, dependsOnMethods = {"testOpenLink"})
+	@Test(description="Test login user (password salah)", priority=5, dependsOnMethods = {"testUserRegisterSuccess"})
 	public void testUserLoginFail_3() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -341,13 +342,13 @@ public class Tests {
 			//username
 			driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 			//password
-			driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
+			driver.findElement(By.xpath("//input[@name='password']")).sendKeys("Password salah");
 			//login button click
 			driver.findElement(By.xpath("//button[text()='Log In']")).click();
 			
 			Thread.sleep(3000);
 
-			var msg = driver.findElement(By.xpath("//div[contains(text(),'Password salah!"));
+			var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/div/form/div[3]/div"));
 			Assert.assertEquals(msg.getText(), "Password salah!");
 		}
 		else {
@@ -355,7 +356,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test login user (sukses)", priority=6 , dependsOnMethods = {"testOpenLink"})
+	@Test(description="Test login user (sukses)", priority=6 , dependsOnMethods = {"testUserRegisterSuccess"})
 	public void testUserLoginSuccess() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -411,7 +412,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test delete account user", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	@Test(description="Test delete account user", priority=10, dependsOnMethods = {"testUserLogout"})
 	public void testUserDeleteAccount() throws Exception {
 		WebElement settingsNav = null;
 		try {
@@ -448,10 +449,13 @@ public class Tests {
 			Thread.sleep(1000);
 
 			
-			var logoutButton = driver.findElement(By.xpath("//button[text()='Delete Account']"));
-			logoutButton.click();
+			var deleteButton = driver.findElement(By.xpath("//button[text()='Delete Account']"));
+			deleteButton.click();
+			Thread.sleep(1000);
+			var confirmButton = driver.findElement(By.xpath("/html/body/div[4]/div/div/div/div[3]/button[2]"));
+			confirmButton.click();
 			
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 			
 			var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 			if(loginNav.getText().equals("Login")) {
@@ -465,10 +469,10 @@ public class Tests {
 				//login button click
 				driver.findElement(By.xpath("//button[text()='Log In']")).click();
 				
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 				
-				var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/h6[3]"));
-				Assert.assertEquals(msg.getText(), "User tidak terdaftar!");
+				var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/div/form/div[3]/div"));
+				Assert.assertEquals(msg.getText(), "Akun sudah dihapus!");
 			}
 			else {
 				Assert.fail("Login button not found after deleting account");
