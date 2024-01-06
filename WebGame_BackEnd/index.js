@@ -7,10 +7,7 @@ const port = 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    optionsSuccessStatus: 200
-}));
+app.use(cors({ credentials: true }));
 
 const bugRouter = require('./src/routes/bug');
 const userRouter = require("./src/routes/user");
@@ -29,7 +26,7 @@ app.use("/", helpRouter);
 
 app.listen(port, async () => {
     try {
-        await mongoose.connect(process.env.DATABASE_URL)
+        await mongoose.connect("mongodb+srv://team:teamsdp2023@cluster-m0.8pfwkar.mongodb.net/webgame?retryWrites=true&w=majority")
         console.log('Database connected')
     } catch (e) {
         console.log('Error database connection \n', e)

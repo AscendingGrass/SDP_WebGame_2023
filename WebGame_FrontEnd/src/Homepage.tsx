@@ -8,6 +8,7 @@ const Homepage = () => {
 
   useEffect(()=>{
     const fetch = async () =>{
+      console.log("aiueo:" + import.meta.env.VITE_BACKEND_URL)
       setNews((await axios.get(`${import.meta.env.VITE_BACKEND_URL}/fetchLatestAnnouncement`)).data.result)
     }
 
