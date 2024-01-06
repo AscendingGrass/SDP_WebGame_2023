@@ -45,7 +45,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test register user (semua field kosong)", priority=1)
+	@Test(description="Test register user (semua field kosong)", priority=1 , dependsOnMethods = {"testOpenLink"})
 	public void testUserRegisterFail_1() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -53,21 +53,21 @@ public class Tests {
 			try {
 				var waitRegister = new WebDriverWait(driver, Duration.ofSeconds(20));
 				waitRegister.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Register']")));
-				
+								
 				var registerNav = driver.findElement(By.xpath("//a[text()='Register']"));
 				registerNav.click();
-				
+					
 				var waitSignUp = new WebDriverWait(driver, Duration.ofSeconds(20));
 				waitSignUp.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='sign up']")));
-				
+					
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
 				signUp.click();
 				
-				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/h6"));
+				var message = driver.findElement(By.xpath("//div[contains(text(),'Semua field wajib diisi!')]"));
 				
 				Thread.sleep(3000);
 				
-				Assert.assertEquals(message.getText(), "");
+				Assert.assertEquals(message.getText(), "Semua field wajib diisi!");
 			}
 			catch(Exception e) {
 				Assert.fail(e.getMessage());
@@ -78,7 +78,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test register user (2 field kosong)", priority=1)
+	@Test(description="Test register user (2 field kosong)", priority=1 , dependsOnMethods = {"testOpenLink"} )
 	public void testUserRegisterFail_2() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -94,17 +94,17 @@ public class Tests {
 				waitSignUp.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='sign up']")));
 				
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
-				
+				Thread.sleep(1000);
 				// username
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[1]/input")).sendKeys("test");
-				
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test");
+				Thread.sleep(1000);
 				signUp.click();
 				
-				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/h6"));
+				var message = driver.findElement(By.xpath("//div[contains(text(),'Semua field wajib diisi!')]"));
 				
 				Thread.sleep(3000);
 				
-				Assert.assertEquals(message.getText(), "");
+				Assert.assertEquals(message.getText(), "Semua field wajib diisi!");
 			}
 			catch(Exception e) {
 				Assert.fail(e.getMessage());
@@ -115,7 +115,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test register user (1 field kosong)", priority=1)
+	@Test(description="Test register user (1 field kosong)", priority=1 , dependsOnMethods = {"testOpenLink"})
 	public void testUserRegisterFail_3() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -133,17 +133,17 @@ public class Tests {
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
 				
 				// username
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[1]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test");
 				// email
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[2]/input")).sendKeys("test@gmail.com");
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test@gmail.com");
 				
 				signUp.click();
 				
-				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/h6"));
+				var message = driver.findElement(By.xpath("//div[contains(text(),'Semua field wajib diisi!')]"));
 				
 				Thread.sleep(3000);
 				
-				Assert.assertEquals(message.getText(), "");
+				Assert.assertEquals(message.getText(), "Semua field wajib diisi!");
 			}
 			catch(Exception e) {
 				Assert.fail(e.getMessage());
@@ -172,19 +172,19 @@ public class Tests {
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
 				
 				// username
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[1]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test");
 				// email
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[2]/input")).sendKeys("test@gmail.com");
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test@gmail.com");
 				// password
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[3]/input")).sendKeys("test");
-				
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test");
+				Thread.sleep(3000);
 				signUp.click();
 
-				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/h6"));
+				var message = driver.findElement(By.xpath("//div[contains(text(),'Berhasil register'"));
 				
 				Thread.sleep(3000);
 				
-				Assert.assertEquals(message.getText(), "Register berhasil");
+				Assert.assertEquals(message.getText(), "Berhasil register");
 			}
 			catch(Exception e) {
 				Assert.fail(e.getMessage());
@@ -195,7 +195,7 @@ public class Tests {
 		}
 	}
 
-	@Test(description="Test register user (Username telah terpakai)", priority=2, dependsOnMethods = {"testUserRegisterSuccess"})
+	@Test(description="Test register user (Username telah terpakai)", priority=2, dependsOnMethods = {"testOpenLink"})
 	public void testUserRegisterFail_0_1() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -213,15 +213,15 @@ public class Tests {
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
 				
 				// username
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[1]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test");
 				// email
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[2]/input")).sendKeys("test@gmail.com");
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test@gmail.com");
 				// password
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[3]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test");
 				
 				signUp.click();
-
-				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/h6"));
+				Thread.sleep(3000);
+				var message = driver.findElement(By.xpath("//div[contains(text(),'Username telah terpakai'"));
 				
 				Thread.sleep(3000);
 				
@@ -254,15 +254,15 @@ public class Tests {
 				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
 				
 				// username
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[1]/input")).sendKeys("testestest");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("testestest");
 				// email
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[2]/input")).sendKeys("test@gmail.com");
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test@gmail.com");
 				// password
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/div/div[3]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test");
 				
 				signUp.click();
 
-				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/form/h6"));
+				var message = driver.findElement(By.xpath("//div[contains(text(),'Email telah terpakai'"));
 				
 				Thread.sleep(3000);
 				
@@ -277,7 +277,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test login user (semua field kosong)", priority=5)
+	@Test(description="Test login user (semua field kosong)", priority=5 , dependsOnMethods = {"testUserRegisterSuccess"})
 	public void testUserLoginFail_1() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
