@@ -57,6 +57,7 @@ public class Tests {
 		}
 	}
 
+	//USER!!!
 	
 //	@Test(description="Test register user (semua field kosong)", priority=1 , dependsOnMethods = {"testOpenLink"})
 //	public void testUserRegisterFail_1() throws Exception {
@@ -483,77 +484,833 @@ public class Tests {
 //		}
 //	}
 	
-//	@Test(description="Test Edit Account User", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
-//	public void testUserEditAccountUsername() throws Exception {
-//		WebElement settingsNav = null;
-//		try {
-//			settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
-//		}
-//		catch(Exception e) {
-//			var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
-//			if(loginNav.getText().equals("Login")) {
-//				loginNav.click();
-//				Thread.sleep(1000);
-//
-//				//username
-//				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
-//				//password
-//				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
-//				//login button click
-//				driver.findElement(By.xpath("//button[text()='Log In']")).click();
-//				
-//				Thread.sleep(3000);
-//				
-//				try {
-//					settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
-//				}
-//				catch(Exception e2) {
-//					Assert.fail("Login failed");
-//				}
-//			}
-//			else {
-//				Assert.fail("Login button not found");
-//			}
-//		}
-//		
-//		if(settingsNav.getText().equals("Setting")) {
-//			settingsNav.click();
-//			Thread.sleep(1000);
-//
-//			
-//			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
-//		    editButton.click();
-//			
-//			Thread.sleep(1000);
-//			
-//		    // Wait for the form to be visible
-//		    WebElement form = driver.findElement(By.xpath("//form[@class='mt-8 mb-2 w-1/2']"));
-//		    Thread.sleep(1000);
-//		    // Locate the input fields and change values
-//		    WebElement usernameInput = form.findElement(By.name("username"));
-//		    WebElement emailInput = form.findElement(By.name("email"));
-//		    WebElement passwordInput = form.findElement(By.name("password"));
-//
-//		    usernameInput.clear();
-//		    usernameInput.sendKeys("newUsername");
-//		    Thread.sleep(1000);
-//
-//		    emailInput.clear();
-//		    emailInput.sendKeys("newemail@example.com");
-//		    Thread.sleep(1000);
-//
-//		    passwordInput.clear();
-//		    passwordInput.sendKeys("newpassword");
-//		    Thread.sleep(1000);
-//
-//		    // Locate and click the "Edit Account" button
-//		    WebElement saveButton = form.findElement(By.xpath("//button[text()='Save Changes']"));
-//		    saveButton.click();
-//		}
-//
-//	}	
+	@Test(description="Test register user (1 field kosong)", priority=1 , dependsOnMethods = {"testOpenLink"})
+	public void testUserRegisterFail_3() throws Exception {
+		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+		if(loginNav.getText().equals("Login")) {
+			loginNav.click();
+			try {
+				var waitRegister = new WebDriverWait(driver, Duration.ofSeconds(20));
+				waitRegister.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Register']")));
+				
+				var registerNav = driver.findElement(By.xpath("//a[text()='Register']"));
+				registerNav.click();
+				
+				var waitSignUp = new WebDriverWait(driver, Duration.ofSeconds(20));
+				waitSignUp.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='sign up']")));
+				
+				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
+				
+				// username
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
+				// email
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys(this.email);
+				
+				signUp.click();
+				
+				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/div"));
+				
+				Thread.sleep(3000);
+				
+				Assert.assertEquals(message.getText(), "Semua field wajib diisi!");
+			}
+			catch(Exception e) {
+				Assert.fail(e.getMessage());
+			}
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
 	
+	@Test(description="Test register user (sukses)", priority=1 , dependsOnMethods = {"testOpenLink"})
+	public void testUserRegisterSuccess() throws Exception {
+		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+		if(loginNav.getText().equals("Login")) {
+			loginNav.click();
+			try {
+				var waitRegister = new WebDriverWait(driver, Duration.ofSeconds(20));
+				waitRegister.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Register']")));
+				
+				var registerNav = driver.findElement(By.xpath("//a[text()='Register']"));
+				registerNav.click();
+				
+				var waitSignUp = new WebDriverWait(driver, Duration.ofSeconds(20));
+				waitSignUp.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='sign up']")));
+				
+				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
+				
+				// username
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
+				// email
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys(this.email);
+				// password
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
+				Thread.sleep(1000);
+				signUp.click();
 
+				Thread.sleep(1000);
+				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/div"));
+				
+				
+				Assert.assertEquals(message.getText(), "Berhasil register");
+			}
+			catch(Exception e) {
+				Assert.fail(e.getMessage());
+			}
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+
+	@Test(description="Test register user (Username telah terpakai)", priority=2, dependsOnMethods = {"testOpenLink"})
+	public void testUserRegisterFail_0_1() throws Exception {
+		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+		if(loginNav.getText().equals("Login")) {
+			loginNav.click();
+			try {
+				var waitRegister = new WebDriverWait(driver, Duration.ofSeconds(20));
+				waitRegister.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Register']")));
+				
+				var registerNav = driver.findElement(By.xpath("//a[text()='Register']"));
+				registerNav.click();
+				
+				var waitSignUp = new WebDriverWait(driver, Duration.ofSeconds(20));
+				waitSignUp.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='sign up']")));
+				
+				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
+				
+				// username
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
+				// email
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys(this.email);
+				// password
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
+				
+				signUp.click();
+				Thread.sleep(3000);
+				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/div"));
+				
+				Thread.sleep(3000);
+				
+				Assert.assertEquals(message.getText(), "Username telah terpakai");
+			}
+			catch(Exception e) {
+				Assert.fail(e.getMessage());
+			}
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+	
+	@Test(description="Test register user (Email telah terpakai)", priority=2, dependsOnMethods = {"testUserRegisterSuccess"})
+	public void testUserRegisterFail_0_2() throws Exception {
+		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+		if(loginNav.getText().equals("Login")) {
+			loginNav.click();
+			try {
+				var waitRegister = new WebDriverWait(driver, Duration.ofSeconds(20));
+				waitRegister.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[text()='Register']")));
+				
+				var registerNav = driver.findElement(By.xpath("//a[text()='Register']"));
+				registerNav.click();
+				
+				var waitSignUp = new WebDriverWait(driver, Duration.ofSeconds(20));
+				waitSignUp.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='sign up']")));
+				
+				var signUp = driver.findElement(By.xpath("//button[text()='sign up']"));
+				
+				// username
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys("testestest");
+				// email
+				driver.findElement(By.xpath("//input[@name='email']")).sendKeys(this.email);
+				// password
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
+				
+				signUp.click();
+				Thread.sleep(1000);
+				
+				var message = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/div"));
+				
+				Thread.sleep(1000);
+				
+				Assert.assertEquals(message.getText(), "Email telah terpakai");
+			}
+			catch(Exception e) {
+				Assert.fail(e.getMessage());
+			}
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+	
+	@Test(description="Test login user (semua field kosong)", priority=5 , dependsOnMethods = {"testOpenLink"})
+	public void testUserLoginFail_1() throws Exception {
+		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+		if(loginNav.getText().equals("Login")) {
+			loginNav.click();
+			
+			Thread.sleep(1000);
+			
+			//login button click
+			driver.findElement(By.xpath("//button[text()='Log In']")).click();
+			
+			Thread.sleep(3000);
+			var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/div/form/div[3]/div"));
+			Assert.assertEquals(msg.getText(), "Semua Field Wajib diisi!");
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+	
+	@Test(description="Test login user (username tidak ada)", priority=5 , dependsOnMethods = {"testOpenLink"})
+	public void testUserLoginFail_2() throws Exception {
+		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+		if(loginNav.getText().equals("Login")) {
+			loginNav.click();
+			Thread.sleep(1000);
+
+			//username
+			driver.findElement(By.xpath("//input[@name='username']")).sendKeys("USER DOESN'T EXIST");
+			//password
+			driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
+			//login button click
+			driver.findElement(By.xpath("//button[text()='Log In']")).click();
+			
+			Thread.sleep(3000);
+
+			var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/div/form/div[3]/div"));
+			Assert.assertEquals(msg.getText(), "User tidak terdaftar!");
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+	
+	@Test(description="Test login user (password salah)", priority=5, dependsOnMethods = {"testUserRegisterSuccess"})
+	public void testUserLoginFail_3() throws Exception {
+		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+		if(loginNav.getText().equals("Login")) {
+			loginNav.click();
+			Thread.sleep(1000);
+
+			//username
+			driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
+			//password
+			driver.findElement(By.xpath("//input[@name='password']")).sendKeys("Password salah");
+			//login button click
+			driver.findElement(By.xpath("//button[text()='Log In']")).click();
+			
+			Thread.sleep(3000);
+
+			var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/div/form/div[3]/div"));
+			Assert.assertEquals(msg.getText(), "Password salah!");
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+	
+	@Test(description="Test login user (sukses)", priority=6 , dependsOnMethods = {"testUserRegisterSuccess"})
+	public void testUserLoginSuccess() throws Exception {
+		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+		if(loginNav.getText().equals("Login")) {
+			loginNav.click();
+			Thread.sleep(1000);
+
+			//username
+			driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
+			//password
+			driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
+			//login button click
+			driver.findElement(By.xpath("//button[text()='Log In']")).click();
+			
+			Thread.sleep(3000);
+			
+			try {
+				
+				var msg = driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div/div[1]/div[1]/a[2]"));
+				Assert.assertEquals(msg.getText(), this.username);
+			}
+			catch(Exception e) {
+				Assert.fail("Login failed");
+			}
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+	
+	@Test(description="Test User click News tab", priority=3 , dependsOnMethods = {"testUserLoginSuccess"})
+	public void testUserNewsTab() throws Exception {
+		var usersNav = driver.findElement(By.xpath("//a[text()='News']"));
+		if(usersNav.getText().equals("News")) {
+			usersNav.click();
+            Thread.sleep(1000);
+            
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+            for (int i = 0; i < 10; i++) {  // Adjust the loop count for the desired scroll length
+                jsExecutor.executeScript("window.scrollBy(0, 50);");
+                Thread.sleep(500);  // Adjust the sleep duration for the desired scroll speed
+            }
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+	
+	@Test(description="Test User Privacy Policy Button click", priority=6 , dependsOnMethods = {"testUserLoginSuccess"})
+	public void TestUserPrivacyPolicyButton() throws Exception {
+		try {
+			
+			driver.findElement(By.xpath("//button[text()='Privacy Policy']")).click();
+	        Thread.sleep(3000);
+	        
+	    
+	        WebElement confirmButton = driver.findElement(By.xpath("/html/body/div[3]/div/div/div/div[3]/button[2]/span"));
+	        confirmButton.click();
+	        Thread.sleep(3000);
+	        
+	    } catch (Exception e) {
+	        Assert.fail("Failed to click the Privacy Policy button");
+	    }
+	}
+	
+	@Test(description="Test User Term & Condition Button click", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void TestUserTermConditionButton() throws Exception {
+	    try {
+
+	        WebElement termConditionButton = driver.findElement(By.xpath("//button[text()='Term & Condition']"));
+	        termConditionButton.click();
+	        Thread.sleep(3000);
+	        
+	        WebElement confirmButton = driver.findElement(By.xpath("/html/body/div[3]/div/div/div/div[3]/button[2]/span"));
+	        confirmButton.click();
+	        Thread.sleep(3000);
+
+	     
+	    } catch (Exception e) {
+	        Assert.fail("Failed to click the Term & Condition button");
+	    }
+	}
+	
+	@Test(description="Test Laderboard Female button click", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void TestLeaderboardFemale() throws Exception {
+	    try {
+
+	        WebElement termConditionButton = driver.findElement(By.xpath("//a[text()='Leaderboard']"));
+	        termConditionButton.click();
+	        Thread.sleep(3000);
+	        
+	        WebElement confirmButton = driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div[1]/nav/ul/li[1]/div[1]"));
+	        confirmButton.click();
+	        Thread.sleep(3000);
+
+	     
+	    } catch (Exception e) {
+	        Assert.fail("Failed to Find Leadeboard Button");
+	    }
+	}
+	
+	@Test(description="Test Laderboard Male button click", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void TestLeaderboardMale() throws Exception {
+	    try {
+
+	        WebElement termConditionButton = driver.findElement(By.xpath("//a[text()='Leaderboard']"));
+	        termConditionButton.click();
+	        Thread.sleep(3000);
+	        
+	        WebElement confirmButton = driver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div/div[1]/nav/ul/li[2]/div"));
+	        confirmButton.click();
+	        Thread.sleep(3000);
+
+	     
+	    } catch (Exception e) {
+	        Assert.fail("Failed to Find Leadeboard Button");
+	    }
+	}
+	
+	@Test(description="Test edit 1 field", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testEditUsername() throws Exception {
+		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			//edit button click
+			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
+			editButton.click();
+			
+			Thread.sleep(1000);
+			
+			//username
+			driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test1");
+			//save button click
+			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
+			
+			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
+			HomeNav.click();
+			
+			Thread.sleep(1000);
+			
+			settingsNav.click();
+			
+			Thread.sleep(1000);
+			
+			try {
+				
+				var msg = driver.findElement(By.xpath("//input[@name='username']"));
+				Assert.assertEquals(msg.getAttribute("value"), this.username + "test1");
+			}
+			catch(Exception e) {
+				Assert.fail("username tidak ter save");		
+			}
+			
+		}
+		else {
+			Assert.fail("Setting button not found");
+		}
+	}
+	@Test(description="Test edit 1 field", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testEditEmail() throws Exception {
+		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			//edit button click
+			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
+			editButton.click();
+			
+			Thread.sleep(1000);
+			
+			//email
+			driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test1");
+			//save button click
+			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
+			
+			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
+			HomeNav.click();
+			
+			Thread.sleep(1000);
+			
+			settingsNav.click();
+			
+			Thread.sleep(1000);
+			
+			try {
+				
+				var msg = driver.findElement(By.xpath("//input[@name='email']"));
+				Assert.assertEquals(msg.getAttribute("value"), this.email + "test1");
+			}
+			catch(Exception e) {
+				Assert.fail("email tidak ter save");		
+			}
+			
+		}
+		else {
+			Assert.fail("Setting button not found");
+		}
+	}
+	@Test(description="Test edit 1 field", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testEditPassword() throws Exception {
+		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			//edit button click
+			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
+			editButton.click();
+			
+			Thread.sleep(1000);
+			
+			//password
+			driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test1");
+			//save button click
+			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
+			
+			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
+			HomeNav.click();
+			
+			Thread.sleep(1000);
+			
+			settingsNav.click();
+			
+			Thread.sleep(1000);
+			
+			try {
+				
+				var msg = driver.findElement(By.xpath("//input[@name='password']"));
+				Assert.assertEquals(msg.getAttribute("value"), this.password + "test1");
+			}
+			catch(Exception e) {
+				Assert.fail("password tidak ter save");		
+			}
+			
+		}
+		else {
+			Assert.fail("Setting button not found");
+		}
+	}
+	@Test(description="Test edit 2 field", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testEditUsernameEmail() throws Exception {
+		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			//edit button click
+			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
+			editButton.click();
+			
+			Thread.sleep(1000);
+			
+			//username
+			driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test2");
+			//email
+			driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test2");
+			//save button click
+			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
+			
+			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
+			HomeNav.click();
+			
+			Thread.sleep(1000);
+			
+			settingsNav.click();
+			
+			Thread.sleep(1000);
+			
+			try {
+				
+				var msg1 = driver.findElement(By.xpath("//input[@name='username']"));
+				Assert.assertEquals(msg1.getAttribute("value"), this.username + "test2");
+				
+				var msg2 = driver.findElement(By.xpath("//input[@name='email']"));
+				Assert.assertEquals(msg2.getAttribute("value"), this.email + "test2");
+			}
+			catch(Exception e) {
+				Assert.fail("username atau email tidak ter save");		
+			}
+			
+		}
+		else {
+			Assert.fail("Setting button not found");
+		}
+	}
+	
+	@Test(description="Test edit 2 field", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testEditUsernamePassword() throws Exception {
+		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			//edit button click
+			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
+			editButton.click();
+			
+			Thread.sleep(1000);
+			
+			//username
+			driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test2");
+			//email
+			driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test2");
+			//save button click
+			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
+			
+			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
+			HomeNav.click();
+			
+			Thread.sleep(1000);
+			
+			settingsNav.click();
+			
+			Thread.sleep(1000);
+			
+			try {
+				
+				var msg1 = driver.findElement(By.xpath("//input[@name='username']"));
+				Assert.assertEquals(msg1.getAttribute("value"), this.username + "test2");
+				
+				var msg2 = driver.findElement(By.xpath("//input[@name='password']"));
+				Assert.assertEquals(msg2.getAttribute("value"), this.password + "test2");
+			}
+			catch(Exception e) {
+				Assert.fail("username atau email tidak ter save");		
+			}
+			
+		}
+		else {
+			Assert.fail("Setting button not found");
+		}
+	}
+	
+	@Test(description="Test edit 3 field", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testEditUsernameEmailPassword() throws Exception {
+		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			//edit button click
+			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
+			editButton.click();
+			
+			Thread.sleep(1000);
+			
+			//username
+			driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test3");
+			//email
+			driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test3");
+			//password
+			driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test3");
+			//save button click
+			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
+			
+			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
+			HomeNav.click();
+			
+			Thread.sleep(1000);
+			
+			settingsNav.click();
+			
+			Thread.sleep(1000);
+			
+			try {
+				
+				var msg1 = driver.findElement(By.xpath("//input[@name='username']"));
+				Assert.assertEquals(msg1.getAttribute("value"), this.username + "test3");
+				
+				var msg2 = driver.findElement(By.xpath("//input[@name='password']"));
+				Assert.assertEquals(msg2.getAttribute("value"), this.password + "test3");
+				
+				var msg3 = driver.findElement(By.xpath("//input[@name='email']"));
+				Assert.assertEquals(msg3.getAttribute("value"), this.email + "test3");
+			}
+			catch(Exception e) {
+				Assert.fail("username,email, atau password tidak ter save");		
+			}
+			
+		}
+		else {
+			Assert.fail("Setting button not found");
+		}
+	}
+	@Test(description="Test edit 3 field fail", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testEditfail() throws Exception {
+		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			//edit button click
+			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
+			editButton.click();
+			
+			Thread.sleep(1000);
+			
+			//username
+			driver.findElement(By.xpath("//input[@name='username']")).clear();
+			//email
+			driver.findElement(By.xpath("//input[@name='email']")).clear();
+			//password
+			driver.findElement(By.xpath("//input[@name='password']")).clear();
+			//save button click
+			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
+			
+			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
+			HomeNav.click();
+			
+			Thread.sleep(1000);
+			
+			settingsNav.click();
+			
+			Thread.sleep(1000);
+			
+			try {			
+				var msg = driver.findElement(By.xpath("//div[contains(text(),'Semua field tidak boleh kosong!')]"));
+				Assert.assertEquals(msg.getText(), "Semua field tidak boleh kosong!");
+			}
+			catch(Exception e) {
+				Assert.fail("username,email, atau password tidak ter save");		
+			}
+			
+		}
+		else {
+			Assert.fail("Setting button not found");
+		}
+	}
+	
+	@Test(description="Test Edit Account User", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testUserEditAccountUsername() throws Exception {
+		WebElement settingsNav = null;
+		try {
+			settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		}
+		catch(Exception e) {
+			var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+			if(loginNav.getText().equals("Login")) {
+				loginNav.click();
+				Thread.sleep(1000);
+
+				//username
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
+				//password
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
+				//login button click
+				driver.findElement(By.xpath("//button[text()='Log In']")).click();
+				
+				Thread.sleep(3000);
+				
+				try {
+					settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+				}
+				catch(Exception e2) {
+					Assert.fail("Login failed");
+				}
+			}
+			else {
+				Assert.fail("Login button not found");
+			}
+		}
+		
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			
+			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
+		    editButton.click();
+			
+			Thread.sleep(1000);
+			
+		    // Wait for the form to be visible
+		    WebElement form = driver.findElement(By.xpath("//form[@class='mt-8 mb-2 w-1/2']"));
+		    Thread.sleep(1000);
+		    // Locate the input fields and change values
+		    WebElement usernameInput = form.findElement(By.name("username"));
+		    WebElement emailInput = form.findElement(By.name("email"));
+		    WebElement passwordInput = form.findElement(By.name("password"));
+
+		    usernameInput.clear();
+		    usernameInput.sendKeys("newUsername");
+		    Thread.sleep(1000);
+
+		    emailInput.clear();
+		    emailInput.sendKeys("newemail@example.com");
+		    Thread.sleep(1000);
+
+		    passwordInput.clear();
+		    passwordInput.sendKeys("newpassword");
+		    Thread.sleep(1000);
+
+		    // Locate and click the "Edit Account" button
+		    WebElement saveButton = form.findElement(By.xpath("//button[text()='Save Changes']"));
+		    saveButton.click();
+		}
+
+	}	
+	
+	@Test(description="Test logout user", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testUserLogout() throws Exception {
+		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			
+			var logoutButton = driver.findElement(By.xpath("//button[text()='Log Out']"));
+			logoutButton.click();
+			
+			Thread.sleep(3000);
+			
+			try {
+				var msg = driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div/div[1]/a"));
+				Assert.assertEquals(msg.getText(), "WebGame SDP");
+			}
+			catch(Exception e) {
+				Assert.fail("Logout failed");
+			}
+		}
+		else {
+			Assert.fail("Setting button not found");
+		}
+	}
+	
+	@Test(description="Test delete account user", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	public void testUserDeleteAccount() throws Exception {
+		WebElement settingsNav = null;
+		try {
+			settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+		}
+		catch(Exception e) {
+			var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+			if(loginNav.getText().equals("Login")) {
+				loginNav.click();
+				Thread.sleep(1000);
+
+				//username
+				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[1]/input")).sendKeys("test");
+				//password
+				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/input")).sendKeys("test");
+				//login button click
+				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/button")).click();
+				
+				Thread.sleep(3000);
+				
+				try {
+					settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
+				}
+				catch(Exception e2) {
+					Assert.fail("Login failed");
+				}
+			}
+			else {
+				Assert.fail("Login button not found");
+			}
+		}
+		if(settingsNav.getText().equals("Setting")) {
+			settingsNav.click();
+			Thread.sleep(1000);
+
+			
+			var logoutButton = driver.findElement(By.xpath("//button[text()='Delete Account']"));
+			logoutButton.click();
+			
+			Thread.sleep(3000);
+			
+			var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
+			if(loginNav.getText().equals("Login")) {
+				loginNav.click();
+				Thread.sleep(1000);
+
+				//username
+				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[1]/input")).sendKeys("test");
+				//password
+				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/input")).sendKeys("test");
+				//login button click
+				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/button")).click();
+				
+				Thread.sleep(3000);
+				
+				var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/h6[3]"));
+				Assert.assertEquals(msg.getText(), "User tidak terdaftar!");
+			}
+			else {
+				Assert.fail("Login button not found after deleting account");
+			}
+		}
+		else {
+			Assert.fail("Setting button not found");
+		}
+	}
+	
 	
 	// ADMIN !!!!!
 	
@@ -583,6 +1340,86 @@ public class Tests {
 			catch(Exception e) {
 				Assert.fail("Login failed");
 			}
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+
+	
+	@Test(description="Test Admin Privacy Policy Button click", priority=6 , dependsOnMethods = {"testAdminLoginSuccess"})
+	public void TestAdminPrivacyPolicyButton() throws Exception {
+		try {
+			
+			driver.findElement(By.xpath("//button[text()='Privacy Policy']")).click();
+	        Thread.sleep(3000);
+	        
+	    
+	        WebElement confirmButton = driver.findElement(By.xpath("/html/body/div[3]/div/div/div/div[3]/button[2]/span"));
+	        confirmButton.click();
+	        Thread.sleep(3000);
+	        
+	    } catch (Exception e) {
+	        Assert.fail("Failed to click the Privacy Policy button");
+	    }
+	}
+	
+	@Test(description="Test Admin Term & Condition Button click", priority=6, dependsOnMethods = {"testAdminLoginSuccess"})
+	public void TestAdminTermConditionButton() throws Exception {
+	    try {
+
+	        WebElement termConditionButton = driver.findElement(By.xpath("//button[text()='Term & Condition']"));
+	        termConditionButton.click();
+	        Thread.sleep(3000);
+	        
+	        WebElement confirmButton = driver.findElement(By.xpath("/html/body/div[3]/div/div/div/div[3]/button[2]/span"));
+	        confirmButton.click();
+	        Thread.sleep(3000);
+
+	     
+	    } catch (Exception e) {
+	        Assert.fail("Failed to click the Term & Condition button");
+	    }
+	}
+
+	
+	@Test(description="Test click Users tab", priority=2 , dependsOnMethods = {"testAdminLoginSuccess"})
+	public void testListUserTab() throws Exception {
+		var usersNav = driver.findElement(By.xpath("//a[text()='Users']"));
+		if(usersNav.getText().equals("Users")) {
+			usersNav.click();
+            Thread.sleep(1000);
+
+            // Locate the ul element
+            WebElement tabList = driver.findElement(By.cssSelector("ul[role='tablist']"));
+
+            // Iterate through each li element and click
+            for (WebElement tab : tabList.findElements(By.cssSelector("li[role='tab']"))) {
+                tab.click();
+                
+                // Wait for 2 seconds before clicking the "Next" button
+                Thread.sleep(5000);
+
+                // Click the "Next" button
+                WebElement nextButton = driver.findElement(By.xpath("//button[text()='Next']"));
+                while (!isNextButtonDisabled()) {
+                    nextButton.click();
+
+                    // Wait for 5 seconds before the next click
+                    Thread.sleep(1000);
+                }
+                // Wait for 5 seconds before the next click
+                Thread.sleep(5000);
+            }
+
+            Thread.sleep(3000);
+
+            try {
+                var msg = driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div/div[1]/div[1]/a[2]"));
+                Assert.assertEquals(msg.getText(), "admin");
+            } catch(Exception e) {
+                Assert.fail("Login failed");
+            }
 		}
 		else {
 			Assert.fail("Login button not found");
@@ -1058,7 +1895,68 @@ public class Tests {
 //		}
 //	}
 	
-	@Test(description="Test logout Admin", priority=1, dependsOnMethods = {"testAdminLoginSuccess"})
+	@Test(description="Test Admin click News tab", priority=3 , dependsOnMethods = {"testAdminLoginSuccess"})
+	public void testAdminNewsTabs() throws Exception {
+		var usersNav = driver.findElement(By.xpath("//a[text()='News']"));
+		if(usersNav.getText().equals("News")) {
+			usersNav.click();
+            Thread.sleep(1000);
+            
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+            for (int i = 0; i < 10; i++) {  // Adjust the loop count for the desired scroll length
+                jsExecutor.executeScript("window.scrollBy(0, 50);");
+                Thread.sleep(500);  // Adjust the sleep duration for the desired scroll speed
+            }
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+	
+	@Test(description="Test click Users tab", priority=4 , dependsOnMethods = {"testAdminLoginSuccess"})
+	public void testBugsTab() throws Exception {
+		var usersNav = driver.findElement(By.xpath("//a[text()='Bugs']"));
+		if(usersNav.getText().equals("Bugs")) {
+			usersNav.click();
+            Thread.sleep(1000);
+
+            // Locate the ul element
+            WebElement tabList = driver.findElement(By.cssSelector("ul[role='tablist']"));
+
+            // Iterate through each li element and click
+            for (WebElement tab : tabList.findElements(By.cssSelector("li[role='tab']"))) {
+                tab.click();
+                
+                // Wait for 2 seconds before clicking the "Next" button
+                Thread.sleep(5000);
+
+                // Click the "Next" button
+                WebElement nextButton = driver.findElement(By.xpath("//button[text()='Next']"));
+                while (!isNextButtonDisabled()) {
+                    nextButton.click();
+
+                    // Wait for 5 seconds before the next click
+                    Thread.sleep(1000);
+                }
+                // Wait for 5 seconds before the next click
+                Thread.sleep(5000);
+            }
+
+            Thread.sleep(3000);
+
+            try {
+                var msg = driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div/div[1]/div[1]/a[2]"));
+                Assert.assertEquals(msg.getText(), "admin");
+            } catch(Exception e) {
+                Assert.fail("Login failed");
+            }
+		}
+		else {
+			Assert.fail("Login button not found");
+		}
+	}
+	
+	@Test(description="Test logout Admin", priority=5, dependsOnMethods = {"testAdminLoginSuccess"})
 	public void testAdminLogout() throws Exception {
 		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
 		if(settingsNav.getText().equals("Setting")) {
