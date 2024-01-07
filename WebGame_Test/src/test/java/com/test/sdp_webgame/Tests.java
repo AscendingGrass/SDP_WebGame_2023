@@ -292,7 +292,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test login user (semua field kosong)", priority=5 , dependsOnMethods = {"testOpenLink"})
+	@Test(description="Test login user (semua field kosong)", priority=3 , dependsOnMethods = {"testOpenLink"})
 	public void testUserLoginFail_1() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -312,7 +312,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test login user (username tidak ada)", priority=5 , dependsOnMethods = {"testOpenLink"})
+	@Test(description="Test login user (username tidak ada)", priority=3 , dependsOnMethods = {"testOpenLink"})
 	public void testUserLoginFail_2() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -336,7 +336,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test login user (password salah)", priority=5, dependsOnMethods = {"testUserRegisterSuccess"})
+	@Test(description="Test login user (password salah)", priority=3, dependsOnMethods = {"testUserRegisterSuccess"})
 	public void testUserLoginFail_3() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -360,7 +360,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test login user (sukses)", priority=6 , dependsOnMethods = {"testUserRegisterSuccess"})
+	@Test(description="Test login user (sukses)", priority=4 , dependsOnMethods = {"testUserRegisterSuccess"})
 	public void testUserLoginSuccess() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -390,7 +390,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test logout user", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	@Test(description="Test logout user", priority=8, dependsOnMethods = {"testUserLoginSuccess"})
 	public void testUserLogout() throws Exception {
 		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
 		if(settingsNav.getText().equals("Setting")) {
@@ -416,7 +416,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test delete account user", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	@Test(description="Test delete account user", priority=9, dependsOnMethods = {"testUserLoginSuccess"})
 	public void testUserDeleteAccount() throws Exception {
 		WebElement settingsNav = null;
 		try {
@@ -429,11 +429,11 @@ public class Tests {
 				Thread.sleep(1000);
 
 				//username
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[1]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 				//password
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 				//login button click
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/button")).click();
+				driver.findElement(By.xpath("//button[text()='Log In']")).click();
 				
 				Thread.sleep(3000);
 				
@@ -458,22 +458,27 @@ public class Tests {
 			
 			Thread.sleep(3000);
 			
+			var confirmbutton = driver.findElement(By.xpath("/html/body/div[4]/div/div/div/div[3]/button[2]/span"));
+			confirmbutton.click();
+			
+			Thread.sleep(3000);
+			
 			var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 			if(loginNav.getText().equals("Login")) {
 				loginNav.click();
 				Thread.sleep(1000);
 
 				//username
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[1]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
 				//password
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/div[2]/input")).sendKeys("test");
+				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
 				//login button click
-				driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/button")).click();
+				driver.findElement(By.xpath("//button[text()='Log In']")).click();
 				
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 				
-				var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/form/h6[3]"));
-				Assert.assertEquals(msg.getText(), "User tidak terdaftar!");
+				var msg = driver.findElement(By.xpath("/html/body/div/div/div[2]/div/div/div/form/div[3]/div"));
+				Assert.assertEquals(msg.getText(), "Akun sudah dihapus!");
 			}
 			else {
 				Assert.fail("Login button not found after deleting account");
@@ -484,7 +489,7 @@ public class Tests {
 		}
 	}
 
-	@Test(description="Test User click News tab", priority=3 , dependsOnMethods = {"testUserLoginSuccess"})
+	@Test(description="Test User click News tab", priority=5 , dependsOnMethods = {"testUserLoginSuccess"})
 	public void testUserNewsTab() throws Exception {
 		var usersNav = driver.findElement(By.xpath("//a[text()='News']"));
 		if(usersNav.getText().equals("News")) {
@@ -502,7 +507,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test User Privacy Policy Button click", priority=6 , dependsOnMethods = {"testUserLoginSuccess"})
+	@Test(description="Test User Privacy Policy Button click", priority=5 , dependsOnMethods = {"testUserLoginSuccess"})
 	public void TestUserPrivacyPolicyButton() throws Exception {
 		try {
 			
@@ -519,7 +524,7 @@ public class Tests {
 	    }
 	}
 	
-	@Test(description="Test User Term & Condition Button click", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	@Test(description="Test User Term & Condition Button click", priority=5, dependsOnMethods = {"testUserLoginSuccess"})
 	public void TestUserTermConditionButton() throws Exception {
 	    try {
 
@@ -707,15 +712,25 @@ public class Tests {
 			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
 			editButton.click();
 			
-			Thread.sleep(1000);
+			Thread.sleep(1000);			
 			
-			//username
-			driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test2");
-			//email
-			driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test2");
+		    WebElement usernameInput = driver.findElement(By.xpath("//input[@name='username']"));
+		    WebElement emailInput = driver.findElement(By.xpath("//input[@name='email']"));
+		    
+
+		    usernameInput.clear();
+		    usernameInput.sendKeys(this.username + "test2");
+		    Thread.sleep(1000);
+
+		    emailInput.clear();
+		    emailInput.sendKeys(this.email + "test2");
+		    Thread.sleep(1000);
+		    
 			//save button click
 			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
 			
+		    Thread.sleep(1000);
+		    
 			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
 			HomeNav.click();
 			
@@ -755,14 +770,23 @@ public class Tests {
 			editButton.click();
 			
 			Thread.sleep(1000);
+				
+		    WebElement usernameInput = driver.findElement(By.xpath("//input[@name='username']"));
+		    WebElement passwordInput = driver.findElement(By.xpath("//input[@name='password']"));
+
+		    usernameInput.clear();
+		    usernameInput.sendKeys(this.username + "test2");
+		    Thread.sleep(1000);
+
+		    passwordInput.clear();
+		    passwordInput.sendKeys(this.password + "test2");
+		    Thread.sleep(1000);
 			
-			//username
-			driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test2");
-			//email
-			driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test2");
 			//save button click
 			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
 			
+			Thread.sleep(1000);
+		    
 			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
 			HomeNav.click();
 			
@@ -803,14 +827,25 @@ public class Tests {
 			
 			Thread.sleep(1000);
 			
-			//username
-			driver.findElement(By.xpath("//input[@name='username']")).sendKeys("test3");
-			//email
-			driver.findElement(By.xpath("//input[@name='email']")).sendKeys("test3");
-			//password
-			driver.findElement(By.xpath("//input[@name='password']")).sendKeys("test3");
+		    WebElement usernameInput = driver.findElement(By.xpath("//input[@name='username']"));
+		    WebElement emailInput = driver.findElement(By.xpath("//input[@name='email']"));
+		    WebElement passwordInput = driver.findElement(By.xpath("//input[@name='password']"));
+
+		    usernameInput.clear();
+		    usernameInput.sendKeys(this.username + "test3");
+		    Thread.sleep(1000);
+
+		    emailInput.clear();
+		    emailInput.sendKeys(this.email + "test3");
+		    Thread.sleep(1000);
+
+		    passwordInput.clear();
+		    passwordInput.sendKeys(this.password + "test3");
+		    Thread.sleep(1000);
+			
 			//save button click
 			driver.findElement(By.xpath("//button[text()='Save Changes']")).click();
+			Thread.sleep(1000);
 			
 			var HomeNav = driver.findElement(By.xpath("//a[text()='Home']"));
 			HomeNav.click();
@@ -994,7 +1029,7 @@ public class Tests {
 	}
 
 	
-	@Test(description="Test Admin Privacy Policy Button click", priority=6 , dependsOnMethods = {"testAdminLoginSuccess"})
+	@Test(description="Test Admin Privacy Policy Button click", priority=15 , dependsOnMethods = {"testAdminLoginSuccess"})
 	public void TestAdminPrivacyPolicyButton() throws Exception {
 		try {
 			
@@ -1011,7 +1046,7 @@ public class Tests {
 	    }
 	}
 	
-	@Test(description="Test Admin Term & Condition Button click", priority=6, dependsOnMethods = {"testAdminLoginSuccess"})
+	@Test(description="Test Admin Term & Condition Button click", priority=15, dependsOnMethods = {"testAdminLoginSuccess"})
 	public void TestAdminTermConditionButton() throws Exception {
 	    try {
 
@@ -1028,50 +1063,8 @@ public class Tests {
 	        Assert.fail("Failed to click the Term & Condition button");
 	    }
 	}
-
 	
-	@Test(description="Test Admin Privacy Policy Button click", priority=6 , dependsOnMethods = {"testAdminLoginSuccess"})
-	public void clickPrivacyPolicyButton() throws Exception {
-		try {
-			// Assuming the Privacy Policy button has the text "Privacy Policy"
-			driver.findElement(By.xpath("//button[text()='Privacy Policy']")).click();
-	        Thread.sleep(10000);
-	        
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	        WebElement dialog = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='grid place-items-center fixed w-screen h-screen bg-black bg-opacity-60 backdrop-blur-sm']")));
-	        
-	        WebElement confirmButton = driver.findElement(By.xpath("//button[contains(span, 'Confirm')]"));
-	        confirmButton.click();
-	        Thread.sleep(3000);
-	        // Add assertions or additional actions after clicking the button if needed
-	    } catch (Exception e) {
-	        Assert.fail("Failed to click the Privacy Policy button");
-	    }
-	}
-	
-	@Test(description="Test Admin Term & Condition Button click", priority=6, dependsOnMethods = {"testAdminLoginSuccess"})
-	public void clickTermConditionButton() throws Exception {
-	    try {
-	        // Assuming the "Term & Condition" button has the text "Term & Condition"
-	        WebElement termConditionButton = driver.findElement(By.xpath("//button[text()='Term & Condition']"));
-	        termConditionButton.click();
-	        Thread.sleep(3000);
-	        
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	        WebElement dialog = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='grid place-items-center fixed w-screen h-screen bg-black bg-opacity-60 backdrop-blur-sm']")));
-	        
-	        WebElement confirmButton = dialog.findElement(By.xpath("//button[contains(span, 'Confirm')]"));
-	        confirmButton.click();
-	        Thread.sleep(3000);
-
-	        // Add assertions or additional actions after clicking the "Term & Condition" button if needed
-	    } catch (Exception e) {
-	        Assert.fail("Failed to click the Term & Condition button");
-	    }
-	}
-
-	
-	@Test(description="Test click Users tab", priority=2 , dependsOnMethods = {"testAdminLoginSuccess"})
+	@Test(description="Test click Users tab", priority=16 , dependsOnMethods = {"testAdminLoginSuccess"})
 	public void testListUserTab() throws Exception {
 		var usersNav = driver.findElement(By.xpath("//a[text()='Users']"));
 		if(usersNav.getText().equals("Users")) {
@@ -1125,7 +1118,7 @@ public class Tests {
 	    }
 	}
 	
-	@Test(description="Test click News tab", priority=3 , dependsOnMethods = {"testAdminLoginSuccess"})
+	@Test(description="Test click News tab", priority=17 , dependsOnMethods = {"testAdminLoginSuccess"})
 	public void testNewTabsAdmi() throws Exception {
 		var usersNav = driver.findElement(By.xpath("//a[text()='News']"));
 		if(usersNav.getText().equals("News")) {
@@ -1143,7 +1136,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test click Users tab", priority=4 , dependsOnMethods = {"testAdminLoginSuccess"})
+	@Test(description="Test click bug tab", priority=18 , dependsOnMethods = {"testAdminLoginSuccess"})
 	public void testBugsTab() throws Exception {
 		var usersNav = driver.findElement(By.xpath("//a[text()='Bugs']"));
 		if(usersNav.getText().equals("Bugs")) {
@@ -1186,7 +1179,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test Admin click News tab", priority=3 , dependsOnMethods = {"testAdminLoginSuccess"})
+	@Test(description="Test Admin click News tab", priority=19 , dependsOnMethods = {"testAdminLoginSuccess"})
 	public void testAdminNewsTabs() throws Exception {
 		var usersNav = driver.findElement(By.xpath("//a[text()='News']"));
 		if(usersNav.getText().equals("News")) {
@@ -1204,7 +1197,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test logout Admin", priority=5, dependsOnMethods = {"testAdminLoginSuccess"})
+	@Test(description="Test logout Admin", priority=20, dependsOnMethods = {"testAdminLoginSuccess"})
 	public void testAdminLogout() throws Exception {
 		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
 		if(settingsNav.getText().equals("Setting")) {
@@ -1230,76 +1223,8 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test Register to Delete Account", priority=1, dependsOnMethods = {"testAdminLogout"})
-	public void testRegisterToDeleteAccount() throws Exception {
-		String temp = UUID.randomUUID().toString();
-		this.username = "user-" + temp;
-		this.password = this.username;
-		this.email = this.username + "@gmail.com";
-		
-		
-		WebElement loginLink = driver.findElement(By.xpath("//a[text()='Login']"));
-        loginLink.click();
-
-        // Wait for 1 second
-        Thread.sleep(3000);
-
-//      Click the "Register" link
-        WebElement registerLink = driver.findElement(By.xpath("//a[text()='Register']"));
-        registerLink.click();
-        
-        Thread.sleep(3000);
-		
-        WebElement usernameInput = driver.findElement(By.name("username"));
-        WebElement emailInput = driver.findElement(By.name("email"));
-        WebElement passwordInput = driver.findElement(By.name("password"));
-        WebElement submitButton = driver.findElement(By.xpath("//button[text()='sign up']"));
-        
-        usernameInput.sendKeys(this.username);
-        Thread.sleep(1000);
-        emailInput.sendKeys(this.email);
-        Thread.sleep(1000);
-        passwordInput.sendKeys(this.password);
-        Thread.sleep(1000);
-        
-        submitButton.click();
-        
-        Thread.sleep(5000);
-        
-	}
 	
-	@Test(description = "Test Login Account to Delete", priority = 1, dependsOnMethods = {"testRegisterToDeleteAccount"})
-	public void testLoginToDeleteAccount() throws Exception {
-		WebElement loginLink = driver.findElement(By.xpath("//a[text()='Login']"));
-        loginLink.click();
-        
-        driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
-//		//password
-		driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
-//		//login button click
-		Thread.sleep(3000);
-		driver.findElement(By.xpath("//button[text()='Log In']")).click();
-
-		Thread.sleep(3000);
-		
-		WebElement settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
-		settingsNav.click();
-		
-		Thread.sleep(1000);
-		
-		WebElement deleteButton = driver.findElement(By.xpath("//button[text()='Delete Account']"));
-		deleteButton.click();
-		Thread.sleep(2000);
-		
-		var confirmButton = driver.findElement(By.xpath("/html/body/div[4]/div/div/div/div[3]/button[2]"));
-		confirmButton.click();
-		
-		Thread.sleep(2000);
-
-		
-	}
-	
-	@Test(description = "Test Register Account to AdminDelete", priority = 1, dependsOnMethods = {"testLoginToDeleteAccount"})
+	@Test(description = "Test Register Account to AdminDelete", priority = 23, dependsOnMethods = {"testLoginToDeleteAccount"})
 	public void testRegisterToAdminDelete() throws Exception {
 		WebElement loginLink = driver.findElement(By.xpath("//a[text()='Login']"));
         loginLink.click();
@@ -1330,7 +1255,7 @@ public class Tests {
         Thread.sleep(1000);
 	}
 	
-	@Test(description = "Test Login Admin to Delete Account", priority = 1, dependsOnMethods = {"testRegisterToAdminDelete"})
+	@Test(description = "Test Login Admin to Delete Account", priority = 24, dependsOnMethods = {"testRegisterToAdminDelete"})
 	public void testLoginAdmintoDeleteAccount() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
@@ -1362,7 +1287,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description = "Test Search User to Delete User", priority = 1, dependsOnMethods = {"testLoginAdmintoDeleteAccount"})
+	@Test(description = "Test Search User to Delete User", priority = 25, dependsOnMethods = {"testLoginAdmintoDeleteAccount"})
 	public void testSearchUserToDelete() throws Exception {
 		var usersNav = driver.findElement(By.xpath("//a[text()='Users']"));
 		if(usersNav.getText().equals("Users")) {
