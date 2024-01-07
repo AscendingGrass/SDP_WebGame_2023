@@ -961,7 +961,7 @@ public class Tests {
 	
 	// ADMIN !!!!!
 	
-	@Test(description="Test login admin (sukses)", priority=1 , dependsOnMethods = {"testOpenLink"})
+	@Test(description="Test login admin (sukses)", priority=10 , dependsOnMethods = {"testOpenLink"})
 	public void testAdminLoginSuccess() throws Exception {
 		var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
 		if(loginNav.getText().equals("Login")) {
