@@ -814,7 +814,7 @@ public class Tests {
 		}
 	}
 	
-	@Test(description="Test edit 3 field", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
+	@Test(description="Test edit 3 field", priority=7, dependsOnMethods = {"testUserLoginSuccess"})
 	public void testEditUsernameEmailPassword() throws Exception {
 		var settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
 		if(settingsNav.getText().equals("Setting")) {
@@ -866,6 +866,11 @@ public class Tests {
 				
 				var msg3 = driver.findElement(By.xpath("//input[@name='email']"));
 				Assert.assertEquals(msg3.getAttribute("value"), this.email + "test3");
+				
+				this.username += "test3";
+				this.password += "test3";
+				this.email += "test3";
+
 			}
 			catch(Exception e) {
 				Assert.fail("username,email, atau password tidak ter save");		
@@ -920,79 +925,6 @@ public class Tests {
 			Assert.fail("Setting button not found");
 		}
 	}
-	
-	@Test(description="Test Edit Account User", priority=6, dependsOnMethods = {"testUserLoginSuccess"})
-	public void testUserEditAccountUsername() throws Exception {
-		WebElement settingsNav = null;
-		try {
-			settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
-		}
-		catch(Exception e) {
-			var loginNav = driver.findElement(By.xpath("//a[text()='Login']"));
-			if(loginNav.getText().equals("Login")) {
-				loginNav.click();
-				Thread.sleep(1000);
-
-				//username
-				driver.findElement(By.xpath("//input[@name='username']")).sendKeys(this.username);
-				//password
-				driver.findElement(By.xpath("//input[@name='password']")).sendKeys(this.password);
-				//login button click
-				driver.findElement(By.xpath("//button[text()='Log In']")).click();
-				
-				Thread.sleep(3000);
-				
-				try {
-					settingsNav = driver.findElement(By.xpath("//a[text()='Setting']"));
-				}
-				catch(Exception e2) {
-					Assert.fail("Login failed");
-				}
-			}
-			else {
-				Assert.fail("Login button not found");
-			}
-		}
-		
-		if(settingsNav.getText().equals("Setting")) {
-			settingsNav.click();
-			Thread.sleep(1000);
-
-			
-			var editButton = driver.findElement(By.xpath("//button[text()='Edit Account']"));
-		    editButton.click();
-			
-			Thread.sleep(1000);
-			
-		    // Wait for the form to be visible
-		    WebElement form = driver.findElement(By.xpath("//form[@class='mt-8 mb-2 w-1/2']"));
-		    Thread.sleep(1000);
-		    // Locate the input fields and change values
-		    WebElement usernameInput = form.findElement(By.name("username"));
-		    WebElement emailInput = form.findElement(By.name("email"));
-		    WebElement passwordInput = form.findElement(By.name("password"));
-
-		    usernameInput.clear();
-		    usernameInput.sendKeys("newUsername");
-		    Thread.sleep(1000);
-
-		    emailInput.clear();
-		    emailInput.sendKeys("newemail@example.com");
-		    Thread.sleep(1000);
-
-		    passwordInput.clear();
-		    passwordInput.sendKeys("newpassword");
-		    Thread.sleep(1000);
-
-		    // Locate and click the "Edit Account" button
-		    WebElement saveButton = form.findElement(By.xpath("//button[text()='Save Changes']"));
-		    saveButton.click();
-		}
-
-	}	
-	
-	
-	
 	
 	// ADMIN !!!!!
 	
@@ -1224,7 +1156,7 @@ public class Tests {
 	}
 	
 	
-	@Test(description = "Test Register Account to AdminDelete", priority = 23, dependsOnMethods = {"testLoginToDeleteAccount"})
+	@Test(description = "Test Register Account to AdminDelete", priority = 23, dependsOnMethods = {"testAdminLogout"})
 	public void testRegisterToAdminDelete() throws Exception {
 		WebElement loginLink = driver.findElement(By.xpath("//a[text()='Login']"));
         loginLink.click();
