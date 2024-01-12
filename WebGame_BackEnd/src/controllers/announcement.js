@@ -84,6 +84,18 @@ const dummyData = async (req, res)=>{
     })
 }
 
+const insertAnnoucement = async (req, res) => {
+    const body = req.body;
+
+    const result = await Announcement.create({
+        ...body
+    });
+    return res.status(200).json({
+        error: false,
+        result
+    })
+}
+
 const getAllAnnouncement = async (req, res) => {
     const result = await Announcement.find();
 
@@ -104,6 +116,7 @@ const getLatestAnnouncement = async (req, res) => {
 
 module.exports = {
     dummyData,
+    insertAnnoucement,
     getAllAnnouncement,
     getLatestAnnouncement
 }
