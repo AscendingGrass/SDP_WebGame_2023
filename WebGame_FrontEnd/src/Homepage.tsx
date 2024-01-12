@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import { useEffect, useState } from "react";
+import HomeNews from "./HomeNews";
 
 const Homepage = () => {
 
@@ -34,16 +35,7 @@ const Homepage = () => {
           {
             news.length > 0 &&
             news.map((item, index) => (
-              <div className="basis-1/3 flex" key={index}>
-                <div className="card card rounded-md table w-3/4 mx-auto border-solid border-8 border-gray-400 bg-gray-400 ">
-                  <div className="card-header">
-                    <div className="card-title text-2xl font-bold">{item.title}</div>
-                  </div>
-                  <div className="card-body mt-6">
-                    {item.description}
-                  </div>
-                </div>
-              </div>
+              <HomeNews {...item} key={index}/>
             ))
           }
         </div>
